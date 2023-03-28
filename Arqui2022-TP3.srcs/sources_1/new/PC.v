@@ -11,10 +11,8 @@ module PC(
     
     always @(posedge i_clk) begin
     
-        if(i_bloqueo) begin         // En caso de que el bit de bloqueo este activado, no modifico el module PC
-        
-        end else begin              // Si no esta activado el bloqueo, entonces modifico el PC
-            o_pc = i_pc_next;
+        if(! i_bloqueo) begin         // En caso de que el bit de bloqueo no este activado, modifico el module PC
+            o_pc <= i_pc_next;
         end
     end
         
