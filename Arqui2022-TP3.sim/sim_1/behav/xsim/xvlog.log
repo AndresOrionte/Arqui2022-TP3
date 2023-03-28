@@ -1,5 +1,0 @@
-INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Luciano/Facu/Arquitecturas de Computadoras/Practico/Proyectos_Vivado/Arqui2022-TP3/Arqui2022-TP3.srcs/sources_1/new/MemoriaDeInstrucciones.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module MemoriaDeInstrucciones
-WARNING: [VRFC 10-8374] loop variable declaration is not allowed in this mode of Verilog [C:/Luciano/Facu/Arquitecturas de Computadoras/Practico/Proyectos_Vivado/Arqui2022-TP3/Arqui2022-TP3.srcs/sources_1/new/MemoriaDeInstrucciones.v:42]
-INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Luciano/Facu/Arquitecturas de Computadoras/Practico/Proyectos_Vivado/Arqui2022-TP3/Arqui2022-TP3.srcs/sim_1/new/MemoriaDeInstrucciones_Test.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module MemoriaDeInstrucciones_Test
