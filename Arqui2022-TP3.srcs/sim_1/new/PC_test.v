@@ -1,0 +1,40 @@
+`timescale 1ns / 1ps
+
+module PC_test();
+    
+    reg [31:0] i_pc_next;
+    reg i_clk;
+    reg i_bloqueo;
+    wire [31:0] o_pc;
+    
+    PC pc0(i_pc_next, i_clk, i_bloqueo, o_pc);
+    
+    initial begin
+    
+        i_clk = 0;
+        i_bloqueo = 0;
+        
+        // Asigno un valor al PC
+        i_pc_next = 32'h0004;
+        #1
+        i_pc_next = 32'h000F;
+        #1
+        i_pc_next = 32'h00FF;
+        
+        // Checkeo bit de bloqueo
+        i_bloqueo = 1;
+        #1
+        i_pc_next = 32'hFFFF;
+        #3
+        i_bloqueo = 0;
+        #1
+        i_pc_next = 32'h0000;
+     
+    end
+        
+    // Inicializo el Clk
+    always begin
+        #0.5
+        i_clk = ~i_clk;
+    end
+endmodule
