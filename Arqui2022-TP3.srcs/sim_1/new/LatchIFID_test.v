@@ -1,0 +1,52 @@
+`timescale 1ns / 1ps
+
+module LatchIFID_test();
+
+    reg i_clk;
+    reg i_bloqueo;
+    reg [31:0] i_pc_p4;
+    reg [31:0] i_instruccion;
+    wire [25:0] o_index;
+    wire [5:0] o_opcode;
+    wire [31:0] o_pc_p4;
+    
+    LatchIFID latch1(i_clk, i_bloqueo, i_pc_p4, i_instruccion, o_pc_p4, o_index, o_opcode);
+    
+    initial begin
+        
+        // Comienzo con un bloqueo
+        i_clk = 0;
+        i_bloqueo = 1;
+        
+        // Asigno valores a la entrada
+        i_instruccion = 32'h00000F0F;
+        #1
+        i_pc_p4 = 32'h00000004;
+        #3
+        i_instruccion = 32'h0000FFFF;
+        #3
+        
+        // Desbloqueo y compruebo que funcione el latch
+        i_bloqueo = 0;
+        #1
+        i_pc_p4 = 32'h0008;
+        #1
+        i_instruccion = 32'h00000000;
+        #3
+        i_instruccion = 32'hF000000F;
+        #1
+        
+        // Vuelvo a bloquear y compruebo nuevamente
+        i_bloqueo = 1;
+        #1
+        i_pc_p4 = 32'hFFFFFFFF;
+        i_instruccion = 32'hFFFFFFFF;
+    end
+        
+    
+    // Inicializo el Clk
+    always begin
+        #0.5
+        i_clk = ~i_clk;
+    end
+endmodule
