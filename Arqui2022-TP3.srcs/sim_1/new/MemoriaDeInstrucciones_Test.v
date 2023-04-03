@@ -117,9 +117,38 @@ module MemoriaDeInstrucciones_Test();
         #1
         i_direccion = 32'h003F;
         
+        // Check de instataniedad de los bucles for como descriptores de hardware
+        
+        #1
+        i_reset = 1;
+        
+        #1
+        i_reset = 0;
+        
+        #1
+        i_direccion = 32'h0002;
+
+        #1
+        i_direccion = 32'h0003;
+        
+        #1
+        i_direccion = 32'h0004;
+        
+        #1
+        i_direccion = 32'h0005;
+        
+        #1
+        i_direccion = 32'h0006;
+        
+        #1
+        i_direccion = 32'h0007;
+        
+        #1
+        i_direccion = 32'h0008;
+        
     end
     
-        // Clk de periodo 1
+    // Clk de periodo 1
     always begin
         #0.5
         i_clk = ~i_clk;

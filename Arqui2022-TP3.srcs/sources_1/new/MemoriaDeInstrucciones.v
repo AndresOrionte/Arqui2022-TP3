@@ -37,10 +37,10 @@ module MemoriaDeInstrucciones
     always @(posedge i_clk) begin
     
         if(i_reset) begin                   // En caso de reset pongo memoria y salidas a cero
-            o_instruccion <= 32'h0000;
+            o_instruccion <= 32'h00000000;
             o_error_flag <= 1'b0;
             for(integer i=0; i<64; i=i+1) begin
-                mem[i] = 32'h0000;
+                mem[i] <= 32'h00000000;
             end
         end else begin                      // Si no hay reset entonces voy al funcionamiento normal
             if(i_flag_escritura) begin      // Si esta levantado el flag de escritura escribo la palabra indicada en la posicion indicada
