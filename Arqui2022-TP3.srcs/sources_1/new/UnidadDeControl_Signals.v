@@ -77,17 +77,8 @@ module UnidadDeControl_Signals(
                 o_take_branch <= 1'b0;
                 o_branch_eq <= 1'b0;
                 
-                if(!i_op_code[4]) begin                     // (0) 0 = Operaciones tipo R
-                    
-                    o_reg_dst <= 1'b1;
-                    o_alu_src <= 1'b0;
-                
-                end else begin                              // (0) 1 = Operaciones tipo I(Inm)
-                
-                    o_reg_dst <= 1'b0;
-                    o_alu_src <= 1'b1;
-                    
-                end
+                o_reg_dst <= !i_op_code[4];
+                o_alu_src <= i_op_code[4];
                 
                 if(i_op_code[3:0] == 4'b1000) begin         // (0X) 1000 = Deteccion operacion SLT o SLTI
                 
