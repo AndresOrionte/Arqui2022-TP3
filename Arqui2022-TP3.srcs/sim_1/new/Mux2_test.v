@@ -12,8 +12,8 @@ module Mux2_test();
     initial begin
         // Test Case 1
         i_sel = 0;
-        i_dato_1 = 8'h01;
-        i_dato_2 = 8'h02;
+        i_dato_1 = 32'h0001;
+        i_dato_2 = 32'h0002;
         #5;
         
         // Test Case 2
