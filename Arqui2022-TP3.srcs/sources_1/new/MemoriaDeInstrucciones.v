@@ -32,21 +32,21 @@ module MemoriaDeInstrucciones
     output reg o_error_flag                 // No implementado
 );
 
-    reg [31:0] mem [63:0];
+    reg [7:0] mem [255:0];
 
     always @(posedge i_clk) begin
     
         if(i_reset) begin                   // En caso de reset pongo memoria y salidas a cero
             o_instruccion <= 32'h00000000;
             o_error_flag <= 1'b0;
-            for(integer i=0; i<64; i=i+1) begin
-                mem[i] <= 32'h00000000;
+            for(integer i=0; i<256; i=i+1) begin
+                mem[i] <= 8'h00;
             end
         end else begin                      // Si no hay reset entonces voy al funcionamiento normal
             if(i_flag_escritura) begin      // Si esta levantado el flag de escritura escribo la palabra indicada en la posicion indicada
-                mem[i_direccion[5:0]] = i_escritura;
+                {mem[i_direccion[7:0]+2'b11], mem[i_direccion[7:0]+2'b10], mem[i_direccion[7:0]+2'b01], mem[i_direccion[7:0]]} = i_escritura;
             end else begin                  // En otro caso saco la instruccion indicada 
-                o_instruccion = mem[i_direccion[5:0]];
+                o_instruccion = {mem[i_direccion[7:0]+2'b11], mem[i_direccion[7:0]+2'b10], mem[i_direccion[7:0]+2'b01], mem[i_direccion[7:0]]};
             end
         end
     

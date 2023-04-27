@@ -31,13 +31,13 @@ module MemoriaDeInstrucciones_Test();
     wire [31:0] o_instruccion;
     wire o_error_flag;        
 
-    MemoriaDeInstrucciones Mem0(i_clk, i_reset, i_direccion, i_escritura, i_flag_escritura, o_instruccion, o_flag_error);
+    MemoriaDeInstrucciones Mem0(i_clk, i_reset, i_direccion, i_escritura, i_flag_escritura, o_instruccion, o_error_flag);
     
     initial begin
 
         i_clk = 0;
-        i_direccion = 32'h0000;
-        i_escritura = 32'h0000;
+        i_direccion = 32'h00000000;
+        i_escritura = 32'h00000000;
         i_flag_escritura = 1'b0;
         // Primero hacemos un reset
         i_reset = 1;
@@ -47,75 +47,78 @@ module MemoriaDeInstrucciones_Test();
         
         // Comprobamos 3 direcciones aleatorias para ver que comienzen en 0
         #1
-        i_direccion = 32'h0002;
+        i_direccion = 32'h00000000;
         
         #1
-        i_direccion = 32'h000F;
+        i_direccion = 32'h00000004;
         
         #1
-        i_direccion = 32'h001F;
+        i_direccion = 32'h00000010;
         
         // Escribimos 3 direcciones
         #1
         i_flag_escritura = 1'b1;
-        i_direccion = 32'h0003;
-        i_escritura = 32'h1111;
+        i_direccion = 32'h00000004;
+        i_escritura = 32'h00111111;
         
         #1
         i_flag_escritura = 1'b1;
-        i_direccion = 32'h0005;
-        i_escritura = 32'h2222;
+        i_direccion = 32'h00000000C;
+        i_escritura = 32'h00222222;
         
         #1
         i_flag_escritura = 1'b1;
-        i_direccion = 32'h0007;
-        i_escritura = 32'h3333;
+        i_direccion = 32'h0000014;
+        i_escritura = 32'h00333333;
         
         // Chequeamos los datos de manera alternada
         
         #1
         i_flag_escritura = 1'b0;
-        i_direccion = 32'h0002;
+        i_direccion = 32'h00000000;
 
         #1
-        i_direccion = 32'h0003;
+        i_direccion = 32'h00000004;
         
         #1
-        i_direccion = 32'h0004;
+        i_direccion = 32'h00000008;
         
         #1
-        i_direccion = 32'h0005;
+        i_direccion = 32'h0000000C;
         
         #1
-        i_direccion = 32'h0006;
+        i_direccion = 32'h00000010;
         
         #1
-        i_direccion = 32'h0007;
+        i_direccion = 32'h00000014;
         
         #1
-        i_direccion = 32'h0008;
-        
-        // Check del limite de 64 posiciones
+        i_direccion = 32'h00000018;
         
         #1
-        i_flag_escritura = 1'b1;
-        i_direccion = 32'h0109;
-        i_escritura = 32'h4444;
+        i_direccion = 32'h0000001C;
         
-        #1
-        i_flag_escritura = 1'b0;
-        i_direccion = 32'h0009;
+        // Check del limite de 256 posiciones
         
         #1
         i_flag_escritura = 1'b1;
-        i_direccion = 32'hFFFF;
-        i_escritura = 32'h5555;
+        i_direccion = 32'h000000FC;
+        i_escritura = 32'h00444444;
+        
+        #1
+        i_flag_escritura = 1'b0;
+        i_direccion = 32'h000001FC;
+        
+        #1
+        i_flag_escritura = 1'b1;
+        i_direccion = 32'h00FFFF00;
+        i_escritura = 32'h00555555;
         
         #1
         i_flag_escritura = 1'b0;
         
         #1
-        i_direccion = 32'h003F;
+        i_direccion = 32'h00003F00;
         
         // Check de instataniedad de los bucles for como descriptores de hardware
         
@@ -126,25 +129,25 @@ module MemoriaDeInstrucciones_Test();
         i_reset = 0;
         
         #1
-        i_direccion = 32'h0002;
+        i_direccion = 32'h00000000;
 
         #1
-        i_direccion = 32'h0003;
+        i_direccion = 32'h00000004;
         
         #1
-        i_direccion = 32'h0004;
+        i_direccion = 32'h00000008;
         
         #1
-        i_direccion = 32'h0005;
+        i_direccion = 32'h0000000C;
         
         #1
-        i_direccion = 32'h0006;
+        i_direccion = 32'h00000010;
         
         #1
-        i_direccion = 32'h0007;
+        i_direccion = 32'h00000014;
         
         #1
-        i_direccion = 32'h0008;
+        i_direccion = 32'h00000018;
         
     end
     
