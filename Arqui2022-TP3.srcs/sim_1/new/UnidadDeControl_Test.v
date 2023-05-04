@@ -135,13 +135,13 @@ module UnidadDeControl_Test();
         i_op_code = 6'b100100;  //LW
         
         #1
-        i_op_code = 6'b101101;  //SB
+        i_op_code = 6'b101001;  //SB
         
         #1
-        i_op_code = 6'b101110;  //SH
+        i_op_code = 6'b101010;  //SH
         
         #1
-        i_op_code = 6'b101111;  //SW
+        i_op_code = 6'b101100;  //SW
         
         #10
         

@@ -53,7 +53,7 @@ module MemoriaDeInstrucciones_Test();
         i_direccion = 32'h00000004;
         
         #1
-        i_direccion = 32'h00000010;
+        i_direccion = 32'h0000000C;
         
         // Escribimos 3 direcciones
         #1
