@@ -17,7 +17,13 @@ module Sumador_test();
     i_A = 32'h0000FFF0;
     #5
     
-    i_A = 32'hFFFFFFFF;
+    // Hago (-4) + (-2)
+    i_A = 32'hFFFFFFFC;
+    i_B = 32'hFFFFFFFE;
+    #5    
+
+    i_A = 10;
+    i_B = -5;
     
     end
 
