@@ -6,11 +6,10 @@ module LatchIFID_test();
     reg i_bloqueo;
     reg [31:0] i_pc_p4;
     reg [31:0] i_instruccion;
-    wire [25:0] o_index;
-    wire [5:0] o_opcode;
     wire [31:0] o_pc_p4;
+    wire [31:0] o_instruccion;
     
-    LatchIFID latch1(i_clk, i_bloqueo, i_pc_p4, i_instruccion, o_pc_p4, o_index, o_opcode);
+    LatchIFID latch1(i_clk, i_bloqueo, i_pc_p4, i_instruccion, o_pc_p4, o_instruccion);
     
     initial begin
         
