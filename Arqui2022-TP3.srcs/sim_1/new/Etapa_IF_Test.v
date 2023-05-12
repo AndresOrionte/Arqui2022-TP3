@@ -62,6 +62,27 @@ module Etapa_IF_Test();
         #5
         i_reset = 0;
         
+        //Dejamos pasar algunos clocks para verificar que el PC progrese
+        #5
+        
+        //Comprobamos el cambio del PC ante las señales de saltos y branch
+        i_take_jump = 1;
+        i_jump_address = 32'h0000FF00;
+        #1
+        i_take_jump = 0;
+        
+        #5
+        i_take_jump_r = 1;
+        i_jump_r_address = 32'h00AAAAAC;
+        #1
+        i_take_jump_r = 0;
+        
+        #5
+        i_take_branch = 1;
+        i_branch_address = 32'h00000888;
+        #1
+        i_take_branch = 0;
+        
         
         
         

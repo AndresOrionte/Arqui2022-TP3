@@ -13,7 +13,7 @@ module PC_test();
     
     initial begin
     
-        i_clk = 1;
+        i_clk = 0;
         i_pc_next = 0;
         i_bloqueo = 0;
         // Primero hacemos un reset

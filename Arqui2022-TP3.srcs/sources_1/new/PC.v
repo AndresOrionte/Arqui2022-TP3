@@ -11,7 +11,7 @@ module PC(
     );
 
     
-    always @(posedge i_clk) begin
+    always @(negedge i_clk) begin
     
         if(i_reset) begin                   //// En caso de reset pongo PC a cero
             o_pc <= 32'h00000000;

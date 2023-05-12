@@ -56,7 +56,7 @@ module Etapa_IF(
     
     PC PC0(i_clk, i_reset, pc_next, i_block_pc, pc);
     
-    MemoriaDeInstrucciones Mem_0(i_clk, i_reset, pc, i_dato_escritura_mem, i_flag_escritura_mem, instruccion, error_flag);
+    MemoriaDeInstrucciones Mem_0(i_clk, i_reset, pc, i_dato_escritura_mem, i_flag_escritura_mem, instruccion);
     
     LatchIFID Latch_1(i_clk, i_block_latch, pc_p4, instruccion, o_pc_p4, o_instruccion);
     

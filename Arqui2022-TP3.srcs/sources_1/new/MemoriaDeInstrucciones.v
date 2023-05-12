@@ -28,17 +28,15 @@ module MemoriaDeInstrucciones
     input wire [31:0] i_escritura,
     input wire i_flag_escritura,
     
-    output reg [31:0] o_instruccion,
-    output reg o_error_flag                 // No implementado
+    output reg [31:0] o_instruccion
 );
 
     reg [7:0] mem [255:0];
 
-    always @(posedge i_clk) begin
+    always @(negedge i_clk) begin
     
         if(i_reset) begin                   // En caso de reset pongo memoria y salidas a cero
             o_instruccion <= 32'h00000000;
-            o_error_flag <= 1'b0;
             for(integer i=0; i<256; i=i+1) begin
                 mem[i] <= 8'h00;
             end

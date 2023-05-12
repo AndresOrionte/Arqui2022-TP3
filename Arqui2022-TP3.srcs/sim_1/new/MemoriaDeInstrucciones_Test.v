@@ -28,10 +28,9 @@ module MemoriaDeInstrucciones_Test();
     reg [31:0] i_escritura;
     reg i_flag_escritura;
     
-    wire [31:0] o_instruccion;
-    wire o_error_flag;        
+    wire [31:0] o_instruccion;  
 
-    MemoriaDeInstrucciones Mem0(i_clk, i_reset, i_direccion, i_escritura, i_flag_escritura, o_instruccion, o_error_flag);
+    MemoriaDeInstrucciones Mem0(i_clk, i_reset, i_direccion, i_escritura, i_flag_escritura, o_instruccion);
     
     initial begin
 
