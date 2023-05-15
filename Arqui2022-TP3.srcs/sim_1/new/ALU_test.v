@@ -33,71 +33,71 @@ module ALU_test();
     
     //Prueba Suma
     
-//    i_ALUOp = op_add;
-//    i_A = 32'h00000001;
-//    i_B = 32'h00000001;
+    i_ALUOp = op_add;
+    i_A = 32'h00000001;
+    i_B = 32'h00000001;
     
-//    #10
-//    //i_ALUOp = op_add;
-//    i_A = 32'hFFFFFFFF;
-//    i_B = 32'h00000001;
+    #10
+    //i_ALUOp = op_add;
+    i_A = 32'hFFFFFFFF;
+    i_B = 32'h00000001;
     
-//    #10
-//    //i_ALUOp = op_add;
-//    i_A = 32'h00000000;
-//    i_B = 32'h00000000;
+    #10
+    //i_ALUOp = op_add;
+    i_A = 32'h00000000;
+    i_B = 32'h00000000;
     
-//    #10
-//    i_ALUOp = op_add;
-//    i_A = 32'hFFFFFFFF;
-//    i_B = 32'hFFFFFFFF;
+    #10
+    i_ALUOp = op_add;
+    i_A = 32'hFFFFFFFF;
+    i_B = 32'hFFFFFFFF;
     
-//    //Prueba resta
-//    #10
-//    i_ALUOp = op_sub;
-//    i_A = 32'h00000010;
-//    i_B = 32'h00000001;
+    //Prueba resta
+    #10
+    i_ALUOp = op_sub;
+    i_A = 32'h00000010;
+    i_B = 32'h00000001;
     
-//    #10
-//    i_ALUOp = op_sub;
-//    i_A = 32'h00000001;
-//    i_B = 32'h00000001;
+    #10
+    i_ALUOp = op_sub;
+    i_A = 32'h00000001;
+    i_B = 32'h00000001;
     
-//    #10
-//    i_ALUOp = op_sub;
-//    i_A = 32'h00000010;
-//    i_B = 32'h00000100;
+    #10
+    i_ALUOp = op_sub;
+    i_A = 32'h00000010;
+    i_B = 32'h00000100;
     
-//    #10
-//    i_ALUOp = op_sub;
-//    i_A = 32'h00000000;
-//    i_B = 32'h00000000;
+    #10
+    i_ALUOp = op_sub;
+    i_A = 32'h00000000;
+    i_B = 32'h00000000;
     
-//    //Prueba and
-//    #10
-//    i_ALUOp = op_and;
-//    i_A = 32'h00000010;
-//    i_B = 32'h00000001;
+    //Prueba and
+    #10
+    i_ALUOp = op_and;
+    i_A = 32'h00000010;
+    i_B = 32'h00000001;
     
-//    #10
-//    i_ALUOp = op_and;
-//    i_A = 32'h000000F0;
-//    i_B = 32'h000000FF;
+    #10
+    i_ALUOp = op_and;
+    i_A = 32'h000000F0;
+    i_B = 32'h000000FF;
     
-//    //Prueba or
-//    #10
-//    i_ALUOp = op_or;
-//    i_A = 32'h00000FF0;
-//    i_B = 32'h0000FF0F;
+    //Prueba or
+    #10
+    i_ALUOp = op_or;
+    i_A = 32'h00000FF0;
+    i_B = 32'h0000FF0F;
     
-//    //Prueba xor
-//    #10
-//    i_ALUOp = op_xor;
-//    i_A = 32'h00000FF0;
-//    i_B = 32'h0000FF0F;
+    //Prueba xor
+    #10
+    i_ALUOp = op_xor;
+    i_A = 32'h00000FF0;
+    i_B = 32'h0000FF0F;
     
     //Prueba sra
-//    #10
+    #10
     i_ALUOp = op_sra;
     i_A = 32'h00000002;
     i_B = 32'hF0000000;
@@ -134,6 +134,15 @@ module ALU_test();
     i_ALUOp = op_nor;
     i_A = 32'h00000110;
     i_B = 32'h00000101;
+    
+    //Prueba sll16
+    #10
+    i_ALUOp = op_sll16;
+    i_B = 32'h0000F000;
+    
+    #10
+    i_ALUOp = op_sll16;
+    i_B = 32'h000000FF;
     
     //Prueba operacion invalida
     #10

@@ -47,7 +47,7 @@ module ALU
             result = ~(i_A | i_B);
             end
         op_sll16: begin
-           result = i_A << 16;      //CHEQUEAR
+           result = i_B << 16;      //CHEQUEAR
             end
         op_sra: begin
             result =  $signed(i_B) >>> i_A;
