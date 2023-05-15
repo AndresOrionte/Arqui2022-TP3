@@ -79,10 +79,35 @@ module Etapa_IF_Test();
         
         #5
         i_take_branch = 1;
-        i_branch_address = 32'h00000888;
+        i_branch_address = 32'h00000000;
         #1
         i_take_branch = 0;
         
+        //Probamos a escribir algunas instrucciones en la memoria de instrucciones. Dado que aun no esta implementado el mux que permite 
+        // tomar control sobre las direcciones para escritura, utilizaré el propio pc para hacerlo.
+        #5
+        i_block_latch = 1;
+        i_flag_escritura_mem = 1;
+        i_dato_escritura_mem = 32'h11111111;
+        
+        #1
+        i_dato_escritura_mem = 32'h22222222;
+        
+        #1
+        i_dato_escritura_mem = 32'h33333333;
+        
+        #1
+        i_dato_escritura_mem = 32'h44444444;
+        
+        //Ahora vemos si se leen correctamente
+        #1
+        i_flag_escritura_mem = 0;
+        i_block_latch = 0;
+        i_take_jump = 1;
+        i_jump_address = 32'h00000010;
+        
+        #1
+        i_take_jump = 0;
         
         
         
