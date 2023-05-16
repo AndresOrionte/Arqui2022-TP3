@@ -49,13 +49,13 @@ module ALU
            result = i_B << 16;
             end
         op_sra: begin
-            result =  $signed(i_B) >>> i_A;
+            result =  $signed(i_A) >>> i_B;
             end
         op_srl: begin
-            result = i_B >> i_A;
+            result = i_A >> i_B;
             end
         op_sll: begin
-            result = i_B << i_A;
+            result = i_A << i_B;
             end
         default: begin
             result = {32{1'b0}};

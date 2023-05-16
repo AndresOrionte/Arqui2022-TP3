@@ -98,35 +98,35 @@ module ALU_test();
     //Prueba sra
     #10
     i_ALUOp = op_sra;
-    i_A = 32'h00000002;
-    i_B = 32'hF0000000;
+    i_A = 32'hF0000000;
+    i_B = 32'h00000002;
     
     #10
     i_ALUOp = op_sra;
-    i_A = 32'h00000002;
-    i_B = 32'h000000FF;
+    i_A = 32'h000000FF;
+    i_B = 32'h00000002;
     
     //Prueba srl
     #10
     i_ALUOp = op_srl;
-    i_A = 32'h00000002;
-    i_B = 32'hF0000000;
+    i_A = 32'hF0000000;
+    i_B = 32'h00000002;
     
     #10
     i_ALUOp = op_srl;
-    i_A = 32'h00000002;
-    i_B = 32'h000000FF;
+    i_A = 32'h000000FF;
+    i_B = 32'h00000002;
     
     //Prueba sll
     #10
     i_ALUOp = op_sll;
-    i_A = 32'h00000002;
-    i_B = 32'hF0000000;
+    i_A = 32'hF0000000;
+    i_B = 32'h00000002;
     
     #10
     i_ALUOp = op_sll;
-    i_A = 32'h00000002;
-    i_B = 32'h000000FF;
+    i_A = 32'h000000FF;
+    i_B = 32'h00000002;
     
     //Prueba nor
     #10
