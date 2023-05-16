@@ -18,7 +18,6 @@ module ALU
     localparam op_sra = 6'b001000;
     localparam op_srl = 6'b010000;
     localparam op_sll = 6'b100000;
-    localparam op_nop = 6'b000000;
     
     reg [32:0]result;
     
@@ -47,7 +46,7 @@ module ALU
             result = ~(i_A | i_B);
             end
         op_sll16: begin
-           result = i_B << 16;      //CHEQUEAR
+           result = i_B << 16;
             end
         op_sra: begin
             result =  $signed(i_B) >>> i_A;
@@ -57,9 +56,6 @@ module ALU
             end
         op_sll: begin
             result = i_B << i_A;
-            end
-        op_nop: begin
-            result = {32{1'b0}};
             end
         default: begin
             result = {32{1'b0}};

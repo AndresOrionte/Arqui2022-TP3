@@ -10,7 +10,6 @@ module ALU_test();
     localparam op_sra = 6'b001000;
     localparam op_srl = 6'b010000;
     localparam op_sll = 6'b100000;
-    localparam op_nop = 6'b000000;
     
     reg [31:0]i_A;
     reg [31:0]i_B;
