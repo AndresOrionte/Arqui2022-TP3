@@ -21,23 +21,24 @@
 
 
 module Etapa_IF(
-
+    //Inputs comunes
     input wire i_clk,
     input wire i_reset,
+    //PC
     input wire i_block_pc,
+    //MemoriaDeInstrucciones
     input wire [31:0]i_dato_escritura_mem,
     input wire i_flag_escritura_mem,
+    //Latch_IF
     input wire i_block_latch,
-    
+    //Señales de control de saltos e ingreso de direcciones
     input wire i_take_jump,
     input wire [31:0] i_jump_address,
-    
     input wire i_take_jump_r,
     input wire [31:0] i_jump_r_address,
-    
     input wire i_take_branch,
     input wire [31:0] i_branch_address,
-    
+    //Outputs comunes
     output wire [31:0] o_pc_p4,
     output wire [31:0] o_instruccion
 

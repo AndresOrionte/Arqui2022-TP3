@@ -39,7 +39,7 @@ module UnidadDeControl_Signals(
     output reg o_take_jump,
     output reg o_take_jump_r,
     output reg o_take_branch,
-    output reg o_branch_eq
+    output reg o_branch_neq
     );
     
     
@@ -59,7 +59,7 @@ module UnidadDeControl_Signals(
             o_take_jump <= 1'b0;
             o_take_jump_r <= 1'b0;
             o_take_branch <= 1'b0;
-            o_branch_eq <= 1'b0;
+            o_branch_neq <= 1'b0;
             
         end else begin
            
@@ -75,7 +75,7 @@ module UnidadDeControl_Signals(
                 o_take_jump <= 1'b0;
                 o_take_jump_r <= 1'b0;
                 o_take_branch <= 1'b0;
-                o_branch_eq <= 1'b0;
+                o_branch_neq <= 1'b0;
                 
                 o_reg_dst <= !i_op_code[4];
                 o_alu_src <= i_op_code[4];
@@ -103,7 +103,7 @@ module UnidadDeControl_Signals(
                     o_take_jump <= 1'b0;
                     o_take_jump_r <= 1'b0;
                     o_take_branch <= 1'b0;
-                    o_branch_eq <= 1'b0;
+                    o_branch_neq <= 1'b0;
                     
                     if(!i_op_code[3]) begin                     // (10) 0 = Operaciones tipo I(L)
                     
@@ -155,7 +155,7 @@ module UnidadDeControl_Signals(
                     if(!i_op_code[2]) begin                     // (11X) 0 = Operaciones tipo Jump
                     
                         o_take_branch <= 1'b0;
-                        o_branch_eq <= 1'b0;
+                        o_branch_neq <= 1'b0;
                         
                         o_reg_write <= i_op_code[0];
                         o_gpr31 <= !i_op_code[1];
@@ -170,7 +170,7 @@ module UnidadDeControl_Signals(
                         o_take_jump_r <= 1'b0;
                         o_take_branch <= 1'b1;
                         
-                        o_branch_eq <= i_op_code[0];
+                        o_branch_neq <= i_op_code[0];
                     
                     end
                 
