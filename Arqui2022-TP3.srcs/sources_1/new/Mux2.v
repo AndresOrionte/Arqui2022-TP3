@@ -1,11 +1,13 @@
 `timescale 1ns / 1ps
 
-module Mux2(
+module Mux2 #(
+    parameter BUS_WIDTH = 32
+    )(
     input wire i_sel,
-    input wire [31:0] i_dato_0,
-    input wire [31:0] i_dato_1,
+    input wire [BUS_WIDTH-1:0] i_dato_0,
+    input wire [BUS_WIDTH-1:0] i_dato_1,
         
-    output reg [31:0] o_dato  
+    output reg [BUS_WIDTH-1:0] o_dato  
     );
 
     // No lleva clock

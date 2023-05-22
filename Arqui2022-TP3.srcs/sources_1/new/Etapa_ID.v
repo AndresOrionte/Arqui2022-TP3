@@ -32,6 +32,8 @@ module Etapa_ID(
     input wire i_reg_write,
     //UnidadeDeControl_Signals y UnidadDeControl_ALUOP
     input wire i_reset_signals,
+    //Latch_ID
+    input wire i_block_latch,
     
     //Outputs hacia atras, para jumps
     output wire o_take_jump,
@@ -55,7 +57,7 @@ module Etapa_ID(
     output wire o_reg_write,
     output wire o_take_jump_r,
     output wire o_take_branch,
-    output wire o_branchNEQ,
+    output wire o_branch_neq,
     // Deteccion de riesgo
     output wire o_auto_desbloqueo
     
@@ -93,11 +95,11 @@ module Etapa_ID(
     
     Shift2 #26 Shift_0(i_instruccion[25:0], jump_address_sh);
     
-    ExtensorDeSigno #26 ExtS_0(jump_address_sh, jump_address_ext);
+    ExtensorDeSigno #28 ExtS_0(jump_address_sh, jump_address_ext);
     
     Sumador Sumador_0(jump_address_ext, i_pc_p4, o_jump_address);
     
-    LatchIDEX Latch_2(i_clk, i_reset, i_pc_p4, dato_1, dato_2, operando_b, i_instruccion, aluop, less_wb, mem_width, gpr31, pc_4_wb, reg_dst, mem_to_reg, mem_write, reg_write, take_jump_r, take_branch, branch_eq, auto_desbloqueo, reset_idex, o_pc_p4, o_dato_1, o_dato_2, o_operando_b, o_instruccion, o_aluop, o_less_wb, o_mem_width, o_gpr31, o_pc_4_wb, o_reg_dst, o_mem_to_reg, o_mem_write, o_reg_write, o_take_jump_r, o_take_branch, o_auto_desbloqueo);
+    LatchIDEX Latch_2(i_clk, i_block_latch, i_pc_p4, dato_1, dato_2, operando_b, i_instruccion, aluop, less_wb, mem_width, gpr31, pc_4_wb, reg_dst, mem_to_reg, mem_write, reg_write, take_jump_r, take_branch, branch_neq, auto_desbloqueo, reset_idex, o_pc_p4, o_dato_1, o_dato_2, o_operando_b, o_instruccion, o_aluop, o_less_wb, o_mem_width, o_gpr31, o_pc_4_wb, o_reg_dst, o_mem_to_reg, o_mem_write, o_reg_write, o_take_jump_r, o_take_branch, o_branch_neq, o_auto_desbloqueo);
     
     
     
