@@ -29,10 +29,9 @@ module MemoriaDeDatos_Test();
     reg i_mem_write;
     reg [3:0] i_mem_width;
     
-    wire [31:0] o_dato;
-    wire o_error_flag;        
+    wire [31:0] o_dato;       
 
-    MemoriaDeDatos Mem1(i_clk, i_reset, i_direccion, i_escritura, i_mem_write, i_mem_width, o_dato, o_error_flag);
+    MemoriaDeDatos Mem1(i_clk, i_reset, i_direccion, i_escritura, i_mem_write, i_mem_width, o_dato);
     
     
     initial begin

@@ -28,8 +28,7 @@ module MemoriaDeDatos(
     input wire i_mem_write,
     input wire [3:0] i_mem_width,
         
-    output reg [31:0] o_dato,
-    output reg o_error_flag                 // No implementado
+    output reg [31:0] o_dato
 );
 
     reg [7:0] mem [255:0];
@@ -38,7 +37,6 @@ module MemoriaDeDatos(
     
         if(i_reset) begin                   // En caso de reset pongo memoria y salidas a cero
             o_dato <= 32'h00000000;
-            o_error_flag <= 1'b0;
             for(integer i=0; i<256; i=i+1) begin
                 mem[i] <= 8'h00;
             end
