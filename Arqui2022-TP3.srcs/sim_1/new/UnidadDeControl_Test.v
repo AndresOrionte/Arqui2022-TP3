@@ -163,6 +163,11 @@ module UnidadDeControl_Test();
         #1
         i_op_code = 6'b110101;  //BEN
         
+        #10
+        
+        #1
+        i_op_code = 6'b000000;  //NOP
+        
         
     end
 

@@ -66,28 +66,47 @@ module UnidadDeControl_Signals(
             
             if(!i_op_code[5]) begin                     // 0 = Operaciones tipo R e I(Inm)
             
-                o_reg_write <= 1'b1;
-                o_mem_write <= 1'b0;
-                o_mem_to_reg <= 1'b0;
-                o_pc_4_wb <= 1'b0;
-                o_gpr31 <= 1'b0;
-                //o_mem_width <= 4'bXXXX;
-                o_take_jump <= 1'b0;
-                o_take_jump_r <= 1'b0;
-                o_take_branch <= 1'b0;
-                o_branch_neq <= 1'b0;
+                if(i_op_code[4:0] == 5'b00000) begin    // NOP
                 
-                o_reg_dst <= !i_op_code[4];
-                o_alu_src <= i_op_code[4];
-                
-                if(i_op_code[3:0] == 4'b1000) begin         // (0X) 1000 = Deteccion operacion SLT o SLTI
-                
-                    o_less_wb <= 1'b1;
+                    o_reg_dst <= 1'b0;
+                    o_reg_write <= 1'b0;
+                    o_alu_src <= 1'b0;
+                    o_mem_write <= 1'b0;
+                    o_mem_to_reg <= 1'b0;
+                    o_pc_4_wb <= 1'b0;
+                    o_gpr31 <= 1'b0;
+                    //o_mem_width <= 4'bXXXX;
+                    o_less_wb <= 1'b0;
+                    o_take_jump <= 1'b0;
+                    o_take_jump_r <= 1'b0;
+                    o_take_branch <= 1'b0;
+                    o_branch_neq <= 1'b0;
                 
                 end else begin
                 
-                    o_less_wb <= 1'b0;
-                
+                    o_reg_write <= 1'b1;
+                    o_mem_write <= 1'b0;
+                    o_mem_to_reg <= 1'b0;
+                    o_pc_4_wb <= 1'b0;
+                    o_gpr31 <= 1'b0;
+                    //o_mem_width <= 4'bXXXX;
+                    o_take_jump <= 1'b0;
+                    o_take_jump_r <= 1'b0;
+                    o_take_branch <= 1'b0;
+                    o_branch_neq <= 1'b0;
+                    
+                    o_reg_dst <= !i_op_code[4];
+                    o_alu_src <= i_op_code[4];
+                    
+                    if(i_op_code[3:0] == 4'b1000) begin         // (0X) 1000 = Deteccion operacion SLT o SLTI
+                    
+                        o_less_wb <= 1'b1;
+                    
+                    end else begin
+                    
+                        o_less_wb <= 1'b0;
+                    
+                    end
                 end
                 
             end else begin                              // 1 = Operaciones tipo I(L-S), Jump y Branch
