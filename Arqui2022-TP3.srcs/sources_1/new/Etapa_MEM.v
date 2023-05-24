@@ -43,8 +43,8 @@ module Etapa_MEM(
     input wire i_reg_write,
     
     //Outputs hacia adelante, etapa WB
-    output wire o_dato_wb,
-    output wire o_reg_esc,
+    output wire [31:0] o_dato_wb,
+    output wire [4:0] o_reg_esc,
     output wire o_reg_write
 
     );
