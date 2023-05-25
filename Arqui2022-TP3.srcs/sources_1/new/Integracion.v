@@ -26,6 +26,8 @@ module Integracion(
     input wire i_reset,
     
     input wire i_block_pc,
+    input wire i_ctrl_dir_mem_instrucciones,
+    input wire [31:0] i_dir_mem_instrucciones,
     input wire [31:0]i_dato_escritura_mem_instrucciones,
     input wire i_flag_escritura_mem_instrucciones,
     input wire i_block_latch_1,
@@ -58,8 +60,9 @@ module Integracion(
     wire [3:0] mem_width_2;
     
     
-    Etapa_IF Etapa_0(i_clk, i_reset, i_block_pc, i_dato_escritura_mem_instrucciones, i_flag_escritura_mem_instrucciones, i_block_latch_1, take_jump_0, 
-                        jump_addresss, take_jump_r_0, jump_r_address, take_branch_0, branch_address, pc_p4_0, instruccion_0);
+    Etapa_IF Etapa_0(i_clk, i_reset, i_block_pc, i_ctrl_dir_mem_instrucciones, i_dir_mem_instrucciones,i_dato_escritura_mem_instrucciones, 
+                        i_flag_escritura_mem_instrucciones, i_block_latch_1, take_jump_0, jump_addresss, take_jump_r_0, jump_r_address, 
+                        take_branch_0, branch_address, pc_p4_0, instruccion_0);
     
     Etapa_ID Etapa_1(i_clk, i_reset, instruccion_0, pc_p4_0, reg_esc_registros, dato_esc_registros, reg_write_id, i_reset_signals, i_block_latch_2, 
                         take_jump_0, jump_address, pc_p4_1, dato_1_1, dato_2_1, operando_b_1, instruccion_1, aluop, less_wb_1, mem_width_1,

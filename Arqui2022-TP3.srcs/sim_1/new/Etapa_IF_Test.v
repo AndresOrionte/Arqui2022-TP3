@@ -25,6 +25,8 @@ module Etapa_IF_Test();
     reg i_clk;
     reg i_reset;
     reg i_block_pc;
+    reg i_ctrl_dir_mem;
+    reg [31:0] i_dir_mem;
     reg [31:0]i_dato_escritura_mem;
     reg i_flag_escritura_mem;
     reg i_block_latch;
@@ -41,12 +43,14 @@ module Etapa_IF_Test();
     wire [31:0] o_pc_p4;
     wire [31:0] o_instruccion;
     
-    Etapa_IF etapa_0(i_clk, i_reset, i_block_pc, i_dato_escritura_mem, i_flag_escritura_mem, i_block_latch, i_take_jump, i_jump_address, i_take_jump_r, i_jump_r_address, i_take_branch, i_branch_address, o_pc_p4, o_instruccion);
+    Etapa_IF etapa_0(i_clk, i_reset, i_block_pc, i_ctrl_dir_mem, i_dir_mem, i_dato_escritura_mem, i_flag_escritura_mem, i_block_latch, i_take_jump, i_jump_address, i_take_jump_r, i_jump_r_address, i_take_branch, i_branch_address, o_pc_p4, o_instruccion);
 
     initial begin
 
         i_clk = 1;
         i_block_pc = 0;
+        i_ctrl_dir_mem = 0;
+        i_dir_mem = 0;
         i_dato_escritura_mem = 0;
         i_flag_escritura_mem = 0;
         i_block_latch = 0;
@@ -87,24 +91,30 @@ module Etapa_IF_Test();
         // tomar control sobre las direcciones para escritura, utilizaré el propio pc para hacerlo.
         #5
         i_block_latch = 1;
+        i_ctrl_dir_mem = 1;
+        i_dir_mem = 32'h0000000C;
         i_flag_escritura_mem = 1;
         i_dato_escritura_mem = 32'h11111111;
         
         #1
+        i_dir_mem = 32'h00000014;
         i_dato_escritura_mem = 32'h22222222;
         
         #1
+        i_dir_mem = 32'h0000001C;
         i_dato_escritura_mem = 32'h33333333;
         
         #1
+        i_dir_mem = 32'h00000020;
         i_dato_escritura_mem = 32'h44444444;
         
         //Ahora vemos si se leen correctamente
         #1
+        i_ctrl_dir_mem = 0;
         i_flag_escritura_mem = 0;
         i_block_latch = 0;
         i_take_jump = 1;
-        i_jump_address = 32'h00000010;
+        i_jump_address = 32'h0000004;
         
         #1
         i_take_jump = 0;

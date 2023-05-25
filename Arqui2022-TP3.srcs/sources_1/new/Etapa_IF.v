@@ -27,6 +27,8 @@ module Etapa_IF(
     //PC
     input wire i_block_pc,
     //MemoriaDeInstrucciones
+    input wire i_ctrl_dir_mem,
+    input wire [31:0] i_dir_mem,
     input wire [31:0]i_dato_escritura_mem,
     input wire i_flag_escritura_mem,
     //Latch_IF
@@ -47,6 +49,8 @@ module Etapa_IF(
     wire [31:0] pc_next;
     wire [31:0] pc;
     
+    wire [31:0] mem_dir;
+    
     wire [31:0] instruccion;
     wire [31:0] pc_p4;
     
@@ -57,7 +61,9 @@ module Etapa_IF(
     
     PC PC0(i_clk, i_reset, pc_next, i_block_pc, pc);
     
-    MemoriaDeInstrucciones Mem_0(i_clk, i_reset, pc, i_dato_escritura_mem, i_flag_escritura_mem, instruccion);
+    Mux2 Mux_Mem_Dir(i_ctrl_dir_mem, pc, i_dir_mem, mem_dir);
+    
+    MemoriaDeInstrucciones Mem_0(i_clk, i_reset, mem_dir, i_dato_escritura_mem, i_flag_escritura_mem, instruccion);
     
     LatchIFID Latch_1(i_clk, i_block_latch, pc_p4, instruccion, o_pc_p4, o_instruccion);
     
