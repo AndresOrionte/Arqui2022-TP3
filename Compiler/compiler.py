@@ -1,7 +1,5 @@
 # La sintaxis de una operacion seria la siguiente: 
 # Nombre de la operación + reg destino + reg1 + reg2 / inmediato.
-#
-# Cuando sea un inmediato, se indica con un # precedente
 import re
 
 class AssemblerTranslator:
@@ -9,13 +7,12 @@ class AssemblerTranslator:
     def tokenizer(self, program_asm):
         lines = program_asm.readlines()
         tokens = []
-        # regex_format = (r'(?m)(\w+)\s+(-{0,1}\w+)\s*,\s*(-{0,1}\w+)\s*,\s*(-{0,1}\w+)\s*$'              # 
-        #                     + r'|(?m)(\w+)\s+(-{0,1}\w+)\s*,\s*(-{0,1}\w+)\s*\(\s*(-{0,1}\w+)\)\s*$'
-        #                     + r'|(?m)(\w+)\s+(-{0,1}\w+)\s*,\s*(-{0,1}\w+)\s*$'
-        #                     + r'|(?m)(\w+)\s+(-{0,1}\w+)\s*$') 
-        regex_format = (r'(\w+)\s+(-{0,1}\w+)\s*,\s*(-{0,1}\w+)\s*$')
+        regex_format = (r'(?m)(\w+)\s+(-{0,1}\w+)\s*,\s*(-{0,1}\w+)\s*,\s*(-{0,1}\w+)\s*$'              # 
+                            + r'|(?m)(\w+)\s+(-{0,1}\w+)\s*,\s*(-{0,1}\w+)\s*\(\s*(-{0,1}\w+)\)\s*$'
+                            + r'|(?m)(\w+)\s+(-{0,1}\w+)\s*,\s*(-{0,1}\w+)\s*$'
+                            + r'|(?m)(\w+)\s+(-{0,1}\w+)\s*$') 
 
-        # Parseo las lineas, remuevo trailing y 
+        # Parseo las lineas, remuevo trailing y spliteo en tokens
         for raw_line in lines:
             line = raw_line.replace('\n', '')
             tokens.append(list(filter(None, re.split(string=line, pattern=regex_format))))
@@ -75,22 +72,34 @@ class AssemblerTranslator:
         i_name = token[0]
         if i_name == "SLL":
             inst_bin = self.set_opcode(inst_bin, "011100")
-
+            inst_bin = self.set_dest(inst_bin, token[1])
+            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "SRL":
             inst_bin = self.set_opcode(inst_bin, "011010")
-
+            inst_bin = self.set_dest(inst_bin, token[1])
+            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "SRA":
             inst_bin = self.set_opcode(inst_bin, "011001")
-
+            inst_bin = self.set_dest(inst_bin, token[1])
+            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "SLLV":
             inst_bin = self.set_opcode(inst_bin, "001100")
-
+            inst_bin = self.set_dest(inst_bin, token[1])
+            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_reg2(inst_bin, token[3])
         elif i_name == "SRLV":
             inst_bin = self.set_opcode(inst_bin, "001010")            
-
+            inst_bin = self.set_dest(inst_bin, token[1])
+            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_reg2(inst_bin, token[3])
         elif i_name == "SRAV":
             inst_bin = self.set_opcode(inst_bin, "001001")
-
+            inst_bin = self.set_dest(inst_bin, token[1])
+            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_reg2(inst_bin, token[3])
         elif i_name == "ADDU":
             inst_bin = self.set_opcode(inst_bin, "000001")
             inst_bin = self.set_dest(inst_bin, token[1])
@@ -123,28 +132,44 @@ class AssemblerTranslator:
             inst_bin = self.set_reg2(inst_bin, token[3])
         elif i_name == "SLT":
             inst_bin = self.set_opcode(inst_bin, "001000")
-
+            inst_bin = self.set_dest(inst_bin, token[1])
+            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_reg2(inst_bin, token[3])
         elif i_name == "LB":
             inst_bin = self.set_opcode(inst_bin, "100000")
-
+            inst_bin = self.set_dest(inst_bin, token[1])
+            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "LH":
             inst_bin = self.set_opcode(inst_bin, "100010")
-
+            inst_bin = self.set_dest(inst_bin, token[1])
+            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "LW":
             inst_bin = self.set_opcode(inst_bin, "100100")
-
+            inst_bin = self.set_dest(inst_bin, token[1])
+            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "LHU":
             inst_bin = self.set_opcode(inst_bin, "100011")
-
+            inst_bin = self.set_dest(inst_bin, token[1])
+            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "LBU":
             inst_bin = self.set_opcode(inst_bin, "100001")
-
+            inst_bin = self.set_dest(inst_bin, token[1])
+            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "SB":
             inst_bin = self.set_opcode(inst_bin, "101001")
-
+            inst_bin = self.set_reg1(inst_bin, token[1])
+            inst_bin = self.set_reg2(inst_bin, token[2])
+            inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "SH":
             inst_bin = self.set_opcode(inst_bin, "101010")
-
+            inst_bin = self.set_reg1(inst_bin, token[1])
+            inst_bin = self.set_reg2(inst_bin, token[2])
+            inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "SW":
             inst_bin = self.set_opcode(inst_bin, "101100")
             inst_bin = self.set_reg1(inst_bin, token[1])
@@ -153,46 +178,62 @@ class AssemblerTranslator:
 
         elif i_name == "ADDI":
             inst_bin = self.set_opcode(inst_bin, "010001")
-
+            inst_bin = self.set_dest(inst_bin, token[1])
+            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "SUBI":
             inst_bin = self.set_opcode(inst_bin, "010010")
-
+            inst_bin = self.set_dest(inst_bin, token[1])
+            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "ANDI":
             inst_bin = self.set_opcode(inst_bin, "010011")
-
+            inst_bin = self.set_dest(inst_bin, token[1])
+            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "ORI":
             inst_bin = self.set_opcode(inst_bin, "010100")
-
+            inst_bin = self.set_dest(inst_bin, token[1])
+            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "XORI":
             inst_bin = self.set_opcode(inst_bin, "010101")
-
+            inst_bin = self.set_dest(inst_bin, token[1])
+            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "LUI":
             inst_bin = self.set_opcode(inst_bin, "010111")
             inst_bin = self.set_dest(inst_bin, token[1])
             inst_bin = self.set_inmed(inst_bin, token[2])
             
-
         elif i_name == "SLTI":
             inst_bin = self.set_opcode(inst_bin, "011000")
-
+            inst_bin = self.set_dest(inst_bin, token[1])
+            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "BEQ":
             inst_bin = self.set_opcode(inst_bin, "110100")
-
+            inst_bin = self.set_dest_branch(inst_bin, token[1])
+            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_reg2(inst_bin, token[3])
         elif i_name == "BNE":
             inst_bin = self.set_opcode(inst_bin, "110101")
-
+            inst_bin = self.set_dest_branch(inst_bin, token[1])
+            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_reg2(inst_bin, token[3])
         elif i_name == "J":
             inst_bin = self.set_opcode(inst_bin, "110000")
-
+            inst_bin = self.set_dest_jump(inst_bin, token[1])
         elif i_name == "JAL":
             inst_bin = self.set_opcode(inst_bin, "110001")
-
+            inst_bin = self.set_dest_jump(inst_bin, token[1])
         elif i_name == "JR":
             inst_bin = self.set_opcode(inst_bin, "110010")
-
+            inst_bin = self.set_dest(inst_bin, token[1])
         elif i_name == "JALR":
             inst_bin = self.set_opcode(inst_bin, "110011")
-
+            inst_bin = self.set_dest(inst_bin, token[1])
+            inst_bin = self.set_reg1(inst_bin, token[2])
         elif i_name == "NOP":
             inst_bin = "00000000000000000000000000000000"
             
@@ -215,8 +256,12 @@ finally:
     asm_file.close()
 
 # En binario
-for inst in asm_tokens:
-    binary_code = (asm.instruction_generator(inst))
-    print(binary_code)
+try:
+    bin_file = open("./Compiler/binary_code.txt", "w")
+    for inst in asm_tokens:
+        binary_code = (asm.instruction_generator(inst))
+        bin_file.write(binary_code+'\n')
+finally:
+    bin_file.close()
     
 # TODO: En hexadecimal
