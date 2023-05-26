@@ -39,7 +39,7 @@ module LatchMEMWB(
             
             o_dato_wb <= i_dato_wb;
             o_reg_esc <= i_reg_esc;
-            o_reg_write <= i_reg_esc;      
+            o_reg_write <= i_reg_write;      
             
         end
     end    

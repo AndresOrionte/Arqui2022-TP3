@@ -44,18 +44,24 @@ module Integracion_Test();
         
         #5
         i_reset = 0;
+        i_block_pc = 1;
         i_block_latch_1 = 1;
         
         #1
         i_flag_esc_mem = 1;
-        i_dato_esc_mem = 32'b01011100001000000000000011001000;
+        i_ctrl_dir_mem_instrucciones = 1;
+        i_dir_mem_instrucciones = 32'h00000010;
+        i_dato_esc_mem = 32'b01011100001000010000000011001000;
+        
+        #1
+        i_dir_mem_instrucciones = 32'h00000020;
+        i_dato_esc_mem = 32'b01000100001000100000000010000000;
         
         #1
         i_flag_esc_mem = 0;
-        
-        #4
-        i_flag_esc_mem = 1;
-        i_dato_esc_mem = 32'b01011100001000000000000011001000;
+        i_ctrl_dir_mem_instrucciones = 0;
+        i_block_pc = 0;
+        i_block_latch_1 = 0;
 
     end
     

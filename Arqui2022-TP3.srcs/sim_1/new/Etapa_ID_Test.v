@@ -66,8 +66,8 @@ module Etapa_ID_Test();
                         
     initial begin
         
-        i_clk = 0;
-        i_reset = 0;
+        i_clk = 1;
+        i_reset = 1;
         i_instruccion = 0;
         i_pc_p4 = 0;
         i_reg_esc = 0;
@@ -75,7 +75,19 @@ module Etapa_ID_Test();
         i_reg_write = 0;
         i_reset_signals = 0;
         i_block_latch = 0;
-
+        
+        #5
+        i_reset = 0;
+        
+        #1
+        i_instruccion = 32'b01011100001000010000000011001000;
+        
+        #1
+        i_instruccion = 32'b01000100001000100000000010000000;
+        
+        #1
+        i_instruccion = 0;
+        
     end
     
     // Clk de periodo 1

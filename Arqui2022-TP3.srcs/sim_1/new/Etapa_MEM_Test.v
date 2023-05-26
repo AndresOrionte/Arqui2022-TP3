@@ -47,27 +47,40 @@ module Etapa_MEM_Test();
 
     initial begin
         
-        i_clk = 0;
-        i_reset = 0;
-        i_resultado = 0;
-        i_carry = 0;
-        i_less_wb = 0;
-        i_dato_escritura = 0;
-        i_mem_write = 0;
-        i_mem_width = 0;
-        i_mem_to_reg = 0;
-        i_pc_4_wb = 0;
-        i_pc_p4 = 0;
-        i_block_latch = 0;
-        i_reg_esc = 0;
-        i_reg_write = 0;
+        i_clk <= 1;
+        i_reset <= 1;
+        i_resultado <= 0;
+        i_carry <= 0;
+        i_less_wb <= 0;
+        i_dato_escritura <= 0;
+        i_mem_write <= 0;
+        i_mem_width <= 0;
+        i_mem_to_reg <= 0;
+        i_pc_4_wb <= 0;
+        i_pc_p4 <= 0;
+        i_block_latch <= 0;
+        i_reg_esc <= 0;
+        i_reg_write <= 0;
+        
+        #5
+        i_reset <= 0;
+        
+        #1
+        i_reg_esc <= 1;
+        i_resultado <= 200;
+        i_reg_write <= 1;
+        
+        #1
+        i_reg_esc <= 0;
+        i_resultado <= 0;
+        i_reg_write <= 0;
 
     end
     
     // Clk de periodo 1
     always begin
         #0.5
-        i_clk = ~i_clk;
+        i_clk <= ~i_clk;
     end
     
 endmodule
