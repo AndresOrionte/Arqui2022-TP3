@@ -69,6 +69,6 @@ module Etapa_MEM(
     
     Mux2 Mux_2(i_pc_4_wb, dato_sel, i_pc_p4, dato_wb);
     
-    LatchMEMWB Latch_3(i_clk, i_block_latch, dato_wb, i_reg_esc, i_reg_write, o_dato_wb, o_reg_esc, o_reg_write);
+    LatchMEMWB Latch_3(i_clk, i_reset, i_block_latch, dato_wb, i_reg_esc, i_reg_write, o_dato_wb, o_reg_esc, o_reg_write);
     
 endmodule

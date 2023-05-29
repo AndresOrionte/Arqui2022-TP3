@@ -2,6 +2,7 @@
 
 module LatchIDEX(
     input wire i_clk,
+    input wire i_reset,
     input wire i_bloqueo,
     input wire [31:0] i_pc_p4,
     input wire [31:0] i_dato_1,
@@ -49,26 +50,50 @@ module LatchIDEX(
     
     always @(posedge i_clk) begin
     
-        if(! i_bloqueo) begin         // En caso de que el bit de bloqueo no este activado, acciono el latch
-            o_pc_p4 <= i_pc_p4;
-            o_dato_1 <= i_dato_1;
-            o_dato_2 <= i_dato_2;
-            o_operando_b <= i_operando_b;
-            o_instruccion <= i_instruccion;
-            o_ALUOp <= i_ALUOp;
-            o_LessWB <= i_LessWB;
-            o_MemWidth <= i_MemWidth;
-            o_GPR31 <= i_GPR31;
-            o_PC4WB <= i_PC4WB;
-            o_RegDst <= i_RegDst;
-            o_MemtoReg <= i_MemtoReg;
-            o_MemWrite <= i_MemWrite;
-            o_RegWrite <= i_RegWrite;
-            o_TakeJumpR <= i_TakeJumpR;
-            o_TakeBranch <= i_TakeBranch;
-            o_BranchNEQ <= i_BranchNEQ;
-            o_AutoDesbloqueo <= i_AutoDesbloqueo;           
-            
+        if(i_reset) begin
+        
+            o_pc_p4 <= 32'h00000000; 
+            o_dato_1 <= 32'h00000000;
+            o_dato_2 <= 32'h00000000;
+            o_operando_b <= 32'h00000000;
+            o_instruccion <= 32'h00000000;
+            o_ALUOp <= 6'h00;
+            o_LessWB <= 1'b0;
+            o_MemWidth <= 4'h0;
+            o_GPR31 <= 1'b0;
+            o_PC4WB <= 1'b0;
+            o_RegDst <= 1'b0;
+            o_MemtoReg <= 1'b0;
+            o_MemWrite <= 1'b0;
+            o_RegWrite <= 1'b0;
+            o_TakeJumpR <= 1'b0;
+            o_TakeBranch <= 1'b0;
+            o_BranchNEQ <= 1'b0;
+            o_AutoDesbloqueo <= 1'b0;
+        
+        end else begin
+        
+            if(! i_bloqueo) begin         // En caso de que el bit de bloqueo no este activado, acciono el latch
+                o_pc_p4 <= i_pc_p4;
+                o_dato_1 <= i_dato_1;
+                o_dato_2 <= i_dato_2;
+                o_operando_b <= i_operando_b;
+                o_instruccion <= i_instruccion;
+                o_ALUOp <= i_ALUOp;
+                o_LessWB <= i_LessWB;
+                o_MemWidth <= i_MemWidth;
+                o_GPR31 <= i_GPR31;
+                o_PC4WB <= i_PC4WB;
+                o_RegDst <= i_RegDst;
+                o_MemtoReg <= i_MemtoReg;
+                o_MemWrite <= i_MemWrite;
+                o_RegWrite <= i_RegWrite;
+                o_TakeJumpR <= i_TakeJumpR;
+                o_TakeBranch <= i_TakeBranch;
+                o_BranchNEQ <= i_BranchNEQ;
+                o_AutoDesbloqueo <= i_AutoDesbloqueo;           
+            end
         end
-    end    
+    end   
+     
 endmodule

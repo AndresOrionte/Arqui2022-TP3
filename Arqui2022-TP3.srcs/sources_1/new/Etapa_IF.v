@@ -65,7 +65,7 @@ module Etapa_IF(
     
     MemoriaDeInstrucciones Mem_0(i_clk, i_reset, mem_dir, i_dato_escritura_mem, i_flag_escritura_mem, instruccion);
     
-    LatchIFID Latch_1(i_clk, i_block_latch, pc_p4, instruccion, o_pc_p4, o_instruccion);
+    LatchIFID Latch_1(i_clk, i_reset, i_block_latch, pc_p4, instruccion, o_pc_p4, o_instruccion);
     
     Sumador Sumador_0(literal_4, pc, pc_p4);
     

@@ -3,18 +3,20 @@
 module LatchIFID_test();
 
     reg i_clk;
+    reg i_reset;
     reg i_bloqueo;
     reg [31:0] i_pc_p4;
     reg [31:0] i_instruccion;
     wire [31:0] o_pc_p4;
     wire [31:0] o_instruccion;
     
-    LatchIFID latch1(i_clk, i_bloqueo, i_pc_p4, i_instruccion, o_pc_p4, o_instruccion);
+    LatchIFID latch1(i_clk, i_reset, i_bloqueo, i_pc_p4, i_instruccion, o_pc_p4, o_instruccion);
     
     initial begin
         
         // Comienzo con un bloqueo
         i_clk = 0;
+        i_reset = 0;
         i_bloqueo = 1;
         
         // Asigno valores a la entrada

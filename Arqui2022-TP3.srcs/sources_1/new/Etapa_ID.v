@@ -85,7 +85,8 @@ module Etapa_ID(
 
     UnidadDeRegistros Regs_0(i_clk, i_reset, i_instruccion[25:21], i_instruccion[20:16], i_reg_esc, i_dato_esc, i_reg_write, dato_1, dato_2);
     
-    UnidadDeControl_Signals UCS_0(i_clk, i_reset, i_instruccion[31:26], i_reset_signals, reg_dst, reg_write, alu_src, mem_write, mem_to_reg, pc_4_wb, gpr31, mem_width, less_wb, o_take_jump, take_jump_r, take_branch, branch_eq);
+    UnidadDeControl_Signals UCS_0(i_clk, i_reset, i_instruccion[31:26], i_reset_signals, reg_dst, reg_write, alu_src, mem_write, mem_to_reg, 
+                                    pc_4_wb, gpr31, mem_width, less_wb, o_take_jump, take_jump_r, take_branch, branch_eq);
     
     UnidadDeControl_ALUOP UCA_0(i_clk, i_reset, i_instruccion[31:26], i_reset_signals, aluop);
     
@@ -99,7 +100,10 @@ module Etapa_ID(
     
     Sumador Sumador_0(jump_address_ext, i_pc_p4, o_jump_address);
     
-    LatchIDEX Latch_2(i_clk, i_block_latch, i_pc_p4, dato_1, dato_2, operando_b, i_instruccion, aluop, less_wb, mem_width, gpr31, pc_4_wb, reg_dst, mem_to_reg, mem_write, reg_write, take_jump_r, take_branch, branch_neq, auto_desbloqueo, reset_idex, o_pc_p4, o_dato_1, o_dato_2, o_operando_b, o_instruccion, o_aluop, o_less_wb, o_mem_width, o_gpr31, o_pc_4_wb, o_reg_dst, o_mem_to_reg, o_mem_write, o_reg_write, o_take_jump_r, o_take_branch, o_branch_neq, o_auto_desbloqueo);
+    LatchIDEX Latch_2(i_clk, i_reset, i_block_latch, i_pc_p4, dato_1, dato_2, operando_b, i_instruccion, aluop, less_wb, mem_width, gpr31, pc_4_wb, 
+                        reg_dst, mem_to_reg, mem_write, reg_write, take_jump_r, take_branch, branch_neq, auto_desbloqueo, reset_idex, o_pc_p4, 
+                        o_dato_1, o_dato_2, o_operando_b, o_instruccion, o_aluop, o_less_wb, o_mem_width, o_gpr31, o_pc_4_wb, o_reg_dst, o_mem_to_reg, 
+                        o_mem_write, o_reg_write, o_take_jump_r, o_take_branch, o_branch_neq, o_auto_desbloqueo);
     
     
     

@@ -23,6 +23,7 @@
 module LatchEXMEM(
 
     input wire i_clk,
+    input wire i_reset,
     input wire i_bloqueo,
     input wire [31:0] i_pc_p4,
     input wire [31:0] i_resultado,
@@ -54,23 +55,39 @@ module LatchEXMEM(
     
     always @(posedge i_clk) begin
     
-        if(! i_bloqueo) begin         // En caso de que el bit de bloqueo no este activado, acciono el latch
+        if(i_reset) begin
         
-            o_pc_p4 <= i_pc_p4;
-            o_resultado <= i_resultado;
-            o_carry <= i_carry;
-            o_dato_2 <= i_dato_2;
-            o_reg_esc <= i_reg_esc;
+            o_pc_p4 <= 32'h00000000;
+            o_resultado <= 32'h00000000;
+            o_carry <= 1'b0;
+            o_dato_2 <= 32'h00000000;
+            o_reg_esc <= 5'h00;
+            o_reg_write <= 1'b0;
+            o_mem_write <= 1'b0;
+            o_mem_to_reg <= 1'b0;
+            o_pc_4_wb <= 1'b0;
+            o_mem_width <= 4'h0;
+            o_less_wb <= 1'b0;
+        
+        end else begin
+        
+            if(! i_bloqueo) begin         // En caso de que el bit de bloqueo no este activado, acciono el latch
             
-            o_reg_write <= i_reg_write;
-            o_mem_write <= i_mem_write;
-            o_mem_to_reg <= i_mem_to_reg;
-            o_pc_4_wb <= i_pc_4_wb;
-            o_mem_width <= i_mem_width;
-            o_less_wb <= i_less_wb;
-        
+                o_pc_p4 <= i_pc_p4;
+                o_resultado <= i_resultado;
+                o_carry <= i_carry;
+                o_dato_2 <= i_dato_2;
+                o_reg_esc <= i_reg_esc;
+                
+                o_reg_write <= i_reg_write;
+                o_mem_write <= i_mem_write;
+                o_mem_to_reg <= i_mem_to_reg;
+                o_pc_4_wb <= i_pc_4_wb;
+                o_mem_width <= i_mem_width;
+                o_less_wb <= i_less_wb;
+            
+            end
         end
-    
     end
     
 endmodule

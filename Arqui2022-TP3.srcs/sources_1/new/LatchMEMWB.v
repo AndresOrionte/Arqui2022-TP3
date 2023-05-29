@@ -22,6 +22,7 @@
 
 module LatchMEMWB(
     input wire i_clk,
+    input wire i_reset,
     input wire i_bloqueo,
     input wire [31:0] i_dato_wb,
     input wire [4:0] i_reg_esc,
@@ -35,12 +36,21 @@ module LatchMEMWB(
     
     always @(posedge i_clk) begin
     
-        if(! i_bloqueo) begin         // En caso de que el bit de bloqueo no este activado, acciono el latch
-            
-            o_dato_wb <= i_dato_wb;
-            o_reg_esc <= i_reg_esc;
-            o_reg_write <= i_reg_write;      
-            
+        if(i_reset) begin
+        
+            o_dato_wb <= 32'h00000000;
+            o_reg_esc <= 5'h00;
+            o_reg_write <= 1'b0;
+        
+        end else begin
+        
+            if(! i_bloqueo) begin         // En caso de que el bit de bloqueo no este activado, acciono el latch
+                
+                o_dato_wb <= i_dato_wb;
+                o_reg_esc <= i_reg_esc;
+                o_reg_write <= i_reg_write;      
+                
+            end
         end
     end    
     
