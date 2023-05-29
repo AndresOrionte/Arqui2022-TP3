@@ -37,7 +37,7 @@ module Etapa_ID(
     
     //Outputs hacia atras, para jumps
     output wire o_take_jump,
-    output wire o_jump_address,
+    output wire [31:0] o_jump_address,
     
     //Outputs hacia adelante, etapa EX
     output wire [31:0] o_pc_p4,
@@ -68,7 +68,7 @@ module Etapa_ID(
     wire [31:0] dato_2;
     
     wire reg_dst, reg_write, alu_src, mem_write, mem_to_reg, pc_4_wb, gpr31, less_wb, take_jump_r, take_branch, branch_neq;
-    wire [4:0] mem_width;
+    wire [3:0] mem_width;
     
     wire [5:0] aluop;
     
@@ -86,7 +86,7 @@ module Etapa_ID(
     UnidadDeRegistros Regs_0(i_clk, i_reset, i_instruccion[25:21], i_instruccion[20:16], i_reg_esc, i_dato_esc, i_reg_write, dato_1, dato_2);
     
     UnidadDeControl_Signals UCS_0(i_clk, i_reset, i_instruccion[31:26], i_reset_signals, reg_dst, reg_write, alu_src, mem_write, mem_to_reg, 
-                                    pc_4_wb, gpr31, mem_width, less_wb, o_take_jump, take_jump_r, take_branch, branch_eq);
+                                    pc_4_wb, gpr31, mem_width, less_wb, o_take_jump, take_jump_r, take_branch, branch_neq);
     
     UnidadDeControl_ALUOP UCA_0(i_clk, i_reset, i_instruccion[31:26], i_reset_signals, aluop);
     

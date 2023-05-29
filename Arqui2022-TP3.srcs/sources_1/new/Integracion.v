@@ -61,7 +61,7 @@ module Integracion(
     
     
     Etapa_IF Etapa_0(i_clk, i_reset, i_block_pc, i_ctrl_dir_mem_instrucciones, i_dir_mem_instrucciones,i_dato_escritura_mem_instrucciones, 
-                        i_flag_escritura_mem_instrucciones, i_block_latch_1, take_jump_0, jump_addresss, take_jump_r_0, jump_r_address, 
+                        i_flag_escritura_mem_instrucciones, i_block_latch_1, take_jump_0, jump_address, take_jump_r_0, jump_r_address, 
                         take_branch_0, branch_address, pc_p4_0, instruccion_0);
     
     Etapa_ID Etapa_1(i_clk, i_reset, instruccion_0, pc_p4_0, reg_esc_registros, dato_esc_registros, reg_write_id, i_reset_signals, i_block_latch_2, 

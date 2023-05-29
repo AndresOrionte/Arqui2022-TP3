@@ -39,7 +39,7 @@ module Etapa_MEM(
     input wire [31:0] i_pc_p4,
     //LAtch3
     input wire i_block_latch,
-    input wire i_reg_esc,
+    input wire [4:0] i_reg_esc,
     input wire i_reg_write,
     
     //Outputs hacia adelante, etapa WB
