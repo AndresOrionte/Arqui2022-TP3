@@ -31,7 +31,7 @@ module UnidadDeControl_ALUOP(
 
     );
     
-    always @(posedge i_clk) begin
+    always @(*) begin
     
         if(i_reset) begin
         

@@ -32,12 +32,13 @@ module MemoriaDeInstrucciones
 );
 
     reg [7:0] mem [255:0];
-
+    integer i;
+    
     always @(negedge i_clk) begin
     
         if(i_reset) begin                   // En caso de reset pongo memoria y salidas a cero
             o_instruccion <= 32'h00000000;
-            for(integer i=0; i<256; i=i+1) begin
+            for(i=0; i<256; i=i+1) begin
                 mem[i] <= 8'h00;
             end
         end else begin                      // Si no hay reset entonces voy al funcionamiento normal

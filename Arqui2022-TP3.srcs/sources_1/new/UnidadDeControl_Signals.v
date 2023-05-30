@@ -43,7 +43,7 @@ module UnidadDeControl_Signals(
     );
     
     
-    always @(posedge i_clk) begin
+    always @(*) begin
     
         if(i_reset) begin               //En caso de reset pongo todas las salidas a 0
         

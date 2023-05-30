@@ -51,7 +51,7 @@ module Integracion_Test();
         i_flag_esc_mem = 1;
         i_ctrl_dir_mem_instrucciones = 1;
         i_dir_mem_instrucciones = 32'h00000010;
-        i_dato_esc_mem = 32'b01011100001000010000000011001000;
+        i_dato_esc_mem = 32'b01011100000000010000000011001000;
         
         #1
         i_dir_mem_instrucciones = 32'h00000020;

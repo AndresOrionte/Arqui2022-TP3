@@ -35,6 +35,7 @@ module UnidadDeRegistros(
     );
     
     reg [31:0] mem [31:0];
+    integer i;
     
     always @(posedge i_clk) begin
     
@@ -42,7 +43,7 @@ module UnidadDeRegistros(
             
             o_dato_1 <= 32'h00000000;
             o_dato_2 <= 32'h00000000;
-            for(integer i=0; i<32; i=i+1) begin
+            for(i=0; i<32; i=i+1) begin
                 mem[i] <= 32'h00000000;
             end
             
