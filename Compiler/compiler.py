@@ -7,8 +7,7 @@ class AssemblerTranslator:
     def tokenizer(self, program_asm):
         lines = program_asm.readlines()
         tokens = []
-        regex_format = (r'(?m)(\w+)\s+(-{0,1}\w+)\s*,\s*(-{0,1}\w+)\s*,\s*(-{0,1}\w+)\s*$'              # 
-                            + r'|(?m)(\w+)\s+(-{0,1}\w+)\s*,\s*(-{0,1}\w+)\s*\(\s*(-{0,1}\w+)\)\s*$'
+        regex_format = (r'(?m)(\w+)\s+(-{0,1}\w+)\s*,\s*(-{0,1}\w+)\s*,\s*(-{0,1}\w+)\s*$'
                             + r'|(?m)(\w+)\s+(-{0,1}\w+)\s*,\s*(-{0,1}\w+)\s*$'
                             + r'|(?m)(\w+)\s+(-{0,1}\w+)\s*$') 
 
@@ -38,11 +37,7 @@ class AssemblerTranslator:
     
     
     def set_opcode(self, inst, opcode):
-        return opcode + inst[6:31]
-    
-    def set_dest(self, inst, dest):
-        dest = self.to_binary(dest, 5)
-        return inst[0:6] + dest + inst[11:31]
+        return opcode + inst[6:]
     
     # Instrucciones Jump tienen 26b de destino
     def set_dest_jump(self, inst, dest):
@@ -52,15 +47,19 @@ class AssemblerTranslator:
     # Instrucciones Jump tienen 16b de destino
     def set_dest_branch(self, inst, dest):
         dest = self.to_binary(dest, 16)
-        return inst[0:6] + dest + inst[21:31]
+        return inst[0:6] + dest + inst[22:]
     
-    def set_reg1(self, inst, reg1):
-        reg1 = self.to_binary(reg1, 5)
-        return inst[0:11] + reg1 + inst[16:31]
+    def set_rs(self, inst, rs):
+        rs = self.to_binary(rs, 5)
+        return inst[0:6] + rs + inst[12:]
     
-    def set_reg2(self, inst, reg2):
-        reg2 = self.to_binary(reg2, 5)
-        return inst[0:16] + reg2 + inst[21:31]
+    def set_rt(self, inst, rt):
+        rt = self.to_binary(rt, 5)
+        return inst[0:11] + rt + inst[16:]
+    
+    def set_rd(self, inst, rd):
+        rd = self.to_binary(rd, 5)
+        return inst[0:17] + rd + inst[21:]
     
     # Offset o Inmediato, sirve para cualquiera de los 2
     def set_inmed(self, inst, inmed):
@@ -72,155 +71,155 @@ class AssemblerTranslator:
         i_name = token[0]
         if i_name == "SLL":
             inst_bin = self.set_opcode(inst_bin, "011100")
-            inst_bin = self.set_dest(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
             inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "SRL":
             inst_bin = self.set_opcode(inst_bin, "011010")
-            inst_bin = self.set_dest(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
             inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "SRA":
             inst_bin = self.set_opcode(inst_bin, "011001")
-            inst_bin = self.set_dest(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
             inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "SLLV":
             inst_bin = self.set_opcode(inst_bin, "001100")
-            inst_bin = self.set_dest(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
-            inst_bin = self.set_reg2(inst_bin, token[3])
+            inst_bin = self.set_rd(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[3])
         elif i_name == "SRLV":
             inst_bin = self.set_opcode(inst_bin, "001010")            
-            inst_bin = self.set_dest(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
-            inst_bin = self.set_reg2(inst_bin, token[3])
+            inst_bin = self.set_rd(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[3])
         elif i_name == "SRAV":
             inst_bin = self.set_opcode(inst_bin, "001001")
-            inst_bin = self.set_dest(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
-            inst_bin = self.set_reg2(inst_bin, token[3])
+            inst_bin = self.set_rd(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[3])
         elif i_name == "ADDU":
             inst_bin = self.set_opcode(inst_bin, "000001")
-            inst_bin = self.set_dest(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
-            inst_bin = self.set_reg2(inst_bin, token[3])
+            inst_bin = self.set_rd(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[3])
         elif i_name == "SUBU":
             inst_bin = self.set_opcode(inst_bin, "000010")
-            inst_bin = self.set_dest(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
-            inst_bin = self.set_reg2(inst_bin, token[3])
+            inst_bin = self.set_rd(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[3])
         elif i_name == "AND":
             inst_bin = self.set_opcode(inst_bin, "000011")
-            inst_bin = self.set_dest(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
-            inst_bin = self.set_reg2(inst_bin, token[3])
+            inst_bin = self.set_rd(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[3])
         elif i_name == "OR":
             inst_bin = self.set_opcode(inst_bin, "000100")
-            inst_bin = self.set_dest(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
-            inst_bin = self.set_reg2(inst_bin, token[3])
+            inst_bin = self.set_rd(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[3])
         elif i_name == "XOR":
             inst_bin = self.set_opcode(inst_bin, "000101")
-            inst_bin = self.set_dest(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
-            inst_bin = self.set_reg2(inst_bin, token[3])
+            inst_bin = self.set_rd(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[3])
         elif i_name == "NOR":
             inst_bin = self.set_opcode(inst_bin, "000110")
-            inst_bin = self.set_dest(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
-            inst_bin = self.set_reg2(inst_bin, token[3])
+            inst_bin = self.set_rd(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[3])
         elif i_name == "SLT":
             inst_bin = self.set_opcode(inst_bin, "001000")
-            inst_bin = self.set_dest(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
-            inst_bin = self.set_reg2(inst_bin, token[3])
+            inst_bin = self.set_rd(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[3])
         elif i_name == "LB":
             inst_bin = self.set_opcode(inst_bin, "100000")
-            inst_bin = self.set_dest(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])      #Base del offset, igual para todos los LOAD y STORE
             inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "LH":
             inst_bin = self.set_opcode(inst_bin, "100010")
-            inst_bin = self.set_dest(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
             inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "LW":
             inst_bin = self.set_opcode(inst_bin, "100100")
-            inst_bin = self.set_dest(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
             inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "LHU":
             inst_bin = self.set_opcode(inst_bin, "100011")
-            inst_bin = self.set_dest(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
             inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "LBU":
             inst_bin = self.set_opcode(inst_bin, "100001")
-            inst_bin = self.set_dest(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
             inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "SB":
             inst_bin = self.set_opcode(inst_bin, "101001")
-            inst_bin = self.set_reg1(inst_bin, token[1])
-            inst_bin = self.set_reg2(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
             inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "SH":
             inst_bin = self.set_opcode(inst_bin, "101010")
-            inst_bin = self.set_reg1(inst_bin, token[1])
-            inst_bin = self.set_reg2(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
             inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "SW":
             inst_bin = self.set_opcode(inst_bin, "101100")
-            inst_bin = self.set_reg1(inst_bin, token[1])
-            inst_bin = self.set_reg2(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
             inst_bin = self.set_inmed(inst_bin, token[3])
 
         elif i_name == "ADDI":
             inst_bin = self.set_opcode(inst_bin, "010001")
-            inst_bin = self.set_dest(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
             inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "SUBI":
             inst_bin = self.set_opcode(inst_bin, "010010")
-            inst_bin = self.set_dest(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
             inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "ANDI":
             inst_bin = self.set_opcode(inst_bin, "010011")
-            inst_bin = self.set_dest(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
             inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "ORI":
             inst_bin = self.set_opcode(inst_bin, "010100")
-            inst_bin = self.set_dest(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
             inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "XORI":
             inst_bin = self.set_opcode(inst_bin, "010101")
-            inst_bin = self.set_dest(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
             inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "LUI":
             inst_bin = self.set_opcode(inst_bin, "010111")
-            inst_bin = self.set_dest(inst_bin, token[1])
+            inst_bin = self.set_rt(inst_bin, token[1])
             inst_bin = self.set_inmed(inst_bin, token[2])
             
         elif i_name == "SLTI":
             inst_bin = self.set_opcode(inst_bin, "011000")
-            inst_bin = self.set_dest(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
             inst_bin = self.set_inmed(inst_bin, token[3])
         elif i_name == "BEQ":
             inst_bin = self.set_opcode(inst_bin, "110100")
             inst_bin = self.set_dest_branch(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
-            inst_bin = self.set_reg2(inst_bin, token[3])
+            inst_bin = self.set_rs(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[3])
         elif i_name == "BNE":
             inst_bin = self.set_opcode(inst_bin, "110101")
             inst_bin = self.set_dest_branch(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
-            inst_bin = self.set_reg2(inst_bin, token[3])
+            inst_bin = self.set_rs(inst_bin, token[2])
+            inst_bin = self.set_rt(inst_bin, token[3])
         elif i_name == "J":
             inst_bin = self.set_opcode(inst_bin, "110000")
             inst_bin = self.set_dest_jump(inst_bin, token[1])
@@ -229,11 +228,11 @@ class AssemblerTranslator:
             inst_bin = self.set_dest_jump(inst_bin, token[1])
         elif i_name == "JR":
             inst_bin = self.set_opcode(inst_bin, "110010")
-            inst_bin = self.set_dest(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[1])
         elif i_name == "JALR":
             inst_bin = self.set_opcode(inst_bin, "110011")
-            inst_bin = self.set_dest(inst_bin, token[1])
-            inst_bin = self.set_reg1(inst_bin, token[2])
+            inst_bin = self.set_rd(inst_bin, token[1])
+            inst_bin = self.set_rs(inst_bin, token[2])
         elif i_name == "NOP":
             inst_bin = "00000000000000000000000000000000"
             
@@ -261,6 +260,7 @@ try:
     for inst in asm_tokens:
         binary_code = (asm.instruction_generator(inst))
         bin_file.write(binary_code+'\n')
+        print(binary_code)
 finally:
     bin_file.close()
     

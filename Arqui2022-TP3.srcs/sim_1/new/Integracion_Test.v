@@ -48,20 +48,42 @@ module Integracion_Test();
         i_block_latch_1 = 1;
         
         #1
-        i_flag_esc_mem = 1;
+/*        i_flag_esc_mem = 1;
         i_ctrl_dir_mem_instrucciones = 1;
-        i_dir_mem_instrucciones = 32'h00000010;
-        i_dato_esc_mem = 32'b01011100000000010000000011001000;
+        i_dir_mem_instrucciones = 32'h00000000;
+        //i_dato_esc_mem = 32'b01011100000111100000000011001000;  // LUI R30, 200 - OK
+        //i_dato_esc_mem = 32'b01011100000111100000000011110000;  // LUI R30, 4080 - OK
+        i_dato_esc_mem = 32'b01010000000111100000111111110000;  // ORI R30, R0, 4080 - OK
+
+        #1
+        i_dir_mem_instrucciones = 32'h00000014;
+        i_dato_esc_mem = 32'b01000100000111110000000011111010;  // ADDI R31, R0, 250 - OK
         
         #1
-        i_dir_mem_instrucciones = 32'h00000020;
-        i_dato_esc_mem = 32'b01000100001000100000000010000000;
+        i_dir_mem_instrucciones = 32'h00000028;
+        //i_dato_esc_mem = 32'b10110011111111100000000000000000;  // SW R30, R31, 0 - OK
+        //i_dato_esc_mem = 32'b10101011111111100000000000000010;  //SH R30, R31, 2 - OK
+        i_dato_esc_mem = 32'b10100111111111100000000000000010;  //SB R30, R31, 2 - OK
+
+        #1
+        i_dir_mem_instrucciones = 32'h00000003C;
+        i_dato_esc_mem = 32'b10001111111111010000000000000001;  // LHU R29, R31, 2 - NO SELECCIONA BIEN EL MUX MANEJADO POR MemToReg*/
         
+        i_flag_esc_mem = 1;
+        i_ctrl_dir_mem_instrucciones = 1;
+        i_dir_mem_instrucciones = 32'h00000000;
+        i_dato_esc_mem = 32'b01011100000111100000011011000011;  // LUI R30, 1731
+        
+        i_dir_mem_instrucciones = 32'h00000014;
+        i_dato_esc_mem = 32'b01000100000111110000000011110000;  // LUI R31, 240 - OK       
+                
         #1
         i_flag_esc_mem = 0;
         i_ctrl_dir_mem_instrucciones = 0;
         i_block_pc = 0;
         i_block_latch_1 = 0;
+        
+        
 
     end
     
