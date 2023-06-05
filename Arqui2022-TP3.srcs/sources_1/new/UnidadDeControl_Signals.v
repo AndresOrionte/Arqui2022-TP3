@@ -115,7 +115,6 @@ module UnidadDeControl_Signals(
                 
                     o_reg_dst <= 1'b0;
                     o_alu_src <= 1'b1;
-                    o_mem_to_reg <= 1'b1;
                     o_pc_4_wb <= 1'b0;
                     o_gpr31 <= 1'b0;
                     o_less_wb <= 1'b0;
@@ -128,6 +127,7 @@ module UnidadDeControl_Signals(
                     
                         o_reg_write <= 1'b1;
                         o_mem_write <= 1'b0;
+                        o_mem_to_reg <= 1'b1;
                         
                         case(i_op_code[2:0])
                         
@@ -157,6 +157,7 @@ module UnidadDeControl_Signals(
                     
                         o_reg_write <= 1'b0;
                         o_mem_write <= 1'b1;
+                        o_mem_to_reg <= 1'b0;
                         o_mem_width <= i_op_code[3:0];
                     
                     end
