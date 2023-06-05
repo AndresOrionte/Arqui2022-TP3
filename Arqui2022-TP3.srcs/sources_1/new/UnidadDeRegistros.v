@@ -49,7 +49,7 @@ module UnidadDeRegistros(
             
         end else begin
             
-            if(i_flag_reg_write) begin
+            if(i_flag_reg_write & (i_reg_esc != 5'b00000 )) begin
                 
                 mem[i_reg_esc] = i_dato_esc;
                 

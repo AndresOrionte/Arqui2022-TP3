@@ -73,7 +73,6 @@ module UnidadDeRegistros_Test();
         i_flag_reg_write = 0;
         
         //Comprobamos si se puede acceder al mismo registro simultaneamente
-        
         #1
         i_reg_lec_1 = 5'b11111;
         i_reg_lec_2 = 5'b11111;
@@ -81,6 +80,17 @@ module UnidadDeRegistros_Test();
         #1
         i_reg_lec_1 = 5'b00000;
         i_reg_lec_2 = 5'b00011;
+        
+        // Intentamos escribir la posicion 0
+        #1 
+        i_flag_reg_write = 1;
+        i_reg_esc = 5'b00000;
+        i_dato_esc = 32'hAAAAAAAA;
+        
+        // Leemos la posicion 0
+        #1
+        i_flag_reg_write = 0;
+        i_reg_lec_1 = 5'b00000;
         
     end
     
