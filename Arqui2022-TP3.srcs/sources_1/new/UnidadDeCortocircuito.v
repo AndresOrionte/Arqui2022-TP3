@@ -21,31 +21,31 @@
 
 
 module UnidadDeCortocircuito(
-    input wire [4:0] rs,
-    input wire [4:0] rt,
-    input wire [4:0] rd_exmem,
-    input wire reg_write_exmem,
-    input wire [4:0] rd_memwb,
-    input wire reg_write_memwb,
-    input wire reg_dst,
+    input wire [4:0] i_rs,
+    input wire [4:0] i_rt,
+    input wire [4:0] i_rd_exmem,
+    input wire i_reg_write_exmem,
+    input wire [4:0] i_rd_memwb,
+    input wire i_reg_write_memwb,
+    input wire i_reg_dst,
     
-    output reg [1:0] forward_a,
-    output reg [1:0] forward_b
+    output reg [1:0] o_forward_a,
+    output reg [1:0] o_forward_b
     );
     
     always @(*) begin
     
-        if(reg_write_exmem && (rd_exmem==rs)) begin
+        if(i_reg_write_exmem && (i_rd_exmem==i_rs)) begin
             
-            forward_a <= 2'b10;
+            o_forward_a <= 2'b10;
             
-        end else if(reg_write_memwb && (rd_memwb==rs)) begin
+        end else if(i_reg_write_memwb && (i_rd_memwb==i_rs)) begin
             
-            forward_a <= 2'b01;
+            o_forward_a <= 2'b01;
             
         end else begin
         
-            forward_a <= 2'b00;
+            o_forward_a <= 2'b00;
         
         end
     
@@ -53,25 +53,25 @@ module UnidadDeCortocircuito(
     
     always @(*) begin
     
-        if(reg_dst) begin
+        if(i_reg_dst) begin
         
-            if(reg_write_exmem && (rd_exmem==rt)) begin
+            if(i_reg_write_exmem && (i_rd_exmem==i_rt)) begin
                 
-                forward_b <= 2'b10;
+                o_forward_b <= 2'b10;
                 
-            end else if(reg_write_memwb && (rd_memwb==rt)) begin
+            end else if(i_reg_write_memwb && (i_rd_memwb==i_rt)) begin
                 
-                forward_b <= 2'b01;
+                o_forward_b <= 2'b01;
                 
             end else begin
             
-                forward_b <= 2'b00;
+                o_forward_b <= 2'b00;
             
             end
             
         end else begin
         
-            forward_b <= 2'b00;
+            o_forward_b <= 2'b00;
         
         end
     
