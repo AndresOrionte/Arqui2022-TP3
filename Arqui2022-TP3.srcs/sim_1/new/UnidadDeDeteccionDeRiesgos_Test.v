@@ -78,8 +78,32 @@ module UnidadDeDeteccionDeRiesgos_Test();
         #5 
         i_reset = 0;
         
-
+        #1
+        i_take_jump_r = 1;
         
+        #1
+        i_post_bloqueo_1 = 1;
+        
+        #1
+        i_take_jump_r = 0;
+        i_post_bloqueo_1 = 0;
+        
+        #5
+        i_rd = 6;
+        i_rt = 6;
+        
+        #1
+        i_mem_to_reg = 1;
+        
+        #1
+        i_reg_dst = 1;
+        
+        #1
+        i_post_bloqueo_2 = 1;
+        
+        #1
+        i_post_bloqueo_2 = 0;
+        i_mem_to_reg = 0;        
     end
     
    
