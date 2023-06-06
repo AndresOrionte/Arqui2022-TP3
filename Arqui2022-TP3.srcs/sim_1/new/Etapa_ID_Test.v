@@ -60,9 +60,11 @@ module Etapa_ID_Test();
     wire o_take_branch;
     wire o_branch_neq;
     // Deteccion de riesgo
-    wire o_auto_desbloqueo;
+    wire o_post_bloqueo;
+    wire o_take_jump_r_uc;     //Salida de la señal directa desde Unidad de Control (para deteccion de riesgos)
+    wire o_take_branch_uc;   //Salida de la señal directa desde Unidad de Control (para deteccion de riesgos)
     
-    Etapa_ID etapa_1(i_clk, i_reset, i_instruccion, i_pc_p4, i_reg_esc, i_dato_esc, i_reg_write, i_reset_signals, i_block_latch, o_take_jump, o_jump_address, o_pc_p4, o_dato_1, o_dato_2, o_operando_b, o_instruccion, o_aluop, o_less_wb, o_mem_width, o_gpr31, o_pc_4_wb, o_reg_dst, o_mem_to_reg, o_mem_write, o_reg_write, o_take_jump_r, o_take_branch, o_branch_neq, o_auto_desbloqueo);
+    Etapa_ID etapa_1(i_clk, i_reset, i_instruccion, i_pc_p4, i_reg_esc, i_dato_esc, i_reg_write, i_reset_signals, i_block_latch, o_take_jump, o_jump_address, o_pc_p4, o_dato_1, o_dato_2, o_operando_b, o_instruccion, o_aluop, o_less_wb, o_mem_width, o_gpr31, o_pc_4_wb, o_reg_dst, o_mem_to_reg, o_mem_write, o_reg_write, o_take_jump_r, o_take_branch, o_branch_neq, o_post_bloqueo, o_take_jump_r_uc, o_take_branch_uc);
                         
     initial begin
         

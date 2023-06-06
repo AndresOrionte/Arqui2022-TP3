@@ -41,6 +41,7 @@ module Etapa_EX(
     input wire i_gpr31,
     //Latch EX
     input wire i_block_latch,
+    input wire i_reset_latch,
     //Pasan directas
     input wire [31:0] i_dato_2,
     input wire i_reg_write,
@@ -107,7 +108,7 @@ module Etapa_EX(
     
     Mux2 #5 Mux_escritura_1(i_gpr31, reg_esc_0, literal_31, reg_esc_1);
     
-    LatchEXMEM Latch_3(i_clk, i_reset, i_block_latch, i_pc_p4, resultado, carry, i_dato_2, reg_esc_1, i_reg_write, i_mem_write, i_mem_to_reg, 
+    LatchEXMEM Latch_3(i_clk, (i_reset | i_reset_latch), i_block_latch, i_pc_p4, resultado, carry, i_dato_2, reg_esc_1, i_reg_write, i_mem_write, i_mem_to_reg, 
                         i_pc_4_wb, i_mem_width, i_less_wb, o_pc_p4, o_resultado, o_carry, o_dato_2, o_reg_esc, o_reg_write, o_mem_write, 
                         o_mem_to_reg, o_pc_4_wb, o_mem_width, o_less_wb);
     

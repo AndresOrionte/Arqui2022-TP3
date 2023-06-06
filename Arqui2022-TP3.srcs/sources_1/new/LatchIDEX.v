@@ -23,8 +23,7 @@ module LatchIDEX(
     input wire i_TakeBranch,
     input wire i_BranchNEQ,
     //De la unidad de deteccion de riesgo
-    input wire i_AutoDesbloqueo,
-    input wire i_ResetIDEX,
+    input wire i_PostBloqueo,
     
     output reg [31:0] o_pc_p4,
     output reg [31:0] o_dato_1,
@@ -45,7 +44,7 @@ module LatchIDEX(
     output reg o_TakeBranch,
     output reg o_BranchNEQ,
     // Deteccion de riesgo
-    output reg o_AutoDesbloqueo
+    output reg o_PostBloqueo
     );
     
     always @(posedge i_clk) begin
@@ -69,7 +68,7 @@ module LatchIDEX(
             o_TakeJumpR <= 1'b0;
             o_TakeBranch <= 1'b0;
             o_BranchNEQ <= 1'b0;
-            o_AutoDesbloqueo <= 1'b0;
+            o_PostBloqueo <= 1'b0;
         
         end else begin
         
@@ -91,7 +90,7 @@ module LatchIDEX(
                 o_TakeJumpR <= i_TakeJumpR;
                 o_TakeBranch <= i_TakeBranch;
                 o_BranchNEQ <= i_BranchNEQ;
-                o_AutoDesbloqueo <= i_AutoDesbloqueo;           
+                o_PostBloqueo <= i_PostBloqueo;           
             end
         end
     end   

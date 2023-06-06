@@ -26,9 +26,9 @@ module UnidadDeDeteccionDeRiesgos(
     input wire i_take_branch,
     input wire i_mem_to_reg,
     input wire i_reg_dst,
-    input wire [5:0] i_rs,
-    input wire [5:0] i_rt,
-    input wire [5:0] i_rd,
+    input wire [4:0] i_rs,
+    input wire [4:0] i_rt,
+    input wire [4:0] i_rd,
     input wire i_post_bloqueo_1,
     input wire i_post_bloqueo_2,
         

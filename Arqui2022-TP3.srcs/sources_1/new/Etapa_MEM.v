@@ -41,11 +41,13 @@ module Etapa_MEM(
     input wire i_block_latch,
     input wire [4:0] i_reg_esc,
     input wire i_reg_write,
+    input wire i_post_bloqueo,
     
     //Outputs hacia adelante, etapa WB
     output wire [31:0] o_dato_wb,
     output wire [4:0] o_reg_esc,
-    output wire o_reg_write
+    output wire o_reg_write,
+    output wire o_post_bloqueo
 
     );
     
@@ -69,6 +71,6 @@ module Etapa_MEM(
     
     Mux2 Mux_2(i_pc_4_wb, dato_sel, i_pc_p4, dato_wb);
     
-    LatchMEMWB Latch_3(i_clk, i_reset, i_block_latch, dato_wb, i_reg_esc, i_reg_write, o_dato_wb, o_reg_esc, o_reg_write);
+    LatchMEMWB Latch_3(i_clk, i_reset, i_block_latch, dato_wb, i_reg_esc, i_reg_write, i_post_bloqueo, o_dato_wb, o_reg_esc, o_reg_write, o_post_bloqueo);
     
 endmodule
