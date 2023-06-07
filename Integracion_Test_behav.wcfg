@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="12.820 ns"></ZoomStartTime>
-      <ZoomEndTime time="32.141 ns"></ZoomEndTime>
-      <Cursor1Time time="23.320 ns"></Cursor1Time>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="13.781 ns"></ZoomEndTime>
+      <Cursor1Time time="1,000.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="154"></NameColumnWidth>
-      <ValueColumnWidth column_width="73"></ValueColumnWidth>
+      <ValueColumnWidth column_width="69"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="23" />
+   <WVObjectSize size="20" />
    <wvobject fp_name="/Integracion_Test/i_clk" type="logic">
       <obj_property name="ElementShortName">i_clk</obj_property>
       <obj_property name="ObjectShortName">i_clk</obj_property>
@@ -31,6 +31,34 @@
    <wvobject fp_name="/Integracion_Test/Int_0/Etapa_0/Mem_0/o_instruccion" type="array">
       <obj_property name="ElementShortName">o_instruccion[31:0]</obj_property>
       <obj_property name="ObjectShortName">o_instruccion[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_1/UCS_0/i_op_code" type="array">
+      <obj_property name="ElementShortName">i_op_code[5:0]</obj_property>
+      <obj_property name="ObjectShortName">i_op_code[5:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_1/UCS_0/o_reg_write" type="logic">
+      <obj_property name="ElementShortName">o_reg_write</obj_property>
+      <obj_property name="ObjectShortName">o_reg_write</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_1/Regs_0/i_reg_lec_1" type="array">
+      <obj_property name="ElementShortName">i_reg_lec_1[4:0]</obj_property>
+      <obj_property name="ObjectShortName">i_reg_lec_1[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_1/Regs_0/i_reg_lec_2" type="array">
+      <obj_property name="ElementShortName">i_reg_lec_2[4:0]</obj_property>
+      <obj_property name="ObjectShortName">i_reg_lec_2[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_1/Regs_0/i_reg_esc" type="array">
+      <obj_property name="ElementShortName">i_reg_esc[4:0]</obj_property>
+      <obj_property name="ObjectShortName">i_reg_esc[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_1/Regs_0/i_dato_esc" type="array">
+      <obj_property name="ElementShortName">i_dato_esc[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i_dato_esc[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_1/Regs_0/i_flag_reg_write" type="logic">
+      <obj_property name="ElementShortName">i_flag_reg_write</obj_property>
+      <obj_property name="ObjectShortName">i_flag_reg_write</obj_property>
    </wvobject>
    <wvobject fp_name="/Integracion_Test/Int_0/Etapa_1/Regs_0/mem" type="array">
       <obj_property name="ElementShortName">mem[31:0][31:0]</obj_property>
@@ -48,68 +76,28 @@
       <obj_property name="ElementShortName">o_C[31:0]</obj_property>
       <obj_property name="ObjectShortName">o_C[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_3/Mem_0/i_direccion" type="array">
-      <obj_property name="ElementShortName">i_direccion[31:0]</obj_property>
-      <obj_property name="ObjectShortName">i_direccion[31:0]</obj_property>
+   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_1/Latch_2/o_instruccion" type="array">
+      <obj_property name="ElementShortName">o_instruccion[31:0]</obj_property>
+      <obj_property name="ObjectShortName">o_instruccion[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_3/Mem_0/i_escritura" type="array">
-      <obj_property name="ElementShortName">i_escritura[31:0]</obj_property>
-      <obj_property name="ObjectShortName">i_escritura[31:0]</obj_property>
+   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_2/Shift_0/i_dato" type="array">
+      <obj_property name="ElementShortName">i_dato[15:0]</obj_property>
+      <obj_property name="ObjectShortName">i_dato[15:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_3/Mem_0/i_mem_write" type="logic">
-      <obj_property name="ElementShortName">i_mem_write</obj_property>
-      <obj_property name="ObjectShortName">i_mem_write</obj_property>
+   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_2/Shift_0/o_dato" type="array">
+      <obj_property name="ElementShortName">o_dato[17:0]</obj_property>
+      <obj_property name="ObjectShortName">o_dato[17:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_3/Mem_0/i_mem_width" type="array">
-      <obj_property name="ElementShortName">i_mem_width[3:0]</obj_property>
-      <obj_property name="ObjectShortName">i_mem_width[3:0]</obj_property>
+   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_2/Sumador_0/i_A" type="array">
+      <obj_property name="ElementShortName">i_A[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i_A[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_3/Mem_0/mem" type="array">
-      <obj_property name="ElementShortName">mem[255:0][7:0]</obj_property>
-      <obj_property name="ObjectShortName">mem[255:0][7:0]</obj_property>
+   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_2/Sumador_0/i_B" type="array">
+      <obj_property name="ElementShortName">i_B[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i_B[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_3/Mem_0/o_dato" type="array">
-      <obj_property name="ElementShortName">o_dato[31:0]</obj_property>
-      <obj_property name="ObjectShortName">o_dato[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_3/Mux_1/i_sel" type="logic">
-      <obj_property name="ElementShortName">i_sel</obj_property>
-      <obj_property name="ObjectShortName">i_sel</obj_property>
-   </wvobject>
-   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_3/Mux_1/i_dato_0" type="array">
-      <obj_property name="ElementShortName">i_dato_0[31:0]</obj_property>
-      <obj_property name="ObjectShortName">i_dato_0[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_3/Mux_1/i_dato_1" type="array">
-      <obj_property name="ElementShortName">i_dato_1[31:0]</obj_property>
-      <obj_property name="ObjectShortName">i_dato_1[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_3/Mux_1/o_dato" type="array">
-      <obj_property name="ElementShortName">o_dato[31:0]</obj_property>
-      <obj_property name="ObjectShortName">o_dato[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_3/Mux_2/i_sel" type="logic">
-      <obj_property name="ElementShortName">i_sel</obj_property>
-      <obj_property name="ObjectShortName">i_sel</obj_property>
-   </wvobject>
-   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_3/Mux_2/i_dato_0" type="array">
-      <obj_property name="ElementShortName">i_dato_0[31:0]</obj_property>
-      <obj_property name="ObjectShortName">i_dato_0[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_3/Mux_2/i_dato_1" type="array">
-      <obj_property name="ElementShortName">i_dato_1[31:0]</obj_property>
-      <obj_property name="ObjectShortName">i_dato_1[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_3/Mux_2/o_dato" type="array">
-      <obj_property name="ElementShortName">o_dato[31:0]</obj_property>
-      <obj_property name="ObjectShortName">o_dato[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_3/Latch_3/o_dato_wb" type="array">
-      <obj_property name="ElementShortName">o_dato_wb[31:0]</obj_property>
-      <obj_property name="ObjectShortName">o_dato_wb[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_3/Latch_3/o_reg_esc" type="array">
-      <obj_property name="ElementShortName">o_reg_esc[4:0]</obj_property>
-      <obj_property name="ObjectShortName">o_reg_esc[4:0]</obj_property>
+   <wvobject fp_name="/Integracion_Test/Int_0/Etapa_2/Sumador_0/o_C" type="array">
+      <obj_property name="ElementShortName">o_C[31:0]</obj_property>
+      <obj_property name="ObjectShortName">o_C[31:0]</obj_property>
    </wvobject>
 </wave_config>

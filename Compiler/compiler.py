@@ -47,11 +47,11 @@ class AssemblerTranslator:
     # Instrucciones Jump tienen 16b de destino
     def set_dest_branch(self, inst, dest):
         dest = self.to_binary(dest, 16)
-        return inst[0:6] + dest + inst[22:]
+        return inst[0:16] + dest
     
     def set_rs(self, inst, rs):
         rs = self.to_binary(rs, 5)
-        return inst[0:6] + rs + inst[12:]
+        return inst[0:6] + rs + inst[11:]
     
     def set_rt(self, inst, rt):
         rt = self.to_binary(rt, 5)
@@ -59,7 +59,7 @@ class AssemblerTranslator:
     
     def set_rd(self, inst, rd):
         rd = self.to_binary(rd, 5)
-        return inst[0:17] + rd + inst[21:]
+        return inst[0:16] + rd + inst[21:]
     
     # Offset o Inmediato, sirve para cualquiera de los 2
     def set_inmed(self, inst, inmed):
