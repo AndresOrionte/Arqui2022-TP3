@@ -29,6 +29,13 @@ module Etapa_EX(
     input wire [31:0] i_dato_1,
     input wire [31:0] i_operando_b,
     input wire [5:0] i_aluop,
+    //Muxs input Unidad Cortocircuito
+    input wire [1:0] i_forward_a_sel,
+    input wire [31:0] i_forward_a_dato_mem,
+    input wire [31:0] i_forward_a_dato_wb,
+    input wire [1:0] i_forward_b_sel,
+    input wire [31:0] i_forward_b_dato_mem,
+    input wire [31:0] i_forward_b_dato_wb,
     //Decisiones branchs y jump
     input wire i_take_jump_r,
     input wire i_branch_neq,
@@ -73,6 +80,8 @@ module Etapa_EX(
 
     );
     
+    wire [31:0] operando_a, operando_b;
+    
     wire [31:0] resultado;
     wire carry;
     wire zero;
@@ -88,8 +97,11 @@ module Etapa_EX(
     reg [4:0] literal_31 = 5'b11111;
     wire [4:0] reg_esc_1;
     
+    Mux3 #32 Mux_operando_0(i_forward_a_sel, i_dato_1, i_forward_a_dato_mem, i_forward_a_dato_wb, operando_a);
     
-    ALU Alu_0(i_dato_1, i_operando_b, i_aluop, resultado, carry, zero);
+    Mux3 #32 Mux_operando_1(i_forward_b_sel, i_operando_b, i_forward_b_dato_mem, i_forward_b_dato_wb, operando_b);
+    
+    ALU Alu_0(operando_a, operando_b, i_aluop, resultado, carry, zero);
     
     assign o_take_jump_r = i_take_jump_r;
     assign o_jump_r_address = i_dato_1;
