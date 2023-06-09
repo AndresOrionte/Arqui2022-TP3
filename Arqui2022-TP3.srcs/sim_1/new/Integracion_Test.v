@@ -47,13 +47,13 @@ module Integracion_Test();
         i_block_pc = 1;
         i_block_latch_1 = 1;
         
-/*        #1
+        #1
         i_flag_esc_mem = 1;
         i_ctrl_dir_mem_instrucciones = 1;
         i_dir_mem_instrucciones = 32'h00000000;
-        //i_dato_esc_mem = 32'b01011100000111100000000011001000;  // LUI R30, 200 - OK
+        i_dato_esc_mem = 32'b01011100000111100000000001100100;  // LUI R30, 100 - OK
         //i_dato_esc_mem = 32'b01011100000111100000000011110000;  // LUI R30, 4080 - OK
-        i_dato_esc_mem = 32'b01010000000111100000111111110000;  // ORI R30, R0, 4080 - OK
+        //i_dato_esc_mem = 32'b01010000000111100000111111110000;  // ORI R30, R0, 4080 - OK
 
         #1
         i_dir_mem_instrucciones = 32'h00000014;
@@ -67,7 +67,7 @@ module Integracion_Test();
 
         #1
         i_dir_mem_instrucciones = 32'h00000003C;
-        i_dato_esc_mem = 32'b10010011111111010000000000000000;  // LW R29, R31, 0 - NO SELECCIONA BIEN EL MUX MANEJADO POR MemToReg*/
+        i_dato_esc_mem = 32'b10010011111111010000000000000000;  // LW R29, R31, 0 - NO SELECCIONA BIEN EL MUX MANEJADO POR MemToReg
         
 /*        i_flag_esc_mem = 1;
         i_ctrl_dir_mem_instrucciones = 1;
@@ -182,7 +182,7 @@ module Integracion_Test();
         //i_dato_esc_mem = 32'b11001011110000000000000000000000;  // JR R30
         //i_dato_esc_mem = 32'b11001111101000001111000000000000;  // JALR R30, R29*/
         
-        i_flag_esc_mem = 1;
+/*        i_flag_esc_mem = 1;
         i_ctrl_dir_mem_instrucciones = 1;
         i_dir_mem_instrucciones = 32'h00000000;
         i_dato_esc_mem = 32'b01000100000111100000000001111000;  // ADDI R30, R0, 120
@@ -194,7 +194,7 @@ module Integracion_Test();
         #1
         i_dir_mem_instrucciones = 32'h00000028;
         i_dato_esc_mem = 32'b11010010100111100000010011101000;  // BEQ 1256, R20, R30
-        i_dato_esc_mem = 32'b11010110100111100000001100100000;  // BNE 800, R20, R30
+        i_dato_esc_mem = 32'b11010110100111100000001100100000;  // BNE 800, R20, R30*/
         
         
         #1
