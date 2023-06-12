@@ -82,7 +82,7 @@ module Etapa_ID(
     wire [31:0] jump_address_ext;
     
     // Aun no implementados (Para la unidad de deteccion de riesgos)
-    wire auto_desbloqueo;
+    
     assign o_take_jump_r_uc = take_jump_r;
     assign o_take_branch_uc = take_branch;
 
@@ -104,7 +104,7 @@ module Etapa_ID(
     Sumador Sumador_0(jump_address_ext, i_pc_p4, o_jump_address);
     
     LatchIDEX Latch_2(i_clk, i_reset, i_block_latch, i_pc_p4, dato_1, dato_2, operando_b, i_instruccion, aluop, less_wb, mem_width, gpr31, pc_4_wb, 
-                        reg_dst, mem_to_reg, mem_write, reg_write, take_jump_r, take_branch, branch_neq, auto_desbloqueo, o_pc_p4, 
+                        reg_dst, mem_to_reg, mem_write, reg_write, take_jump_r, take_branch, branch_neq, i_post_bloqueo, o_pc_p4, 
                         o_dato_1, o_dato_2, o_operando_b, o_instruccion, o_aluop, o_less_wb, o_mem_width, o_gpr31, o_pc_4_wb, o_reg_dst, o_mem_to_reg, 
                         o_mem_write, o_reg_write, o_take_jump_r, o_take_branch, o_branch_neq, o_post_bloqueo);
     
