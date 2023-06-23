@@ -39,8 +39,8 @@ module UART_Test();
         i_rx,
         i_send_start,
         i_send_byte,
-        o_eor,
         o_tx,
+        o_eor,
         o_sending,
         o_recept_byte,
         o_err

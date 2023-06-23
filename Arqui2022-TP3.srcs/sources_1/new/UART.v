@@ -28,8 +28,8 @@ module UART#(
     input wire i_rx,
     input wire i_send_start,
     input wire [7:0] i_send_byte,
-    output wire o_eor,
     output wire o_tx,
+    output wire o_eor,
     output wire o_sending,
     output wire [7:0] o_recept_byte,
     output wire o_err
