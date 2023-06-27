@@ -26,6 +26,7 @@ module Etapa_IF(
     input wire i_reset,
     //PC
     input wire i_block_pc,
+    input wire i_reset_pc,
     //MemoriaDeInstrucciones
     input wire i_ctrl_dir_mem,
     input wire [31:0] i_dir_mem,
@@ -42,12 +43,13 @@ module Etapa_IF(
     input wire [31:0] i_branch_address,
     //Outputs comunes
     output wire [31:0] o_pc_p4,
-    output wire [31:0] o_instruccion
+    output wire [31:0] o_instruccion,
+    //Outputs UnidadDeDebug
+    output wire [31:0] o_pc
 
     );
     
     wire [31:0] pc_next;
-    wire [31:0] pc;
     
     wire [31:0] mem_dir;
     
@@ -59,15 +61,15 @@ module Etapa_IF(
     wire [31:0] mux_0;
     wire [31:0] mux_1;
     
-    PC PC0(i_clk, i_reset, pc_next, i_block_pc, pc);
+    PC PC0(i_clk, (i_reset | i_reset_pc), pc_next, i_block_pc, o_pc);
     
-    Mux2 Mux_Mem_Dir(i_ctrl_dir_mem, pc, i_dir_mem, mem_dir);
+    Mux2 Mux_Mem_Dir(i_ctrl_dir_mem, o_pc, i_dir_mem, mem_dir);
     
     MemoriaDeInstrucciones Mem_0(i_clk, i_reset, mem_dir, i_dato_escritura_mem, i_flag_escritura_mem, instruccion);
     
     LatchIFID Latch_1(i_clk, i_reset, i_block_latch, pc_p4, instruccion, o_pc_p4, o_instruccion);
     
-    Sumador Sumador_0(literal_4, pc, pc_p4);
+    Sumador Sumador_0(literal_4, o_pc, pc_p4);
     
     Mux2 Mux_0(i_take_jump, pc_p4, i_jump_address, mux_0);
     

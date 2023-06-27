@@ -36,6 +36,9 @@ module Etapa_EX(
     input wire [1:0] i_forward_b_sel,
     input wire [31:0] i_forward_b_dato_mem,
     input wire [31:0] i_forward_b_dato_wb,
+    input wire [1:0] i_forward_c_sel,
+    input wire [31:0] i_forward_c_dato_mem,
+    input wire [31:0] i_forward_c_dato_wb,
     //Decisiones branchs y jump
     input wire i_take_jump_r,
     input wire i_branch_neq,
@@ -80,7 +83,7 @@ module Etapa_EX(
 
     );
     
-    wire [31:0] operando_a, operando_b;
+    wire [31:0] operando_a, operando_b, dato_2_forward;
     
     wire [31:0] resultado;
     wire carry;
@@ -101,6 +104,8 @@ module Etapa_EX(
     
     Mux3 #32 Mux_operando_1(i_forward_b_sel, i_operando_b, i_forward_b_dato_mem, i_forward_b_dato_wb, operando_b);
     
+    Mux3 #32 Mux_dato_2(i_forward_c_sel, i_dato_2, i_forward_c_dato_mem, i_forward_c_dato_wb, dato_2_forward);
+    
     ALU Alu_0(operando_a, operando_b, i_aluop, resultado, carry, zero);
     
     assign o_take_jump_r = i_take_jump_r;
@@ -120,7 +125,7 @@ module Etapa_EX(
     
     Mux2 #5 Mux_escritura_1(i_gpr31, reg_esc_0, literal_31, reg_esc_1);
     
-    LatchEXMEM Latch_3(i_clk, (i_reset | i_reset_latch), i_block_latch, i_pc_p4, resultado, carry, i_dato_2, reg_esc_1, i_reg_write, i_mem_write, i_mem_to_reg, 
+    LatchEXMEM Latch_3(i_clk, (i_reset | i_reset_latch), i_block_latch, i_pc_p4, resultado, carry, dato_2_forward, reg_esc_1, i_reg_write, i_mem_write, i_mem_to_reg, 
                         i_pc_4_wb, i_mem_width, i_less_wb, o_pc_p4, o_resultado, o_carry, o_dato_2, o_reg_esc, o_reg_write, o_mem_write, 
                         o_mem_to_reg, o_pc_4_wb, o_mem_width, o_less_wb);
     

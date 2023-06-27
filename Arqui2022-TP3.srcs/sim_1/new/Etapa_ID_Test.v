@@ -35,6 +35,10 @@ module Etapa_ID_Test();
     reg i_reset_signals;
     
     reg i_block_latch;
+    reg i_post_bloqueo;
+    
+    reg i_sel_reg_lec_1;
+    reg [4:0] i_reg_lec_1;
     
     //Outputs hacia atras, para jumps
     wire o_take_jump;
@@ -63,8 +67,9 @@ module Etapa_ID_Test();
     wire o_post_bloqueo;
     wire o_take_jump_r_uc;     //Salida de la señal directa desde Unidad de Control (para deteccion de riesgos)
     wire o_take_branch_uc;   //Salida de la señal directa desde Unidad de Control (para deteccion de riesgos)
+    wire [31:0] o_lec_reg_debug;
     
-    Etapa_ID etapa_1(i_clk, i_reset, i_instruccion, i_pc_p4, i_reg_esc, i_dato_esc, i_reg_write, i_reset_signals, i_block_latch, o_take_jump, o_jump_address, o_pc_p4, o_dato_1, o_dato_2, o_operando_b, o_instruccion, o_aluop, o_less_wb, o_mem_width, o_gpr31, o_pc_4_wb, o_reg_dst, o_mem_to_reg, o_mem_write, o_reg_write, o_take_jump_r, o_take_branch, o_branch_neq, o_post_bloqueo, o_take_jump_r_uc, o_take_branch_uc);
+    Etapa_ID etapa_1(i_clk, i_reset, i_instruccion, i_pc_p4, i_reg_esc, i_dato_esc, i_reg_write, i_reset_signals, i_block_latch, i_post_bloqueo, i_sel_reg_lec_1, i_reg_lec_1, o_take_jump, o_jump_address, o_pc_p4, o_dato_1, o_dato_2, o_operando_b, o_instruccion, o_aluop, o_less_wb, o_mem_width, o_gpr31, o_pc_4_wb, o_reg_dst, o_mem_to_reg, o_mem_write, o_reg_write, o_take_jump_r, o_take_branch, o_branch_neq, o_post_bloqueo, o_take_jump_r_uc, o_take_branch_uc, o_lec_reg_debug);
                         
     initial begin
         
@@ -77,6 +82,9 @@ module Etapa_ID_Test();
         i_reg_write = 0;
         i_reset_signals = 0;
         i_block_latch = 0;
+        i_post_bloqueo = 0;
+        i_sel_reg_lec_1 = 0;
+        i_reg_lec_1 = 0;
         
         #5
         i_reset = 0;

@@ -34,6 +34,9 @@ module Etapa_EX_Test();
     reg [1:0] i_forward_b_sel;
     reg [31:0] i_forward_b_dato_mem;
     reg [31:0] i_forward_b_dato_wb;
+    reg [1:0] i_forward_c_sel;
+    reg [31:0] i_forward_c_dato_mem;
+    reg [31:0] i_forward_c_dato_wb;
     reg i_take_jump_r;
     reg i_branch_neq;
     reg i_take_branch;
@@ -68,7 +71,8 @@ module Etapa_EX_Test();
     wire o_less_wb;
 
     Etapa_EX Etapa_3(i_clk, i_reset, i_dato_1, i_operando_b, i_aluop, i_forward_a_sel, i_forward_a_dato_mem, i_forward_a_dato_wb,
-                    i_forward_b_sel, i_forward_b_dato_mem, i_forward_b_dato_wb, i_take_jump_r, i_branch_neq, i_take_branch, 
+                    i_forward_b_sel, i_forward_b_dato_mem, i_forward_b_dato_wb, i_forward_c_sel, i_forward_c_dato_mem, i_forward_c_dato_wb, 
+                    i_take_jump_r, i_branch_neq, i_take_branch, 
                     i_instruccion, i_pc_p4, i_reg_dst, i_gpr31, i_block_latch, i_reset_latch, i_dato_2, i_reg_write, i_mem_write, 
                     i_mem_to_reg, i_pc_4_wb, i_mem_width, i_less_wb, o_take_jump_r, o_jump_r_address, o_take_branch, 
                     o_branch_address, o_pc_p4, o_resultado, o_carry, o_dato_2, o_reg_esc, o_reg_write, o_mem_write, o_mem_to_reg, 
@@ -87,6 +91,9 @@ module Etapa_EX_Test();
         i_forward_b_sel = 0;
         i_forward_b_dato_mem = 0;
         i_forward_b_dato_wb = 0;
+        i_forward_c_sel = 0;
+        i_forward_c_dato_mem = 0;
+        i_forward_c_dato_wb = 0;
         i_take_jump_r = 0;
         i_branch_neq = 0;
         i_take_branch = 0;

@@ -28,9 +28,11 @@ module UnidadDeCortocircuito(
     input wire [4:0] i_rd_memwb,
     input wire i_reg_write_memwb,
     input wire i_reg_dst,
+    input wire i_mem_write_idex,
     
     output reg [1:0] o_forward_a,
-    output reg [1:0] o_forward_b
+    output reg [1:0] o_forward_b,
+    output reg [1:0] o_forward_c
     );
     
     always @(*) begin
@@ -75,6 +77,24 @@ module UnidadDeCortocircuito(
         
         end
     
+    end
+    
+    always @(*) begin
+        
+        if(i_mem_write_idex && (i_rd_exmem == i_rt)) begin
+            
+            o_forward_c <= 2'b10;
+            
+        end else if(i_mem_write_idex && (i_rd_memwb == i_rt)) begin
+            
+            o_forward_c <= 2'b01;
+            
+        end else begin
+            
+            o_forward_c <= 2'b00;
+            
+        end
+        
     end
     
 endmodule

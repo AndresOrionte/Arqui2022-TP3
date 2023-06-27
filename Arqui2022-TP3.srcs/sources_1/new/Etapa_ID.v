@@ -35,6 +35,9 @@ module Etapa_ID(
     //Latch_ID
     input wire i_block_latch,
     input wire i_post_bloqueo,
+    //UnidadDeDebug
+    input wire i_sel_reg_lec_1,
+    input wire [4:0] i_reg_lec_1,
     
     //Outputs hacia atras, para jumps
     output wire o_take_jump,
@@ -62,9 +65,12 @@ module Etapa_ID(
     // Deteccion de riesgo
     output wire o_post_bloqueo,
     output wire o_take_jump_r_uc,     //Salida de la señal directa desde Unidad de Control (para deteccion de riesgos)
-    output wire o_take_branch_uc     //Salida de la señal directa desde Unidad de Control (para deteccion de riesgos)
-    
+    output wire o_take_branch_uc,     //Salida de la señal directa desde Unidad de Control (para deteccion de riesgos)
+    // UnidadDeDebug
+    output wire [31:0] o_lec_reg_debug
     );
+    
+    wire [4:0] reg_1;
     
     wire [31:0] dato_1;
     wire [31:0] dato_2;
@@ -85,8 +91,11 @@ module Etapa_ID(
     
     assign o_take_jump_r_uc = take_jump_r;
     assign o_take_branch_uc = take_branch;
-
-    UnidadDeRegistros Regs_0(i_clk, i_reset, i_instruccion[25:21], i_instruccion[20:16], i_reg_esc, i_dato_esc, i_reg_write, dato_1, dato_2);
+    assign o_lec_reg_debug = dato_1;
+    
+    Mux2 #5 Mux_0(i_sel_reg_lec_1, i_instruccion[25:21], i_reg_lec_1, reg_1);
+    
+    UnidadDeRegistros Regs_0(i_clk, i_reset, reg_1, i_instruccion[20:16], i_reg_esc, i_dato_esc, i_reg_write, dato_1, dato_2);
     
     UnidadDeControl_Signals UCS_0(i_clk, (i_reset | i_reset_signals), i_instruccion[31:26], reg_dst, reg_write, alu_src, mem_write, mem_to_reg, 
                                     pc_4_wb, gpr31, mem_width, less_wb, o_take_jump, take_jump_r, take_branch, branch_neq);
@@ -95,7 +104,7 @@ module Etapa_ID(
     
     ExtensorDePalabra #16 ExtP_0(i_instruccion[15:0], inmediato_ext);
     
-    Mux2 Mux_0(alu_src, dato_2, inmediato_ext, operando_b);
+    Mux2 Mux_1(alu_src, dato_2, inmediato_ext, operando_b);
     
     Shift2 #26 Shift_0(i_instruccion[25:0], jump_address_sh);
     

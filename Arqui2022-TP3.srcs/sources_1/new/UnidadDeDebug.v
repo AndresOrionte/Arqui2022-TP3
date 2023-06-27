@@ -278,7 +278,7 @@ module UnidadDeDebug(
                                 o_dato_mem_instr <= state_program_instruction;
                                 
                                 state_program_size <= state_program_size - 1;
-                                state_program_pointer <= state_program_pointer + 1;
+                                state_program_pointer <= state_program_pointer + 4;
                                 
                             end
                             

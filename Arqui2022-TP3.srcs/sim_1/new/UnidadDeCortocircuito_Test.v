@@ -29,11 +29,13 @@ module UnidadDeCortocircuito_Test();
     reg [4:0] rd_memwb;
     reg reg_write_memwb;
     reg reg_dst;
+    reg mem_write_idex;
     
     wire [1:0] forward_a;
     wire [1:0] forward_b;
+    wire [1:0] forward_c;
 
-    UnidadDeCortocircuito UC_0 (rs, rt, rd_exmem, reg_write_exmem, rd_memwb, reg_write_memwb, reg_dst, forward_a, forward_b);
+    UnidadDeCortocircuito UC_0 (rs, rt, rd_exmem, reg_write_exmem, rd_memwb, reg_write_memwb, reg_dst, mem_write_idex, forward_a, forward_b, forward_c);
 
     always begin
         
@@ -44,10 +46,12 @@ module UnidadDeCortocircuito_Test();
         rd_memwb = 5'b00010;
         reg_write_memwb = 0;
         reg_dst = 0;
+        mem_write_idex = 0;
         
         // Levantamos flags pero sin cambiar las condiciones no deberia haber cambios
         #1
         reg_dst = 1;
+        mem_write_idex = 1;
         reg_write_exmem = 1;
         reg_write_memwb = 1;
         
@@ -63,6 +67,7 @@ module UnidadDeCortocircuito_Test();
         
         // B deberia dejar de forwardear
         #1
+        mem_write_idex = 0;
         reg_dst = 0;
         
         // B deberia volver a forwardear
