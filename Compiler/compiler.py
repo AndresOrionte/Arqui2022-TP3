@@ -235,6 +235,8 @@ class AssemblerTranslator:
             inst_bin = self.set_rs(inst_bin, token[2])
         elif i_name == "NOP":
             inst_bin = "00000000000000000000000000000000"
+        elif i_name == "HALT":
+            inst_bin = "11111111111111111111111111111111"
             
         else:
             print(i_name, ": Not recognized instruction")
@@ -263,5 +265,17 @@ try:
         print(binary_code)
 finally:
     bin_file.close()
-    
-# TODO: En hexadecimal
+ 
+# En hexa
+hex_code = ""
+try:
+    hex_file = open("./Compiler/hex_code.txt", "w")
+    hex_file.write(str(len(asm_tokens)) + '\n')
+    print(len(asm_tokens))
+    for inst in asm_tokens:
+        binary_code = asm.instruction_generator(inst)
+        hex_code = hex(int(binary_code, 2))[2:].zfill(len(binary_code) // 4)
+        hex_file.write(hex_code + '\n')
+        print(hex_code)
+finally:
+    hex_file.close()
