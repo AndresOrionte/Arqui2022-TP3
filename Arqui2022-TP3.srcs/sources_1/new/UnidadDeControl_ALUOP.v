@@ -25,7 +25,6 @@ module UnidadDeControl_ALUOP(
     input wire i_clk,
     input wire i_reset,
     input wire [5:0] i_op_code,
-    input wire i_reset_signals, // Como se usa??
     
     output reg [5:0] o_alu_op
 

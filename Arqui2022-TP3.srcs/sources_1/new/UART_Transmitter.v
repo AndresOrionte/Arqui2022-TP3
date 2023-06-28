@@ -64,6 +64,7 @@ module UART_Transmitter(
         
             if(i_start && (!o_sending)) begin
                 start_flag <= 1;
+                o_sending <= 1;
                 t_word <= i_word;
             end
             
@@ -82,7 +83,6 @@ module UART_Transmitter(
                         if (start_flag) begin
                             tick_counter <= 4'h0;
                             start_flag <= 0;
-                            o_sending <= 1;
                             state <= STATE_START; 
                             o_tx <= 1'b0;   // Envio bit de start
                         end

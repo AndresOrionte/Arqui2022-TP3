@@ -161,30 +161,30 @@ module UnidadDeControl_Signals(
                     
                     end
                     
-                end else begin                              // (1) 1 = Operaciones tipo Jump y Branch
+                end else begin                              // (1) 1 = Operaciones tipo Jump, Branch y HALT
                 
-                    o_reg_dst <= 1'b1;
-                    o_alu_src <= 1'b0;
-                    o_mem_write <= 1'b0;
-                    o_mem_to_reg <= 1'b0;
-                    o_pc_4_wb <= 1'b1;
-                    //o_mem_width <= 4'bXXXX;
-                    //o_less_wb <= 1'bX;
+                    if(!i_op_code[3]) begin                     // (11) 0 = Operaciones tipo Jump y Branch
                     
-                    if(!i_op_code[2]) begin                     // (11X) 0 = Operaciones tipo Jump
-                    
-                        o_take_branch <= 1'b0;
-                        o_branch_neq <= 1'b0;
+                        o_reg_dst <= 1'b1;
+                        o_alu_src <= 1'b0;
+                        o_mem_write <= 1'b0;
+                        o_mem_to_reg <= 1'b0;
+                        o_pc_4_wb <= 1'b1;
+                        //o_mem_width <= 4'bXXXX;
+                        //o_less_wb <= 1'bX;
                         
-                        o_reg_write <= i_op_code[0];
-                        o_gpr31 <= !i_op_code[1];
-                        o_take_jump <= !i_op_code[1];
-                        o_take_jump_r <= i_op_code[1];
-                    
-                    end else begin                              // (11X) 1 = Operaciones tipo Branch
+                        if(!i_op_code[2]) begin                     // (110) 0 = Operaciones tipo Jump
                         
-                        if(i_op_code[1:0] != 2'b11) begin
+                            o_take_branch <= 1'b0;
+                            o_branch_neq <= 1'b0;
+                            
+                            o_reg_write <= i_op_code[0];
+                            o_gpr31 <= !i_op_code[1];
+                            o_take_jump <= !i_op_code[1];
+                            o_take_jump_r <= i_op_code[1];
                         
+                        end else begin                              // (110) 1 = Operaciones tipo Branch
+
                             o_reg_write <= 1'b0;
                             //o_gpr31 <= 1'bX;
                             o_take_jump <= 1'b0;
@@ -193,18 +193,24 @@ module UnidadDeControl_Signals(
                             
                             o_branch_neq <= i_op_code[0];
                         
-                        end else begin                          // HALT
-                            
-                            o_take_jump <= 1'b0;
-                            o_take_jump_r <= 1'b0;
-                            o_take_branch <= 1'b0;
-                            o_branch_neq <= 1'b0;
-                            o_reg_write <= 1'b0;
-                            o_gpr31 <= 1'b0;
-
-                            
                         end
                     
+                    end else begin                                  // (111) HALT
+                        
+                        o_reg_dst <= 1'b0;
+                        o_reg_write <= 1'b0;
+                        o_alu_src <= 1'b0;
+                        o_mem_write <= 1'b0;
+                        o_mem_to_reg <= 1'b0;
+                        o_pc_4_wb <= 1'b0;
+                        o_gpr31 <= 1'b0;
+                        o_mem_width <= 4'b0000;
+                        o_less_wb <= 1'b0;
+                        o_take_jump <= 1'b0;
+                        o_take_jump_r <= 1'b0;
+                        o_take_branch <= 1'b0;
+                        o_branch_neq <= 1'b0;
+                        
                     end
                 
                 end

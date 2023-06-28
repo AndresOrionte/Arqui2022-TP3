@@ -24,15 +24,10 @@ module Integracion(
     
     input wire i_clk,
     input wire i_reset,
-
-    input wire i_eor,
-    input wire i_err,
-    input wire [7:0] i_recept_byte,
-    input wire i_sending_flag,
     
-    output wire o_send_start,
-    output wire [7:0] o_send_byte
+    input wire i_rx,
     
+    output wire o_tx
     );
     
     wire [31:0] pc_0;
@@ -80,6 +75,9 @@ module Integracion(
     assign o_send_start = send_start_debug;
     assign o_send_byte = send_byte_debug;
     
+    wire eor, sending_flag, err;
+    wire [7:0] recept_byte;
+    
     Etapa_IF Etapa_0(i_clk, reset_out_debug, (block_latchs_debug | block_pc_udr), reset_pc_debug, sel_dir_mem_instr_debug, dir_mem_instr_debug, dato_mem_instr_debug, 
                         flag_esc_mem_instr_debug, (block_latchs_debug | block_latch_1_udr), take_jump_0, jump_address, take_jump_r_0, jump_r_address, 
                         take_branch_0, branch_address, pc_p4_0, instruccion_0, pc_0);
@@ -102,8 +100,10 @@ module Integracion(
     UnidadDeDeteccionDeRiesgos Udr_0(reset_out_debug, take_jump_r_uc, take_branch_uc, mem_to_reg_2, reg_dst_1, instruccion_1[25:21], instruccion_1[20:16], reg_esc_2, post_bloqueo_1_1,
                                         post_bloqueo_2_1, block_pc_udr, block_latch_1_udr, block_latch_2_udr, reset_signals, reset_latch_exmem, post_bloqueo_1_0, post_bloqueo_2_0);
     
-    UnidadDeDebug Ud_0(i_clk, i_reset, i_eor, i_err, i_recept_byte, i_sending_flag, pc_0, lec_reg_debug, lec_mem_datos_debug, instruccion_0[31:26],
+    UnidadDeDebug Udebug_0(i_clk, i_reset, eor, err, recept_byte, sending_flag, pc_0, lec_reg_debug, lec_mem_datos_debug, instruccion_0[31:26],
                         send_start_debug, send_byte_debug, reset_out_debug, reset_pc_debug, block_latchs_debug, sel_dir_mem_instr_debug, flag_esc_mem_instr_debug,
                         dir_mem_instr_debug, dato_mem_instr_debug, sel_dir_un_reg_debug, dir_un_reg_debug, sel_dir_mem_datos_debug, dir_mem_datos_debug);
+    
+    UART #2 UART_0(i_clk, i_reset, i_rx, send_start_debug, send_byte_debug, o_tx, eor, sending_flag, recept_byte, err);
     
 endmodule
