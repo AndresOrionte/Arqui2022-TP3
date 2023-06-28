@@ -104,6 +104,6 @@ module Integracion(
                         send_start_debug, send_byte_debug, reset_out_debug, reset_pc_debug, block_latchs_debug, sel_dir_mem_instr_debug, flag_esc_mem_instr_debug,
                         dir_mem_instr_debug, dato_mem_instr_debug, sel_dir_un_reg_debug, dir_un_reg_debug, sel_dir_mem_datos_debug, dir_mem_datos_debug);
     
-    UART #2 UART_0(i_clk, i_reset, i_rx, send_start_debug, send_byte_debug, o_tx, eor, sending_flag, recept_byte, err);
+    UART UART_0(i_clk, i_reset, i_rx, send_start_debug, send_byte_debug, o_tx, eor, sending_flag, recept_byte, err);
     
 endmodule

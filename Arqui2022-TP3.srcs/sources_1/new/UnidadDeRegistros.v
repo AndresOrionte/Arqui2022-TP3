@@ -41,14 +41,11 @@ module UnidadDeRegistros(
     
         if(i_reset) begin
             
-            o_dato_1 <= 32'h00000000;
-            o_dato_2 <= 32'h00000000;
             for(i=0; i<32; i=i+1) begin
                 mem[i] <= 32'h00000000;
             end
             
         end else begin
-            #0.1
             if(i_flag_reg_write & (i_reg_esc != 5'b00000 )) begin
                 
                 mem[i_reg_esc] = i_dato_esc;
@@ -59,8 +56,17 @@ module UnidadDeRegistros(
     
     always @(negedge i_clk) begin
         
-        o_dato_1 = mem[i_reg_lec_1];
-        o_dato_2 = mem[i_reg_lec_2];
+        if(i_reset) begin
+            
+            o_dato_1 <= 32'h00000000;
+            o_dato_2 <= 32'h00000000;
+            
+        end else begin
+            
+            o_dato_1 = mem[i_reg_lec_1];
+            o_dato_2 = mem[i_reg_lec_2];
+            
+        end
         
     end 
     

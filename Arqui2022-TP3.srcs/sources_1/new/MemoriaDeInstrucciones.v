@@ -45,7 +45,6 @@ module MemoriaDeInstrucciones
             if(i_flag_escritura) begin      // Si esta levantado el flag de escritura escribo la palabra indicada en la posicion indicada
                 {mem[i_direccion[7:0]+2'b11], mem[i_direccion[7:0]+2'b10], mem[i_direccion[7:0]+2'b01], mem[i_direccion[7:0]]} = i_escritura;
             end else begin                  // En otro caso saco la instruccion indicada 
-                #0.1
                 o_instruccion = {mem[i_direccion[7:0]+2'b11], mem[i_direccion[7:0]+2'b10], mem[i_direccion[7:0]+2'b01], mem[i_direccion[7:0]]};
             end
         end

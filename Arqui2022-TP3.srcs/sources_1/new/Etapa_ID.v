@@ -97,10 +97,10 @@ module Etapa_ID(
     
     UnidadDeRegistros Regs_0(i_clk, i_reset, reg_1, i_instruccion[20:16], i_reg_esc, i_dato_esc, i_reg_write, dato_1, dato_2);
     
-    UnidadDeControl_Signals UCS_0(i_clk, (i_reset | i_reset_signals), i_instruccion[31:26], reg_dst, reg_write, alu_src, mem_write, mem_to_reg, 
+    UnidadDeControl_Signals UCS_0((i_reset | i_reset_signals), i_instruccion[31:26], reg_dst, reg_write, alu_src, mem_write, mem_to_reg, 
                                     pc_4_wb, gpr31, mem_width, less_wb, o_take_jump, take_jump_r, take_branch, branch_neq);
     
-    UnidadDeControl_ALUOP UCA_0(i_clk, i_reset, i_instruccion[31:26], aluop);
+    UnidadDeControl_ALUOP UCA_0(i_reset, i_instruccion[31:26], aluop);
     
     ExtensorDePalabra #16 ExtP_0(i_instruccion[15:0], inmediato_ext);
     

@@ -22,7 +22,6 @@
 
 module UnidadDeControl_Signals(
 
-    input wire i_clk,
     input wire i_reset,
     input wire [5:0] i_op_code,
     

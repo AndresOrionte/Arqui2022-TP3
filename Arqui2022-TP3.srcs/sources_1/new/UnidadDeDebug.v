@@ -46,7 +46,7 @@ module UnidadDeDebug(
     output reg [31:0] o_dir_mem_instr,
     output reg [31:0] o_dato_mem_instr,
     output reg o_sel_un_reg,
-    output reg [31:0] o_dir_un_reg,
+    output reg [4:0] o_dir_un_reg,
     output reg o_sel_mem_datos,
     output reg [31:0] o_dir_mem_datos
     );
@@ -103,7 +103,7 @@ module UnidadDeDebug(
             o_dir_mem_instr <= 32'h00000000;
             o_dato_mem_instr <= 32'h00000000;
             o_sel_un_reg <= 1'b0;
-            o_dir_un_reg <= 32'h00000000;
+            o_dir_un_reg <= 5'b00000;
             o_sel_mem_datos <= 1'b0;
             o_dir_mem_datos <= 32'h00000000;
             
