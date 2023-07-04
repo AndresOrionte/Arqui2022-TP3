@@ -172,7 +172,7 @@ module UnidadDeDebug(
                         
                         o_sel_un_reg <= 1'b0;
                         o_sel_mem_datos <= 1'b1;
-                        o_dir_mem_datos <= read_pointer;
+                        o_dir_mem_datos <= read_pointer << 2;
                         read_pointer <= read_pointer + 1;
                         read_send_word <= i_dato_mem_datos;
                         
