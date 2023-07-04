@@ -137,7 +137,7 @@ module UnidadDeDebug(
             read_flag <= 1;
             read_change_flag <= 1'b1;
             read_pointer <= 5'b00000;
-            read_byte_counter <= 2'b11;
+            read_byte_counter <= 2'b00;
             read_stage <= 2'b00;
             
             o_block <= 1'b1;
@@ -195,8 +195,8 @@ module UnidadDeDebug(
                     
                     o_send_byte <= read_send_word [31:24];
                     o_send_start <= 1'b1;
-                    read_send_word = read_send_word << 8;
-                    read_byte_counter = read_byte_counter + 1'b1;
+                    read_send_word <= read_send_word << 8;
+                    read_byte_counter <= read_byte_counter + 1'b1;
                     
                     if(read_byte_counter == 2'b11) begin
                         
