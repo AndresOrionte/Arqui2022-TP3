@@ -48,7 +48,8 @@ module UnidadDeDebug(
     output reg o_sel_un_reg,
     output reg [4:0] o_dir_un_reg,
     output reg o_sel_mem_datos,
-    output reg [31:0] o_dir_mem_datos
+    output reg [31:0] o_dir_mem_datos,
+    output wire [3:0] o_state
     );
     
     localparam STATE_WAITING = 4'b0001;
@@ -84,6 +85,8 @@ module UnidadDeDebug(
     
     reg halt_found_flag;
     reg [1:0] post_halt_counter;
+    
+    assign o_state = state;
     
     always @(posedge i_clk) begin
         

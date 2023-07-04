@@ -1,11 +1,11 @@
-`timescale 1ns / 1ns
+`timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
 // Engineer: 
 // 
-// Create Date: 23.05.2023 22:26:54
+// Create Date: 03.07.2023 20:12:46
 // Design Name: 
-// Module Name: Integracion_Test
+// Module Name: MIPS_Test
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module Integracion_Test();
+module MIPS_Test();
 
     reg i_clk, i_reset;
     
@@ -34,11 +34,11 @@ module Integracion_Test();
     wire eor, err;
     
     wire [3:0] state;
-    wire locked;
+
     
-    Integracion #162 Int_0(i_clk, i_reset, i_rx, o_tx, state, locked);
+    MIPS #2 M_0(i_clk, i_reset, i_rx, o_tx, state);
     
-    UART_BRG #651 B0(i_clk, i_reset, tick);
+    UART_BRG #2 B0(i_clk, i_reset, tick);
     
     UART_Transmitter T0(i_clk, i_reset, tick, send_start, send_byte, i_rx, sending);
     
@@ -55,18 +55,13 @@ module Integracion_Test();
         #10
         i_reset = 0;
         
-        #250
-        i_reset = 1;
-        #1
-        i_reset = 0;
-        
         #5 //P
         send_start = 1;
         send_byte = 8'h50;
         #1
         send_start = 0;
         
-        #1999 //Cantidad instrucciones
+        #369 //Cantidad instrucciones
         send_start = 1;
         send_byte = 6;
         #1
@@ -239,3 +234,4 @@ module Integracion_Test();
 
 
 endmodule
+
