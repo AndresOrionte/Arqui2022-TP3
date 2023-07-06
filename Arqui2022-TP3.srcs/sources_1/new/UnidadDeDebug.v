@@ -21,6 +21,7 @@
 
 
 module UnidadDeDebug(
+
     input wire i_clk,
     input wire i_reset,
     
@@ -83,6 +84,8 @@ module UnidadDeDebug(
     reg [1:0] read_byte_counter;
     reg [1:0] read_stage;
     
+    reg [1:0] read_nededge_action;
+    
     reg halt_found_flag;
     reg [1:0] post_halt_counter;
     
@@ -130,9 +133,10 @@ module UnidadDeDebug(
             read_byte_counter <= 2'b00;
             read_stage <= 2'b00;
             
-        end else if(read_call_flag) begin
+            read_nededge_action <= 2'b00;
+            
+        end else if(read_call_flag) begin           // Preparacion para comenzar la lectura
                 
-            // Preparacion para comenzar la lectura
             read_call_flag <= 0;
             read_flag <= 1;
             read_change_flag <= 1'b1;
@@ -142,7 +146,7 @@ module UnidadDeDebug(
             
             o_block <= 1'b1;
             
-        end else if(read_flag) begin
+        end else if(read_flag) begin                // Rutina de lectura
             
             if(!i_sending_flag) begin
                 
@@ -152,19 +156,23 @@ module UnidadDeDebug(
                     
                     if(read_stage == 2'b00) begin
                         
-                        read_send_word <= i_PC;
+                        read_send_word <= i_PC; //PC debo tomarlo aqui en posedge porque actualiza en negedge
                         read_stage <= 2'b01;
                         
                     end else if(read_stage == 2'b01) begin
                         
                         o_sel_un_reg <= 1'b1;
                         o_dir_un_reg <= read_pointer;
-                        read_pointer <= read_pointer + 1;
-                        read_send_word <= i_dato_reg;
+                        read_nededge_action <= 2'b01;
                         
                         if(read_pointer == 5'b11111) begin
                             
                             read_stage <= 2'b10;
+                            read_pointer <= 5'b00000;
+                            
+                        end else begin
+                            
+                            read_pointer <= read_pointer + 1;
                             
                         end
                         
@@ -173,12 +181,16 @@ module UnidadDeDebug(
                         o_sel_un_reg <= 1'b0;
                         o_sel_mem_datos <= 1'b1;
                         o_dir_mem_datos <= read_pointer << 2;
-                        read_pointer <= read_pointer + 1;
-                        read_send_word <= i_dato_mem_datos;
+                        read_nededge_action <= 2'b10;
                         
                         if(read_pointer == 5'b11111) begin
                             
                             read_stage <= 2'b11;
+                            read_pointer <= 5'b00000;
+                            
+                        end else begin
+                            
+                            read_pointer <= read_pointer + 1;
                             
                         end
                         
@@ -212,7 +224,7 @@ module UnidadDeDebug(
                 
             end
             
-        end else begin
+        end else begin                          // Maquina de estados
             
             case(state)
             
@@ -347,57 +359,28 @@ module UnidadDeDebug(
                         read_call_flag <= 1'b1;
                         
                     end else begin
-                                          
-                        if(halt_found_flag == 1'b0) begin
-                            
-                            o_block <= 1'b1;
                         
-                            if(i_OP_code == 6'b111111) begin
-                                
-                                halt_found_flag <= 1'b1;
-                                post_halt_counter <= 2'b00;
-                                
-                            end else if(i_eor) begin
-                                
-                                case(i_recept_byte)
-                                    
-                                    C_ascii: begin
-                                        
-                                        state <= STATE_CONTINUOUS;
-                                        
-                                    end
-                                    
-                                    S_ascii: begin
-                                        
-                                        state_step_flag <= 1'b1;
-                                        
-                                    end
-                                    
-                                    X_ascii: begin
-                                        
-                                        state <= STATE_WAITING;
-                                        
-                                    end
-                                    
-                                endcase
-                                
-                            end
+                        o_block <= 1'b1;
+                        
                             
-                        end else begin
-                            
-                            if(post_halt_counter != 2'b01) begin
+                        if(i_eor) begin
                                 
-                                post_halt_counter <= post_halt_counter + 1;
+                            case(i_recept_byte)
                                 
-                            end else begin
+                                S_ascii: begin
+                                    
+                                    state_step_flag <= 1'b1;
+                                    
+                                end
                                 
-                                halt_found_flag <= 1'b0;
-                                o_block <= 1'b1;
-                                state <= STATE_WAITING;
-                                read_call_flag <= 1'b1;
+                                X_ascii: begin
+                                    
+                                    state <= STATE_WAITING;
+                                    
+                                end
                                 
-                            end
-                            
+                            endcase
+                                
                         end
                         
                     end
@@ -407,6 +390,22 @@ module UnidadDeDebug(
             endcase
             
         end
+    end
+    
+    always @(negedge i_clk) begin
+        #0.1
+        if(read_nededge_action == 2'b01) begin
+            
+            read_send_word <= i_dato_reg;
+            read_nededge_action <= 2'b00;
+            
+        end else if(read_nededge_action == 2'b10) begin
+            
+            read_send_word <= i_dato_mem_datos;
+            read_nededge_action <= 2'b00;
+            
+        end
+        
     end
     
 endmodule
