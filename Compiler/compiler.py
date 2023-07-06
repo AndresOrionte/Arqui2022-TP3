@@ -256,31 +256,43 @@ try:
 finally:
     asm_file.close()
 
-# En binario
+
+# En decimal
 try:
-    bin_file = open("./Compiler/binary_code.txt", "w")
+    d_file = open("./Compiler/decimal_code.txt", "w")
+    print(len(asm_tokens), end=' ')                     #PC
     for inst in asm_tokens:
         binary_code = asm.instruction_generator(inst)
-        bin_file.write(binary_code + '\n')
         for i in range(0, len(binary_code), 8):
-            binary_chunk = binary_code[i:i+8]
-            decimal_value = str(int(binary_chunk, 2))
-            #print("Binario:", binary_chunk)
-            print(decimal_value)
-        print("---")
+            d_chunk = binary_code[i:i+8]
+            decimal_value = str(int(d_chunk, 2))
+            d_file.write(decimal_value + ' ')           #ESCRIBO EN EL ARCHIVO EL VALOR EN DECIMAL, SEPARADO POR ESPACIO PARA QUE QUEDE EN LA MISMA LINEA
+            print(decimal_value, end=' ')
 finally:
-    bin_file.close()
+    d_file.close()
+
+# # En binario
+# try:
+#     bin_file = open("./Compiler/binary_code.txt", "w")
+#     for inst in asm_tokens:
+#         binary_code = asm.instruction_generator(inst)
+#         bin_file.write(binary_code)
+#         for i in range(0, len(binary_code), 8):
+#             binary_chunk = binary_code[i:i+8]
+#             print(binary_chunk)
+# finally:
+#     bin_file.close()
  
-# En hexa
-hex_code = ""
-try:
-    hex_file = open("./Compiler/hex_code.txt", "w")
-    hex_file.write(str(len(asm_tokens)) + '\n')
-    print(len(asm_tokens))
-    for inst in asm_tokens:
-        binary_code = asm.instruction_generator(inst)
-        hex_code = hex(int(binary_code, 2))[2:].zfill(len(binary_code) // 4)
-        hex_file.write(hex_code + '\n')
-        print("Hexa:", hex_code)
-finally:
-    hex_file.close()
+# # En hexa
+# hex_code = ""
+# try:
+#     hex_file = open("./Compiler/hex_code.txt", "w")
+#     hex_file.write(str(len(asm_tokens)) + '\n')
+#     print(len(asm_tokens))
+#     for inst in asm_tokens:
+#         binary_code = asm.instruction_generator(inst)
+#         hex_code = hex(int(binary_code, 2))[2:].zfill(len(binary_code) // 4)
+#         hex_file.write(hex_code + '\n')
+#         print("Hexa:", hex_code)
+# finally:
+#     hex_file.close()
