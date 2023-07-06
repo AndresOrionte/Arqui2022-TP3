@@ -260,9 +260,14 @@ finally:
 try:
     bin_file = open("./Compiler/binary_code.txt", "w")
     for inst in asm_tokens:
-        binary_code = (asm.instruction_generator(inst))
-        bin_file.write(binary_code+'\n')
-        print(binary_code)
+        binary_code = asm.instruction_generator(inst)
+        bin_file.write(binary_code + '\n')
+        for i in range(0, len(binary_code), 8):
+            binary_chunk = binary_code[i:i+8]
+            decimal_value = str(int(binary_chunk, 2))
+            #print("Binario:", binary_chunk)
+            print(decimal_value)
+        print("---")
 finally:
     bin_file.close()
  
@@ -276,6 +281,6 @@ try:
         binary_code = asm.instruction_generator(inst)
         hex_code = hex(int(binary_code, 2))[2:].zfill(len(binary_code) // 4)
         hex_file.write(hex_code + '\n')
-        print(hex_code)
+        print("Hexa:", hex_code)
 finally:
     hex_file.close()
