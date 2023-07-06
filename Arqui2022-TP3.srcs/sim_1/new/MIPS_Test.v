@@ -44,7 +44,17 @@ module MIPS_Test();
     
     UART_Receiver R0(i_clk, i_reset, tick, o_tx, word, eor, err);
     
-
+    
+    // LUI R4 170
+    // LUI R5 5
+    // ADD R6 R4 R5
+    // ADD R6 R4 R6
+    // ADD R6 R5 R6
+    // SW (R0+4) R6
+    // HALT
+    // Comprueba a la perfeccion todos los casos de funcionamiento de la unidad de cortocircuitos
+    // Funcionando todo en orden!
+    /*
     initial begin
         
         i_clk = 1;
@@ -63,7 +73,7 @@ module MIPS_Test();
         
         #369 //Cantidad instrucciones
         send_start = 1;
-        send_byte = 6;
+        send_byte = 7;
         #1
         send_start = 0;
         
@@ -167,7 +177,32 @@ module MIPS_Test();
         #1
         send_start = 0;
         
-        // SW
+        // ADD R6 R5 R6
+        #369
+        send_start = 1;
+        send_byte = 8'b00000100;
+        #1
+        send_start = 0;
+        
+        #369
+        send_start = 1;
+        send_byte = 8'b10100110;
+        #1
+        send_start = 0;
+        
+        #369
+        send_start = 1;
+        send_byte = 8'b00110000;
+        #1
+        send_start = 0;
+        
+        #369
+        send_start = 1;
+        send_byte = 8'b00000000;
+        #1
+        send_start = 0;
+        
+        // SW (R0+4) R6
         #369
         send_start = 1;
         send_byte = 8'b10110000;
@@ -216,15 +251,65 @@ module MIPS_Test();
         send_byte = 8'b00000000;
         #1
         send_start = 0;
-        
-        // PRUEBA MODO CONTINUO
-        
+
+        // PRUEBA MODO STEP
         #369
         send_start = 1;
-        send_byte = 8'h43;
+        send_byte = 8'h53;
         #1
         send_start = 0;
+        
+        #99999
+        send_start = 1;
+        send_byte = 8'h53;
+        #1
+        send_start = 0;
+        
+        #99999
+        send_start = 1;
+        send_byte = 8'h53;
+        #1
+        send_start = 0;
+        
+        #99999
+        send_start = 1;
+        send_byte = 8'h53;
+        #1
+        send_start = 0;
+        
+        #99999
+        send_start = 1;
+        send_byte = 8'h53;
+        #1
+        send_start = 0;
+        
+        #99999
+        send_start = 1;
+        send_byte = 8'h53;
+        #1
+        send_start = 0;
+        
+        #99999
+        send_start = 1;
+        send_byte = 8'h53;
+        #1
+        send_start = 0;
+        
+        #99999
+        send_start = 1;
+        send_byte = 8'h53;
+        #1
+        send_start = 0;
+        
+        #99999
+        send_start = 1;
+        send_byte = 8'h53;
+        #1
+        send_start = 0;
+        
     end
+    */
+    
     
     // Clk de periodo 1
     always begin
