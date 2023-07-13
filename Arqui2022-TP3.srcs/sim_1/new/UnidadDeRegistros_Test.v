@@ -37,7 +37,7 @@ module UnidadDeRegistros_Test();
     
     initial begin
         
-        i_clk = 0;
+        i_clk = 1;
         i_reg_lec_1 = 5'b00000;
         i_reg_lec_2 = 5'b00000;
         i_reg_esc = 5'b00000;

@@ -37,7 +37,8 @@ module UnidadDeControl_Signals(
     output reg o_take_jump,
     output reg o_take_jump_r,
     output reg o_take_branch,
-    output reg o_branch_neq
+    output reg o_branch_neq,
+    output reg o_halt
     );
     
     
@@ -58,6 +59,7 @@ module UnidadDeControl_Signals(
             o_take_jump_r <= 1'b0;
             o_take_branch <= 1'b0;
             o_branch_neq <= 1'b0;
+            o_halt <= 1'b0;
             
         end else begin
            
@@ -79,6 +81,7 @@ module UnidadDeControl_Signals(
                     o_take_jump_r <= 1'b0;
                     o_take_branch <= 1'b0;
                     o_branch_neq <= 1'b0;
+                    o_halt <= 1'b0;
                 
                 end else begin
                 
@@ -92,6 +95,7 @@ module UnidadDeControl_Signals(
                     o_take_jump_r <= 1'b0;
                     o_take_branch <= 1'b0;
                     o_branch_neq <= 1'b0;
+                    o_halt <= 1'b0;
                     
                     o_reg_dst <= !i_op_code[4];
                     o_alu_src <= i_op_code[4];
@@ -120,6 +124,7 @@ module UnidadDeControl_Signals(
                     o_take_jump_r <= 1'b0;
                     o_take_branch <= 1'b0;
                     o_branch_neq <= 1'b0;
+                    o_halt <= 1'b0;
                     
                     if(!i_op_code[3]) begin                     // (10) 0 = Operaciones tipo I(L)
                     
@@ -171,6 +176,7 @@ module UnidadDeControl_Signals(
                         o_pc_4_wb <= 1'b1;
                         //o_mem_width <= 4'bXXXX;
                         //o_less_wb <= 1'bX;
+                        o_halt <= 1'b0;
                         
                         if(!i_op_code[2]) begin                     // (110) 0 = Operaciones tipo Jump
                         
@@ -209,6 +215,7 @@ module UnidadDeControl_Signals(
                         o_take_jump_r <= 1'b0;
                         o_take_branch <= 1'b0;
                         o_branch_neq <= 1'b0;
+                        o_halt <= 1'b1;
                         
                     end
                 

@@ -62,6 +62,7 @@ module Etapa_ID(
     output wire o_take_jump_r,
     output wire o_take_branch,
     output wire o_branch_neq,
+    output wire o_halt,
     // Deteccion de riesgo
     output wire o_post_bloqueo,
     output wire o_take_jump_r_uc,     //Salida de la señal directa desde Unidad de Control (para deteccion de riesgos)
@@ -75,7 +76,7 @@ module Etapa_ID(
     wire [31:0] dato_1;
     wire [31:0] dato_2;
     
-    wire reg_dst, reg_write, alu_src, mem_write, mem_to_reg, pc_4_wb, gpr31, less_wb, take_jump_r, take_branch, branch_neq;
+    wire reg_dst, reg_write, alu_src, mem_write, mem_to_reg, pc_4_wb, gpr31, less_wb, take_jump_r, take_branch, branch_neq, halt;
     wire [3:0] mem_width;
     
     wire [5:0] aluop;
@@ -98,7 +99,7 @@ module Etapa_ID(
     UnidadDeRegistros Regs_0(i_clk, i_reset, reg_1, i_instruccion[20:16], i_reg_esc, i_dato_esc, i_reg_write, dato_1, dato_2);
     
     UnidadDeControl_Signals UCS_0((i_reset | i_reset_signals), i_instruccion[31:26], reg_dst, reg_write, alu_src, mem_write, mem_to_reg, 
-                                    pc_4_wb, gpr31, mem_width, less_wb, o_take_jump, take_jump_r, take_branch, branch_neq);
+                                    pc_4_wb, gpr31, mem_width, less_wb, o_take_jump, take_jump_r, take_branch, branch_neq, halt);
     
     UnidadDeControl_ALUOP UCA_0(i_reset, i_instruccion[31:26], aluop);
     
@@ -113,9 +114,9 @@ module Etapa_ID(
     Sumador Sumador_0(jump_address_ext, i_pc_p4, o_jump_address);
     
     LatchIDEX Latch_2(i_clk, i_reset, i_block_latch, i_pc_p4, dato_1, dato_2, operando_b, i_instruccion, aluop, less_wb, mem_width, gpr31, pc_4_wb, 
-                        reg_dst, mem_to_reg, mem_write, reg_write, take_jump_r, take_branch, branch_neq, i_post_bloqueo, o_pc_p4, 
+                        reg_dst, mem_to_reg, mem_write, reg_write, take_jump_r, take_branch, branch_neq,  halt, i_post_bloqueo, o_pc_p4, 
                         o_dato_1, o_dato_2, o_operando_b, o_instruccion, o_aluop, o_less_wb, o_mem_width, o_gpr31, o_pc_4_wb, o_reg_dst, o_mem_to_reg, 
-                        o_mem_write, o_reg_write, o_take_jump_r, o_take_branch, o_branch_neq, o_post_bloqueo);
+                        o_mem_write, o_reg_write, o_take_jump_r, o_take_branch, o_branch_neq, o_halt, o_post_bloqueo);
     
     
     

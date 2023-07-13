@@ -33,7 +33,7 @@ module UnidadDeDebug(
     input wire [31:0] i_PC,
     input wire [31:0] i_dato_reg,
     input wire [31:0] i_dato_mem_datos,
-    input wire [5:0] i_OP_code,
+    input wire i_halt,
     
     output reg o_send_start,
     output reg [7:0] o_send_byte,
@@ -51,6 +51,7 @@ module UnidadDeDebug(
     output reg o_sel_mem_datos,
     output reg [31:0] o_dir_mem_datos,
     output wire [3:0] o_state
+    
     );
     
     localparam STATE_WAITING = 4'b0001;
@@ -83,15 +84,11 @@ module UnidadDeDebug(
     reg [31:0] read_send_word;
     reg [1:0] read_byte_counter;
     reg [1:0] read_stage;
-    
-    reg [1:0] read_nededge_action;
-    
-    reg halt_found_flag;
-    reg [1:0] post_halt_counter;
+    reg [1:0] read_delay_flag;
     
     assign o_state = state;
     
-    always @(posedge i_clk) begin
+    always @(negedge i_clk) begin
         
         if(i_reset) begin
             
@@ -119,9 +116,6 @@ module UnidadDeDebug(
             state_program_byte_counter <= 2'b00;
             state_program_instruction <= 32'h00000000;
             
-            halt_found_flag <= 1'b0;
-            post_halt_counter <= 2'b00;
-            
             state_step_flag <= 1'b0;
             
             read_call_flag <= 1'b0;
@@ -132,8 +126,7 @@ module UnidadDeDebug(
             read_send_word <= 32'h00000000;
             read_byte_counter <= 2'b00;
             read_stage <= 2'b00;
-            
-            read_nededge_action <= 2'b00;
+            read_delay_flag <= 2'b00;
             
         end else if(read_call_flag) begin           // Preparacion para comenzar la lectura
                 
@@ -143,36 +136,53 @@ module UnidadDeDebug(
             read_pointer <= 5'b00000;
             read_byte_counter <= 2'b00;
             read_stage <= 2'b00;
+            read_delay_flag <= 2'b00;
             
             o_block <= 1'b1;
             
         end else if(read_flag) begin                // Rutina de lectura
             
-            if(!i_sending_flag) begin
+            if(!i_sending_flag) begin               // Si UART no esta enviando nada
                 
-                if(read_change_flag == 1'b1) begin
+                if(read_change_flag == 1'b1) begin  // Seleccion del registro a enviar
                     
                     o_send_start <= 1'b0;
                     
                     if(read_stage == 2'b00) begin
                         
-                        read_send_word <= i_PC; //PC debo tomarlo aqui en posedge porque actualiza en negedge
-                        read_stage <= 2'b01;
+                        if(read_delay_flag != 2'b10) begin
+                            read_delay_flag <= read_delay_flag + 1;
+                        end else begin
+                            read_send_word <= i_PC;
+                            read_stage <= 2'b01;
+                            read_change_flag <= 1'b0;
+                            read_delay_flag <= 2'b00;
+                        end
                         
                     end else if(read_stage == 2'b01) begin
                         
                         o_sel_un_reg <= 1'b1;
                         o_dir_un_reg <= read_pointer;
-                        read_nededge_action <= 2'b01;
                         
-                        if(read_pointer == 5'b11111) begin
-                            
-                            read_stage <= 2'b10;
-                            read_pointer <= 5'b00000;
-                            
+                        if(read_delay_flag != 2'b10) begin
+                            read_delay_flag <= read_delay_flag + 1;
                         end else begin
+                        
+                            read_send_word <= i_dato_reg;
                             
-                            read_pointer <= read_pointer + 1;
+                            if(read_pointer == 5'b11111) begin
+                                
+                                read_stage <= 2'b10;
+                                read_pointer <= 5'b00000;
+                                
+                            end else begin
+                                
+                                read_pointer <= read_pointer + 1;
+                                
+                            end
+                            
+                            read_change_flag <= 1'b0;
+                            read_delay_flag <= 2'b00;
                             
                         end
                         
@@ -181,17 +191,27 @@ module UnidadDeDebug(
                         o_sel_un_reg <= 1'b0;
                         o_sel_mem_datos <= 1'b1;
                         o_dir_mem_datos <= read_pointer << 2;
-                        read_nededge_action <= 2'b10;
                         
-                        if(read_pointer == 5'b11111) begin
-                            
-                            read_stage <= 2'b11;
-                            read_pointer <= 5'b00000;
-                            
+                        if(read_delay_flag != 2'b10) begin
+                            read_delay_flag <= read_delay_flag + 1;
                         end else begin
+                        
+                            read_send_word <= i_dato_mem_datos;
                             
-                            read_pointer <= read_pointer + 1;
+                            if(read_pointer == 5'b11111) begin
+                                
+                                read_stage <= 2'b11;
+                                read_pointer <= 5'b00000;
+                                
+                            end else begin
+                                
+                                read_pointer <= read_pointer + 1;
+                                
+                            end
                             
+                            read_change_flag <= 1'b0;
+                            read_delay_flag <= 2'b00;
+                        
                         end
                         
                     end else begin
@@ -201,9 +221,7 @@ module UnidadDeDebug(
                         
                     end
                     
-                    read_change_flag <= 1'b0;
-                    
-                end else begin
+                end else begin                  // Envio del registro seleccionado
                     
                     o_send_byte <= read_send_word [31:24];
                     o_send_start <= 1'b1;
@@ -316,34 +334,16 @@ module UnidadDeDebug(
                 
                 STATE_CONTINUOUS: begin
                     
-                    if(halt_found_flag == 1'b0) begin
+                    if(i_halt == 1'b0) begin
                         
-                        if(i_OP_code != 6'b111111) begin
-                            
-                            o_block <= 1'b0; 
-                            o_reset_PC <= 1'b0;
-                            
-                        end else begin
-                            
-                            post_halt_counter <= 2'b00;
-                            halt_found_flag <= 1'b1;
-                            
-                        end
+                        o_block <= 1'b0;
+                        o_reset_PC <= 1'b0;
                         
                     end else begin
                         
-                        if(post_halt_counter != 2'b01) begin
-                            
-                            post_halt_counter <= post_halt_counter + 1;
-                            
-                        end else begin
-                            
-                            halt_found_flag <= 1'b0;
-                            o_block <= 1'b1;
-                            state <= STATE_WAITING;
-                            read_call_flag <= 1'b1;
-                            
-                        end
+                        o_block <= 1'b1;
+                        state <= STATE_WAITING;
+                        read_call_flag <= 1'b1;
                         
                     end
                     
@@ -362,25 +362,38 @@ module UnidadDeDebug(
                         
                         o_block <= 1'b1;
                         
+                        if(i_halt == 1'b0) begin
                             
-                        if(i_eor) begin
-                                
-                            case(i_recept_byte)
-                                
-                                S_ascii: begin
+                            if(i_eor) begin
                                     
-                                    state_step_flag <= 1'b1;
+                                case(i_recept_byte)
                                     
-                                end
-                                
-                                X_ascii: begin
+                                    C_ascii: begin
+                                        
+                                        state <= STATE_CONTINUOUS;
+                                        
+                                    end
                                     
-                                    state <= STATE_WAITING;
+                                    S_ascii: begin
+                                        
+                                        state_step_flag <= 1'b1;
+                                        
+                                    end
                                     
-                                end
-                                
-                            endcase
-                                
+                                    X_ascii: begin
+                                        
+                                        state <= STATE_WAITING;
+                                        
+                                    end
+                                    
+                                endcase
+                                    
+                            end
+                            
+                        end else begin
+                            
+                            state <= STATE_WAITING;
+                            
                         end
                         
                     end
@@ -390,22 +403,6 @@ module UnidadDeDebug(
             endcase
             
         end
-    end
-    
-    always @(negedge i_clk) begin
-        #0.1
-        if(read_nededge_action == 2'b01) begin
-            
-            read_send_word <= i_dato_reg;
-            read_nededge_action <= 2'b00;
-            
-        end else if(read_nededge_action == 2'b10) begin
-            
-            read_send_word <= i_dato_mem_datos;
-            read_nededge_action <= 2'b00;
-            
-        end
-        
     end
     
 endmodule

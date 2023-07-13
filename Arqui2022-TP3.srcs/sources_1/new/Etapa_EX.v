@@ -60,6 +60,7 @@ module Etapa_EX(
     input wire i_pc_4_wb,
     input wire [3:0] i_mem_width,
     input wire i_less_wb,
+    input wire i_halt,
     
     //Outputs hacia atras, para jumps y branchs
     output wire o_take_jump_r,
@@ -79,7 +80,8 @@ module Etapa_EX(
     output wire o_mem_to_reg,
     output wire o_pc_4_wb,
     output wire [3:0] o_mem_width,
-    output wire o_less_wb
+    output wire o_less_wb,
+    output wire o_halt
 
     );
     
@@ -126,8 +128,8 @@ module Etapa_EX(
     Mux2 #5 Mux_escritura_1(i_gpr31, reg_esc_0, literal_31, reg_esc_1);
     
     LatchEXMEM Latch_3(i_clk, (i_reset | i_reset_latch), i_block_latch, i_pc_p4, resultado, carry, dato_2_forward, reg_esc_1, i_reg_write, i_mem_write, i_mem_to_reg, 
-                        i_pc_4_wb, i_mem_width, i_less_wb, o_pc_p4, o_resultado, o_carry, o_dato_2, o_reg_esc, o_reg_write, o_mem_write, 
-                        o_mem_to_reg, o_pc_4_wb, o_mem_width, o_less_wb);
+                        i_pc_4_wb, i_mem_width, i_less_wb, i_halt, o_pc_p4, o_resultado, o_carry, o_dato_2, o_reg_esc, o_reg_write, o_mem_write, 
+                        o_mem_to_reg, o_pc_4_wb, o_mem_width, o_less_wb, o_halt);
     
     
 endmodule

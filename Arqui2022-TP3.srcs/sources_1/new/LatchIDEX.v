@@ -22,6 +22,7 @@ module LatchIDEX(
     input wire i_TakeJumpR,
     input wire i_TakeBranch,
     input wire i_BranchNEQ,
+    input wire i_Halt,
     //De la unidad de deteccion de riesgo
     input wire i_PostBloqueo,
     
@@ -43,6 +44,7 @@ module LatchIDEX(
     output reg o_TakeJumpR,
     output reg o_TakeBranch,
     output reg o_BranchNEQ,
+    output reg o_Halt,
     // Deteccion de riesgo
     output reg o_PostBloqueo
     );
@@ -69,6 +71,7 @@ module LatchIDEX(
             o_TakeBranch <= 1'b0;
             o_BranchNEQ <= 1'b0;
             o_PostBloqueo <= 1'b0;
+            o_Halt <= 1'b0;
         
         end else begin
         
@@ -91,6 +94,7 @@ module LatchIDEX(
                 o_TakeBranch <= i_TakeBranch;
                 o_BranchNEQ <= i_BranchNEQ;
                 o_PostBloqueo <= i_PostBloqueo;           
+                o_Halt <= i_Halt;           
             end
         end
     end   

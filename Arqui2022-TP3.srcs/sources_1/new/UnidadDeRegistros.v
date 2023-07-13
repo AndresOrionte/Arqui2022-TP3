@@ -46,10 +46,10 @@ module UnidadDeRegistros(
             end
             
         end else begin
-            #0.1
+            
             if(i_flag_reg_write & (i_reg_esc != 5'b00000 )) begin
                 
-                mem[i_reg_esc] = i_dato_esc;
+                mem[i_reg_esc] <= i_dato_esc;
                 
             end
         end
@@ -64,8 +64,8 @@ module UnidadDeRegistros(
             
         end else begin
             
-            o_dato_1 = mem[i_reg_lec_1];
-            o_dato_2 = mem[i_reg_lec_2];
+            o_dato_1 <= mem[i_reg_lec_1];
+            o_dato_2 <= mem[i_reg_lec_2];
             
         end
         
