@@ -50,10 +50,10 @@ module MIPS_Test();
     // 0C OR R3 FFFF
     // 10 SW (R0 +252) R1
     // 14 HALT
-    // 18 NOP
+    // 18 OR R4 FFFF
     // 1C OR R1 FFFF
     // 20 JAL -5
-    /*
+
     initial begin
         
         i_clk = 1;
@@ -176,7 +176,7 @@ module MIPS_Test();
         #1
         send_start = 0;
         
-        // SW (R0 +252) R1
+        // SW (R0 +124) R1
         #369
         send_start = 1;
         send_byte = 8'b10110000;
@@ -185,7 +185,7 @@ module MIPS_Test();
         
         #369
         send_start = 1;
-        send_byte = 8'b00000000;
+        send_byte = 8'b00000001;
         #1
         send_start = 0;
         
@@ -197,7 +197,7 @@ module MIPS_Test();
         
         #369
         send_start = 1;
-        send_byte = 8'b11111100;
+        send_byte = 8'b01111100;
         #1
         send_start = 0;
         
@@ -226,28 +226,28 @@ module MIPS_Test();
         #1
         send_start = 0;
         
-        // NOP
+        // OR R4 FFFF
         #369
         send_start = 1;
-        send_byte = 8'b00000000;
+        send_byte = 8'b01010000;
         #1
         send_start = 0;
         
         #369
         send_start = 1;
-        send_byte = 8'b00000000;
+        send_byte = 8'b00000100;
         #1
         send_start = 0;
         
         #369
         send_start = 1;
-        send_byte = 8'b00000000;
+        send_byte = 8'b11111111;
         #1
         send_start = 0;
         
         #369
         send_start = 1;
-        send_byte = 8'b00000000;
+        send_byte = 8'b11111111;
         #1
         send_start = 0;
         
@@ -297,10 +297,18 @@ module MIPS_Test();
         
         #369
         send_start = 1;
-        send_byte = 8'b11111010;
+        send_byte = 8'b11111011;
         #1
         send_start = 0;
         
+        // PRUEBA MODO CONTINUO
+        #369
+        send_start = 1;
+        send_byte = 8'h43;
+        #1
+        send_start = 0;
+        
+        /*
         // PRUEBA MODO STEP
         #369
         send_start = 1;
@@ -367,9 +375,9 @@ module MIPS_Test();
         send_byte = 8'h53;
         #1
         send_start = 0;
-    
+        */
     end
-    */
+    
     
     // 00 LUI R4 4
     // 04 LUI R5 5
@@ -380,7 +388,7 @@ module MIPS_Test();
     // 18 HALT
     // Comprueba a la perfeccion todos los casos de funcionamiento de la unidad de cortocircuitos
     // Funcionando todo en orden!
-    
+    /*
     initial begin
         
         i_clk = 1;
@@ -579,13 +587,13 @@ module MIPS_Test();
         send_start = 0;
         
         // PRUEBA MODO CONTINUO
-        /*
+  
         #369
         send_start = 1;
         send_byte = 8'h43;
         #1
         send_start = 0;
-        */
+
 
         // PRUEBA MODO STEP
         #369
@@ -643,7 +651,7 @@ module MIPS_Test();
         send_start = 0;
 
     end
-    
+*/    
     
     
     // Clk de periodo 1

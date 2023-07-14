@@ -91,7 +91,7 @@ module MIPS #(
 
     
     Etapa_IF Etapa_0(i_clk, reset_out_debug, (block_latchs_debug | block_pc_udr), reset_pc_debug, sel_dir_mem_instr_debug, dir_mem_instr_debug, dato_mem_instr_debug, 
-                        flag_esc_mem_instr_debug, (block_latchs_debug | block_latch_1_udr), take_jump_0, jump_address, take_jump_r_0, jump_r_address, 
+                        flag_esc_mem_instr_debug, block_latchs_debug, (block_latchs_debug | block_latch_1_udr), take_jump_0, jump_address, take_jump_r_0, jump_r_address, 
                         take_branch_0, branch_address, pc_p4_0, instruccion_0, pc_0);
     
     Etapa_ID Etapa_1(i_clk, reset_out_debug, instruccion_0, pc_p4_0, reg_esc_reg, dato_wb_reg, reg_write_reg, block_latchs_debug, reset_signals, (block_latchs_debug | block_latch_2_udr), post_bloqueo_1_0,

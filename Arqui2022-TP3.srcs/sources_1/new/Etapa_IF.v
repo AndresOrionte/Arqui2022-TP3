@@ -32,6 +32,7 @@ module Etapa_IF(
     input wire [31:0] i_dir_mem,
     input wire [31:0]i_dato_escritura_mem,
     input wire i_flag_escritura_mem,
+    input wire i_block_read,
     //Latch_IF
     input wire i_block_latch,
     //Señales de control de saltos e ingreso de direcciones
@@ -65,7 +66,7 @@ module Etapa_IF(
     
     Mux2 Mux_Mem_Dir(i_ctrl_dir_mem, o_pc, i_dir_mem, mem_dir);
     
-    MemoriaDeInstrucciones Mem_0(i_clk, i_reset, mem_dir, i_dato_escritura_mem, i_flag_escritura_mem, instruccion);
+    MemoriaDeInstrucciones Mem_0(i_clk, i_reset, mem_dir, i_dato_escritura_mem, i_flag_escritura_mem, i_block_read, instruccion);
     
     LatchIFID Latch_1(i_clk, i_reset, i_block_latch, pc_p4, instruccion, o_pc_p4, o_instruccion);
     
