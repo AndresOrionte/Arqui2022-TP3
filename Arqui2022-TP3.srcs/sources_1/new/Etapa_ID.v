@@ -30,6 +30,7 @@ module Etapa_ID(
     input wire [4:0] i_reg_esc,
     input wire [31:0] i_dato_esc,
     input wire i_reg_write,
+    input wire i_block_escritura,
     //UnidadeDeControl_Signals y UnidadDeControl_ALUOP
     input wire i_reset_signals,
     //Latch_ID
@@ -96,7 +97,7 @@ module Etapa_ID(
     
     Mux2 #5 Mux_0(i_sel_reg_lec_1, i_instruccion[25:21], i_reg_lec_1, reg_1);
     
-    UnidadDeRegistros Regs_0(i_clk, i_reset, reg_1, i_instruccion[20:16], i_reg_esc, i_dato_esc, i_reg_write, dato_1, dato_2);
+    UnidadDeRegistros Regs_0(i_clk, i_reset, reg_1, i_instruccion[20:16], i_reg_esc, i_dato_esc, i_reg_write, i_block_escritura, dato_1, dato_2);
     
     UnidadDeControl_Signals UCS_0((i_reset | i_reset_signals), i_instruccion[31:26], reg_dst, reg_write, alu_src, mem_write, mem_to_reg, 
                                     pc_4_wb, gpr31, mem_width, less_wb, o_take_jump, take_jump_r, take_branch, branch_neq, halt);

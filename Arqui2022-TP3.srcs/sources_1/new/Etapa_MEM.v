@@ -52,7 +52,11 @@ module Etapa_MEM(
     output wire o_reg_write,
     output wire o_post_bloqueo,
     //UnidadDeDebug
-    output wire [31:0] o_lec_mem
+    output wire [31:0] o_lec_mem,
+    //Outputs especiales para UnidadDeRegistros
+    output wire [31:0] o_dato_wb_reg,
+    output wire [4:0] o_reg_esc_reg,
+    output wire o_reg_write_reg
 
     );
     
@@ -77,6 +81,10 @@ module Etapa_MEM(
     assign literal_1100 = 4'b1100;
     assign literal_0 = 1'b0;
     assign o_lec_mem = dato_mem;
+    
+    assign o_dato_wb_reg = dato_wb;
+    assign o_reg_esc_reg = i_reg_esc;
+    assign o_reg_write_reg = i_reg_write;
     
     ExtensorDePalabra #1 ExtP_0(i_carry, carry_ext);
     

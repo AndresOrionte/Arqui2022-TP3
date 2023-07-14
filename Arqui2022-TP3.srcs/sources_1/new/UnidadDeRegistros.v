@@ -29,6 +29,7 @@ module UnidadDeRegistros(
     input wire [4:0] i_reg_esc,
     input wire [31:0] i_dato_esc,
     input wire i_flag_reg_write,
+    input wire i_block_write,
     
     output reg [31:0] o_dato_1,
     output reg [31:0] o_dato_2
@@ -47,7 +48,7 @@ module UnidadDeRegistros(
             
         end else begin
             
-            if(i_flag_reg_write & (i_reg_esc != 5'b00000 )) begin
+            if(i_flag_reg_write & (i_reg_esc != 5'b00000 ) & !i_block_write) begin
                 
                 mem[i_reg_esc] <= i_dato_esc;
                 

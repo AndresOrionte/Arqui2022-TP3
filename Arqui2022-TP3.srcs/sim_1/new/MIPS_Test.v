@@ -371,13 +371,13 @@ module MIPS_Test();
     end
     */
     
-    // LUI R4 4
-    // LUI R5 5
-    // ADD R6 R4 R5
-    // ADD R6 R4 R6
-    // ADD R6 R5 R6
-    // SW (R0+4) R6
-    // HALT
+    // 00 LUI R4 4
+    // 04 LUI R5 5
+    // 08 ADD R6 R4 R5
+    // 0c ADD R6 R4 R6
+    // 10 ADD R6 R5 R6
+    // 14 SW (R0+4) R6
+    // 18 HALT
     // Comprueba a la perfeccion todos los casos de funcionamiento de la unidad de cortocircuitos
     // Funcionando todo en orden!
     
@@ -579,12 +579,14 @@ module MIPS_Test();
         send_start = 0;
         
         // PRUEBA MODO CONTINUO
+        /*
         #369
         send_start = 1;
         send_byte = 8'h43;
         #1
         send_start = 0;
-/*
+        */
+
         // PRUEBA MODO STEP
         #369
         send_start = 1;
@@ -639,7 +641,7 @@ module MIPS_Test();
         send_byte = 8'h53;
         #1
         send_start = 0;
-*/
+
     end
     
     

@@ -82,13 +82,19 @@ module MIPS #(
     
     wire eor, sending_flag, err;
     wire [7:0] recept_byte;
+    
+    // Para solucionar asincronia en UnidadDeRegistros 
+    
+    wire [31:0] dato_wb_reg;
+    wire [4:0] reg_esc_reg;
+    wire reg_write_reg;
 
     
     Etapa_IF Etapa_0(i_clk, reset_out_debug, (block_latchs_debug | block_pc_udr), reset_pc_debug, sel_dir_mem_instr_debug, dir_mem_instr_debug, dato_mem_instr_debug, 
                         flag_esc_mem_instr_debug, (block_latchs_debug | block_latch_1_udr), take_jump_0, jump_address, take_jump_r_0, jump_r_address, 
                         take_branch_0, branch_address, pc_p4_0, instruccion_0, pc_0);
     
-    Etapa_ID Etapa_1(i_clk, reset_out_debug, instruccion_0, pc_p4_0, reg_esc_registros, dato_esc_registros, reg_write_id, reset_signals, (block_latchs_debug | block_latch_2_udr), post_bloqueo_1_0,
+    Etapa_ID Etapa_1(i_clk, reset_out_debug, instruccion_0, pc_p4_0, reg_esc_reg, dato_wb_reg, reg_write_reg, block_latchs_debug, reset_signals, (block_latchs_debug | block_latch_2_udr), post_bloqueo_1_0,
                         sel_dir_un_reg_debug, dir_un_reg_debug, take_jump_0, jump_address, pc_p4_1, dato_1_1, dato_2_1, operando_b_1, instruccion_1, aluop, less_wb_1, mem_width_1,
                         gpr31_1, pc_4_wb_1, reg_dst_1, mem_to_reg_1, mem_write_1, reg_write_1, take_jump_r_1, take_branch_1, branch_neq_1, halt_1, post_bloqueo_1_1, take_jump_r_uc, take_branch_uc, lec_reg_debug);
     
@@ -99,7 +105,8 @@ module MIPS #(
                         mem_width_2, less_wb_2, halt_2);
                         
     Etapa_MEM Etapa_3(i_clk, reset_out_debug, resultado_2, carry_2, less_wb_2, dato_2_2, mem_write_2, mem_width_2, mem_to_reg_2, pc_4_wb_2, pc_p4_2, block_latchs_debug,
-                        reg_esc_2, reg_write_2, post_bloqueo_2_0, sel_dir_mem_datos_debug, dir_mem_datos_debug, dato_esc_registros, reg_esc_registros, reg_write_id, post_bloqueo_2_1, lec_mem_datos_debug);
+                        reg_esc_2, reg_write_2, post_bloqueo_2_0, sel_dir_mem_datos_debug, dir_mem_datos_debug, dato_esc_registros, reg_esc_registros, reg_write_id, post_bloqueo_2_1, lec_mem_datos_debug,
+                        dato_wb_reg, reg_esc_reg, reg_write_reg);
     
     UnidadDeCortocircuito Uc_0(instruccion_1[25:21], instruccion_1[20:16], reg_esc_2, reg_write_2, reg_esc_registros, reg_write_id, reg_dst_1, mem_write_1, forward_a, forward_b, forward_c);
     
