@@ -30,6 +30,7 @@ class AssemblerTranslator:
 
         if num < 0:
             bin_str = format(num & 0xffffffff, '32b')
+            print(bin_str)
         else:
             bin_str = '{:032b}'.format(num)
 
