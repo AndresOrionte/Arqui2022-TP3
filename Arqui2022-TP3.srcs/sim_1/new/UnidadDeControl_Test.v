@@ -21,10 +21,9 @@
 
 
 module UnidadDeControl_Test();
-    reg i_clk;
+
     reg i_reset;
     reg [5:0] i_op_code;
-    reg i_reset_signals; 
     
     wire o_reg_dst;
     wire o_reg_write;
@@ -39,18 +38,18 @@ module UnidadDeControl_Test();
     wire o_take_jump_r;
     wire o_take_branch;
     wire o_branch_neq;
+    wire o_halt;
     
     wire [5:0] o_alu_op;
     
-    UnidadDeControl_Signals UCS(i_clk, i_reset, i_op_code, i_reset_signals, o_reg_dst, o_reg_write, o_alu_src, o_mem_write, o_mem_to_reg, o_pc_4_wb, o_gpr31, o_mem_width, o_less_wb, o_take_jump, o_take_jump_r, o_take_branch, o_branch_neq);
-    UnidadDeControl_ALUOP UCA(i_clk, i_reset, i_op_code, i_reset_signals, o_alu_op);
+    UnidadDeControl_Signals UCS(i_reset, i_op_code, o_reg_dst, o_reg_write, o_alu_src, o_mem_write, o_mem_to_reg, o_pc_4_wb, 
+                                o_gpr31, o_mem_width, o_less_wb, o_take_jump, o_take_jump_r, o_take_branch, o_branch_neq, o_halt);
+    UnidadDeControl_ALUOP UCA(i_reset, i_op_code, o_alu_op);
     
     initial begin
         
-        i_clk = 0;
         i_reset = 1;
         i_op_code = 0;
-        i_reset_signals = 0;
         
         #5
         i_reset = 0;
@@ -168,13 +167,17 @@ module UnidadDeControl_Test();
         #1
         i_op_code = 6'b000000;  //NOP
         
+        #1
+        i_op_code = 6'b000001;  //ADDU
+        
+        #1
+        i_op_code = 6'b111111; //HALT
+        
+        #10
+        
+        #1
+        i_op_code = 6'b000001; //HALT
         
     end
 
-    // Clk de periodo 1
-    always begin
-        #0.5
-        i_clk = ~i_clk;
-    end
-    
 endmodule

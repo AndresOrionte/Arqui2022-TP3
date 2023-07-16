@@ -29,6 +29,7 @@ module UnidadDeRegistros(
     input wire [4:0] i_reg_esc,
     input wire [31:0] i_dato_esc,
     input wire i_flag_reg_write,
+    input wire i_block_write,
     
     output reg [31:0] o_dato_1,
     output reg [31:0] o_dato_2
@@ -41,17 +42,15 @@ module UnidadDeRegistros(
     
         if(i_reset) begin
             
-            o_dato_1 <= 32'h00000000;
-            o_dato_2 <= 32'h00000000;
             for(i=0; i<32; i=i+1) begin
                 mem[i] <= 32'h00000000;
             end
             
         end else begin
             
-            if(i_flag_reg_write) begin
+            if(i_flag_reg_write & (i_reg_esc != 5'b00000 ) & !i_block_write) begin
                 
-                mem[i_reg_esc] = i_dato_esc;
+                mem[i_reg_esc] <= i_dato_esc;
                 
             end
         end
@@ -59,8 +58,17 @@ module UnidadDeRegistros(
     
     always @(negedge i_clk) begin
         
-        o_dato_1 = mem[i_reg_lec_1];
-        o_dato_2 = mem[i_reg_lec_2];
+        if(i_reset) begin
+            
+            o_dato_1 <= 32'h00000000;
+            o_dato_2 <= 32'h00000000;
+            
+        end else begin
+            
+            o_dato_1 <= mem[i_reg_lec_1];
+            o_dato_2 <= mem[i_reg_lec_2];
+            
+        end
         
     end 
     

@@ -25,6 +25,7 @@ module Etapa_IF_Test();
     reg i_clk;
     reg i_reset;
     reg i_block_pc;
+    reg i_reset_pc;
     reg i_ctrl_dir_mem;
     reg [31:0] i_dir_mem;
     reg [31:0]i_dato_escritura_mem;
@@ -43,12 +44,15 @@ module Etapa_IF_Test();
     wire [31:0] o_pc_p4;
     wire [31:0] o_instruccion;
     
-    Etapa_IF etapa_0(i_clk, i_reset, i_block_pc, i_ctrl_dir_mem, i_dir_mem, i_dato_escritura_mem, i_flag_escritura_mem, i_block_latch, i_take_jump, i_jump_address, i_take_jump_r, i_jump_r_address, i_take_branch, i_branch_address, o_pc_p4, o_instruccion);
+    wire [31:0] o_pc;
+    
+    Etapa_IF etapa_0(i_clk, i_reset, i_block_pc, i_reset_pc, i_ctrl_dir_mem, i_dir_mem, i_dato_escritura_mem, i_flag_escritura_mem, i_block_latch, i_take_jump, i_jump_address, i_take_jump_r, i_jump_r_address, i_take_branch, i_branch_address, o_pc_p4, o_instruccion, o_pc);
 
     initial begin
 
         i_clk = 1;
         i_block_pc = 0;
+        i_reset_pc = 0;
         i_ctrl_dir_mem = 0;
         i_dir_mem = 0;
         i_dato_escritura_mem = 0;

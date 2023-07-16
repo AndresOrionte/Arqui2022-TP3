@@ -27,6 +27,7 @@ module MemoriaDeInstrucciones
     input wire [31:0] i_direccion,
     input wire [31:0] i_escritura,
     input wire i_flag_escritura,
+    input wire i_block_read,
     
     output reg [31:0] o_instruccion
 );
@@ -34,17 +35,17 @@ module MemoriaDeInstrucciones
     reg [7:0] mem [255:0];
     integer i;
     
-    always @(negedge i_clk) begin
+    always @(posedge i_clk) begin
     
         if(i_reset) begin                   // En caso de reset pongo memoria y salidas a cero
             o_instruccion <= 32'h00000000;
             for(i=0; i<256; i=i+1) begin
                 mem[i] <= 8'h00;
             end
-        end else begin                      // Si no hay reset entonces voy al funcionamiento normal
-            if(i_flag_escritura) begin      // Si esta levantado el flag de escritura escribo la palabra indicada en la posicion indicada
+        end else begin                                          // Si no hay reset entonces voy al funcionamiento normal
+            if(i_flag_escritura) begin                          // Si esta levantado el flag de escritura escribo la palabra indicada en la posicion indicada
                 {mem[i_direccion[7:0]+2'b11], mem[i_direccion[7:0]+2'b10], mem[i_direccion[7:0]+2'b01], mem[i_direccion[7:0]]} = i_escritura;
-            end else begin                  // En otro caso saco la instruccion indicada 
+            end else if(!i_block_read) begin                    // En otro caso, y si no esta bloqueada la lectura, saco la instruccion indicada 
                 o_instruccion = {mem[i_direccion[7:0]+2'b11], mem[i_direccion[7:0]+2'b10], mem[i_direccion[7:0]+2'b01], mem[i_direccion[7:0]]};
             end
         end

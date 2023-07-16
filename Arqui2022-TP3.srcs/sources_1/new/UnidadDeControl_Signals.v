@@ -22,10 +22,8 @@
 
 module UnidadDeControl_Signals(
 
-    input wire i_clk,
     input wire i_reset,
     input wire [5:0] i_op_code,
-    input wire i_reset_signals, // Como se usa??
     
     output reg o_reg_dst,
     output reg o_reg_write,
@@ -39,7 +37,8 @@ module UnidadDeControl_Signals(
     output reg o_take_jump,
     output reg o_take_jump_r,
     output reg o_take_branch,
-    output reg o_branch_neq
+    output reg o_branch_neq,
+    output reg o_halt
     );
     
     
@@ -60,6 +59,7 @@ module UnidadDeControl_Signals(
             o_take_jump_r <= 1'b0;
             o_take_branch <= 1'b0;
             o_branch_neq <= 1'b0;
+            o_halt <= 1'b0;
             
         end else begin
            
@@ -81,6 +81,7 @@ module UnidadDeControl_Signals(
                     o_take_jump_r <= 1'b0;
                     o_take_branch <= 1'b0;
                     o_branch_neq <= 1'b0;
+                    o_halt <= 1'b0;
                 
                 end else begin
                 
@@ -94,6 +95,7 @@ module UnidadDeControl_Signals(
                     o_take_jump_r <= 1'b0;
                     o_take_branch <= 1'b0;
                     o_branch_neq <= 1'b0;
+                    o_halt <= 1'b0;
                     
                     o_reg_dst <= !i_op_code[4];
                     o_alu_src <= i_op_code[4];
@@ -115,7 +117,6 @@ module UnidadDeControl_Signals(
                 
                     o_reg_dst <= 1'b0;
                     o_alu_src <= 1'b1;
-                    o_mem_to_reg <= 1'b1;
                     o_pc_4_wb <= 1'b0;
                     o_gpr31 <= 1'b0;
                     o_less_wb <= 1'b0;
@@ -123,11 +124,13 @@ module UnidadDeControl_Signals(
                     o_take_jump_r <= 1'b0;
                     o_take_branch <= 1'b0;
                     o_branch_neq <= 1'b0;
+                    o_halt <= 1'b0;
                     
                     if(!i_op_code[3]) begin                     // (10) 0 = Operaciones tipo I(L)
                     
                         o_reg_write <= 1'b1;
                         o_mem_write <= 1'b0;
+                        o_mem_to_reg <= 1'b1;
                         
                         case(i_op_code[2:0])
                         
@@ -157,40 +160,63 @@ module UnidadDeControl_Signals(
                     
                         o_reg_write <= 1'b0;
                         o_mem_write <= 1'b1;
+                        o_mem_to_reg <= 1'b0;
                         o_mem_width <= i_op_code[3:0];
                     
                     end
                     
-                end else begin                              // (1) 1 = Operaciones tipo Jump y Branch
+                end else begin                              // (1) 1 = Operaciones tipo Jump, Branch y HALT
                 
-                    o_reg_dst <= 1'b1;
-                    o_alu_src <= 1'b0;
-                    o_mem_write <= 1'b0;
-                    o_mem_to_reg <= 1'b0;
-                    o_pc_4_wb <= 1'b1;
-                    //o_mem_width <= 4'bXXXX;
-                    //o_less_wb <= 1'bX;
+                    if(!i_op_code[3]) begin                     // (11) 0 = Operaciones tipo Jump y Branch
                     
-                    if(!i_op_code[2]) begin                     // (11X) 0 = Operaciones tipo Jump
-                    
-                        o_take_branch <= 1'b0;
-                        o_branch_neq <= 1'b0;
+                        o_reg_dst <= 1'b1;
+                        o_alu_src <= 1'b0;
+                        o_mem_write <= 1'b0;
+                        o_mem_to_reg <= 1'b0;
+                        o_pc_4_wb <= 1'b1;
+                        //o_mem_width <= 4'bXXXX;
+                        //o_less_wb <= 1'bX;
+                        o_halt <= 1'b0;
                         
-                        o_reg_write <= i_op_code[0];
-                        o_gpr31 <= !i_op_code[1];
-                        o_take_jump <= !i_op_code[1];
-                        o_take_jump_r <= i_op_code[1];
+                        if(!i_op_code[2]) begin                     // (110) 0 = Operaciones tipo Jump
+                        
+                            o_take_branch <= 1'b0;
+                            o_branch_neq <= 1'b0;
+                            
+                            o_reg_write <= i_op_code[0];
+                            o_gpr31 <= !i_op_code[1];
+                            o_take_jump <= !i_op_code[1];
+                            o_take_jump_r <= i_op_code[1];
+                        
+                        end else begin                              // (110) 1 = Operaciones tipo Branch
+
+                            o_reg_write <= 1'b0;
+                            //o_gpr31 <= 1'bX;
+                            o_take_jump <= 1'b0;
+                            o_take_jump_r <= 1'b0;
+                            o_take_branch <= 1'b1;
+                            
+                            o_branch_neq <= i_op_code[0];
+                        
+                        end
                     
-                    end else begin                              // (11X) 1 = Operaciones tipo Branch
-                    
+                    end else begin                                  // (111) HALT
+                        
+                        o_reg_dst <= 1'b0;
                         o_reg_write <= 1'b0;
-                        //o_gpr31 <= 1'bX;
+                        o_alu_src <= 1'b0;
+                        o_mem_write <= 1'b0;
+                        o_mem_to_reg <= 1'b0;
+                        o_pc_4_wb <= 1'b0;
+                        o_gpr31 <= 1'b0;
+                        o_mem_width <= 4'b0000;
+                        o_less_wb <= 1'b0;
                         o_take_jump <= 1'b0;
                         o_take_jump_r <= 1'b0;
-                        o_take_branch <= 1'b1;
+                        o_take_branch <= 1'b0;
+                        o_branch_neq <= 1'b0;
+                        o_halt <= 1'b1;
                         
-                        o_branch_neq <= i_op_code[0];
-                    
                     end
                 
                 end

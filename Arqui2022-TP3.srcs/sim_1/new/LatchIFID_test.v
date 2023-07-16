@@ -15,10 +15,16 @@ module LatchIFID_test();
     initial begin
         
         // Comienzo con un bloqueo
-        i_clk = 0;
-        i_reset = 0;
+        i_clk = 1;
+        i_reset = 1;
         i_bloqueo = 1;
         
+        i_pc_p4 = 0;
+        i_instruccion = 0;
+        
+        #5
+        i_reset = 0;
+
         // Asigno valores a la entrada
         i_instruccion = 32'h00000F0F;
         #1
@@ -29,8 +35,10 @@ module LatchIFID_test();
         
         // Desbloqueo y compruebo que funcione el latch
         i_bloqueo = 0;
+        i_pc_p4 = 8;
+        i_instruccion = 255;
         #1
-        i_pc_p4 = 32'h0008;
+        i_pc_p4 = 12;
         #1
         i_instruccion = 32'h00000000;
         #3

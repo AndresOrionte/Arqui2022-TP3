@@ -29,20 +29,22 @@ module UnidadDeRegistros_Test();
     reg [4:0] i_reg_esc;
     reg [31:0] i_dato_esc;
     reg i_flag_reg_write;
+    reg i_block_write;
     
     wire [31:0] o_dato_1;
     wire [31:0] o_dato_2;
     
-    UnidadDeRegistros Un0(i_clk, i_reset, i_reg_lec_1, i_reg_lec_2, i_reg_esc, i_dato_esc, i_flag_reg_write, o_dato_1, o_dato_2);
+    UnidadDeRegistros Un0(i_clk, i_reset, i_reg_lec_1, i_reg_lec_2, i_reg_esc, i_dato_esc, i_flag_reg_write, i_block_write, o_dato_1, o_dato_2);
     
     initial begin
         
-        i_clk = 0;
+        i_clk = 1;
         i_reg_lec_1 = 5'b00000;
         i_reg_lec_2 = 5'b00000;
         i_reg_esc = 5'b00000;
         i_dato_esc = 32'b0000000;
         i_flag_reg_write = 0;
+        i_block_write = 0;
         
         // Primero hacemos un reset
         i_reset = 1;
@@ -73,7 +75,6 @@ module UnidadDeRegistros_Test();
         i_flag_reg_write = 0;
         
         //Comprobamos si se puede acceder al mismo registro simultaneamente
-        
         #1
         i_reg_lec_1 = 5'b11111;
         i_reg_lec_2 = 5'b11111;
@@ -81,6 +82,17 @@ module UnidadDeRegistros_Test();
         #1
         i_reg_lec_1 = 5'b00000;
         i_reg_lec_2 = 5'b00011;
+        
+        // Intentamos escribir la posicion 0
+        #1 
+        i_flag_reg_write = 1;
+        i_reg_esc = 5'b00000;
+        i_dato_esc = 32'hAAAAAAAA;
+        
+        // Leemos la posicion 0
+        #1
+        i_flag_reg_write = 0;
+        i_reg_lec_1 = 5'b00000;
         
     end
     

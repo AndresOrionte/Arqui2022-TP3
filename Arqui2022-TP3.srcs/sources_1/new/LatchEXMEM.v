@@ -37,6 +37,7 @@ module LatchEXMEM(
     input wire i_pc_4_wb,
     input wire [3:0] i_mem_width,
     input wire i_less_wb,
+    input wire i_halt,
     
     output reg [31:0] o_pc_p4,
     output reg [31:0] o_resultado,
@@ -49,7 +50,8 @@ module LatchEXMEM(
     output reg o_mem_to_reg,
     output reg o_pc_4_wb,
     output reg [3:0] o_mem_width,
-    output reg o_less_wb
+    output reg o_less_wb,
+    output reg o_halt
     
     );
     
@@ -68,6 +70,7 @@ module LatchEXMEM(
             o_pc_4_wb <= 1'b0;
             o_mem_width <= 4'h0;
             o_less_wb <= 1'b0;
+            o_halt <= 1'b0;
         
         end else begin
         
@@ -85,6 +88,7 @@ module LatchEXMEM(
                 o_pc_4_wb <= i_pc_4_wb;
                 o_mem_width <= i_mem_width;
                 o_less_wb <= i_less_wb;
+                o_halt <= i_halt;
             
             end
         end

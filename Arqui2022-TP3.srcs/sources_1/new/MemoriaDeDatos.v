@@ -31,14 +31,14 @@ module MemoriaDeDatos(
     output reg [31:0] o_dato
 );
 
-    reg [7:0] mem [255:0];
+    reg [7:0] mem [127:0];
     integer i;
     
-    always @(posedge i_clk) begin
+    always @(negedge i_clk) begin
     
         if(i_reset) begin                   // En caso de reset pongo memoria y salidas a cero
             o_dato <= 32'h00000000;
-            for(i=0; i<256; i=i+1) begin
+            for(i=0; i<128; i=i+1) begin
                 mem[i] <= 8'h00;
             end
         end else begin
@@ -50,13 +50,13 @@ module MemoriaDeDatos(
                     case(i_mem_width[2:0])
                     
                         3'b001: begin
-                            o_dato <= {24'd0,  mem[i_direccion[7:0]]};
+                            o_dato <= {24'd0,  mem[i_direccion[6:0]]};
                         end
                         3'b010: begin
-                            o_dato <= {16'd0, mem[i_direccion[7:0]+2'b01], mem[i_direccion[7:0]]}; 
+                            o_dato <= {16'd0, mem[i_direccion[6:0]+2'b01], mem[i_direccion[6:0]]}; 
                         end
                         3'b100: begin
-                            o_dato <= {mem[i_direccion[7:0]+2'b11], mem[i_direccion[7:0]+2'b10], mem[i_direccion[7:0]+2'b01], mem[i_direccion[7:0]]};
+                            o_dato <= {mem[i_direccion[6:0]+2'b11], mem[i_direccion[6:0]+2'b10], mem[i_direccion[6:0]+2'b01], mem[i_direccion[6:0]]};
                         end
                         
                     endcase
@@ -66,13 +66,13 @@ module MemoriaDeDatos(
                     case(i_mem_width[2:0])
                     
                         3'b001: begin
-                            o_dato <= {{24{mem[i_direccion[7:0]][7]}},  mem[i_direccion[7:0]]};
+                            o_dato <= {{24{mem[i_direccion[6:0]][7]}},  mem[i_direccion[6:0]]};
                         end
                         3'b010: begin
-                            o_dato <= {{16{mem[i_direccion[7:0]+2'b01][7]}}, mem[i_direccion[7:0]+2'b01], mem[i_direccion[7:0]]}; 
+                            o_dato <= {{16{mem[i_direccion[6:0]+2'b01][7]}}, mem[i_direccion[6:0]+2'b01], mem[i_direccion[6:0]]}; 
                         end
                         3'b100: begin
-                            o_dato <= {mem[i_direccion[7:0]+2'b11], mem[i_direccion[7:0]+2'b10], mem[i_direccion[7:0]+2'b01], mem[i_direccion[7:0]]};
+                            o_dato <= {mem[i_direccion[6:0]+2'b11], mem[i_direccion[6:0]+2'b10], mem[i_direccion[6:0]+2'b01], mem[i_direccion[6:0]]};
                         end
                         
                     endcase
@@ -84,13 +84,13 @@ module MemoriaDeDatos(
                 case(i_mem_width[2:0])
                     
                     3'b001: begin
-                        mem[i_direccion[7:0]] <= i_escritura[7:0];
+                        mem[i_direccion[6:0]] <= i_escritura[6:0];
                     end
                     3'b010: begin
-                        {mem[i_direccion[7:0]+2'b01], mem[i_direccion[7:0]]} <= i_escritura[15:0];
+                        {mem[i_direccion[6:0]+2'b01], mem[i_direccion[6:0]]} <= i_escritura[15:0];
                     end
                     3'b100: begin
-                        {mem[i_direccion[7:0]+2'b11], mem[i_direccion[7:0]+2'b10], mem[i_direccion[7:0]+2'b01], mem[i_direccion[7:0]]} <= i_escritura;
+                        {mem[i_direccion[6:0]+2'b11], mem[i_direccion[6:0]+2'b10], mem[i_direccion[6:0]+2'b01], mem[i_direccion[6:0]]} <= i_escritura;
                     end
                     
                 endcase
