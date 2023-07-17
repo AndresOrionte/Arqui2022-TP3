@@ -111,7 +111,7 @@ module Etapa_EX(
     ALU Alu_0(operando_a, operando_b, i_aluop, resultado, carry, zero);
     
     assign o_take_jump_r = i_take_jump_r;
-    assign o_jump_r_address = i_dato_1;
+    assign o_jump_r_address = operando_a;
     
     Mux2 #1 Mux_branch_0(i_branch_neq, zero, !zero, branch_sig_0);
     
@@ -127,7 +127,7 @@ module Etapa_EX(
     
     Mux2 #5 Mux_escritura_1(i_gpr31, reg_esc_0, literal_31, reg_esc_1);
     
-    LatchEXMEM Latch_3(i_clk, (i_reset | i_reset_latch), i_block_latch, i_pc_p4, resultado, carry, dato_2_forward, reg_esc_1, i_reg_write, i_mem_write, i_mem_to_reg, 
+    LatchEXMEM Latch_3(i_clk, i_reset, i_reset_latch, i_block_latch, i_pc_p4, resultado, carry, dato_2_forward, reg_esc_1, i_reg_write, i_mem_write, i_mem_to_reg, 
                         i_pc_4_wb, i_mem_width, i_less_wb, i_halt, o_pc_p4, o_resultado, o_carry, o_dato_2, o_reg_esc, o_reg_write, o_mem_write, 
                         o_mem_to_reg, o_pc_4_wb, o_mem_width, o_less_wb, o_halt);
     

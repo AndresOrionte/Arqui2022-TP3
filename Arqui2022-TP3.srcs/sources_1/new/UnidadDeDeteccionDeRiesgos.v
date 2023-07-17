@@ -61,7 +61,8 @@ module UnidadDeDeteccionDeRiesgos(
             o_post_bloqueo_2 <= 0;
             
         end else begin
-        
+            
+            /*
             if(!i_post_bloqueo_2) begin                 // Si en el ciclo anterior no hubo riesgo por load
             
                 o_reset_latch_exmem <= 0;
@@ -82,6 +83,23 @@ module UnidadDeDeteccionDeRiesgos(
                 o_bloqueo_latch_idex <= 0;
                 o_post_bloqueo_2 <= 0;
                 o_reset_latch_exmem <= 1;
+                
+            end
+            */
+            
+            if(i_mem_to_reg & ((i_rd == i_rs) | (i_reg_dst & (i_rd == i_rt)))) begin
+                
+                bloqueo_pc_2 <= 1;
+                bloqueo_ifid_2 <= 1;
+                o_bloqueo_latch_idex <= 1;
+                o_reset_latch_exmem <= 1;
+                
+            end else begin
+                
+                bloqueo_pc_2 <= 0;
+                bloqueo_ifid_2 <= 0;
+                o_bloqueo_latch_idex <= 0;
+                o_reset_latch_exmem <= 0;
                 
             end
             
