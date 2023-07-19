@@ -55,7 +55,7 @@ module MIPS_Test_L();
     // 14 LW R12 (R11)
     // 18 SUB R12 R12 68
     // 1C JALR guardoen(R11) saltoa(R12)
-    
+    /* 
     initial begin
         
         i_clk = 1;
@@ -277,14 +277,14 @@ module MIPS_Test_L();
         send_byte = 8'b00000000;
         #1
         send_start = 0;
-        /*
+        
+        
         // PRUEBA MODO CONTINUO
         #369
         send_start = 1;
         send_byte = 8'h43;
         #1
         send_start = 0;
-        */
         
         
         // PRUEBA MODO STEP
@@ -379,7 +379,318 @@ module MIPS_Test_L();
         send_start = 0;
         
     end
-
+    */
+    
+    
+    //////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////
+    
+    // 00 OR R10 R0 0070
+    // 04 OR R11 R10 0001
+    // 08 BNQ R10 R11 +1
+    // 0C HALT
+    // 10 ADD R10 R10 1
+    // 14 ADD R20 0008
+    // 18 JR R20
+    
+    initial begin
+        
+        i_clk = 1;
+        i_reset = 1;
+        send_start = 0;
+        send_byte = 0;
+        
+        #10
+        i_reset = 0;
+        
+        #5 //P
+        send_start = 1;
+        send_byte = 8'h50;
+        #1
+        send_start = 0;
+        
+        #369 //Cantidad instrucciones
+        send_start = 1;
+        send_byte = 7;
+        #1
+        send_start = 0;
+        
+        // 00 OR R10 R0 0070
+        #369
+        send_start = 1;
+        send_byte = 8'b01010000;
+        #1
+        send_start = 0;
+        
+        #369
+        send_start = 1;
+        send_byte = 8'b00001010;
+        #1
+        send_start = 0;
+        
+        #369
+        send_start = 1;
+        send_byte = 8'b00000000;
+        #1
+        send_start = 0;
+        
+        #369
+        send_start = 1;
+        send_byte = 8'b01110000;
+        #1
+        send_start = 0;
+        
+        // 04 OR R11 R10 0001
+        #369
+        send_start = 1;
+        send_byte = 8'b01010001;
+        #1
+        send_start = 0;
+        
+        #369
+        send_start = 1;
+        send_byte = 8'b01001011;
+        #1
+        send_start = 0;
+        
+        #369
+        send_start = 1;
+        send_byte = 8'b00000000;
+        #1
+        send_start = 0;
+        
+        #369
+        send_start = 1;
+        send_byte = 8'b00000001;
+        #1
+        send_start = 0;
+        
+        // 08 BNQ R10 R11 +1
+        #369
+        send_start = 1;
+        send_byte = 8'b11010101;
+        #1
+        send_start = 0;
+        
+        #369
+        send_start = 1;
+        send_byte = 8'b01001011;
+        #1
+        send_start = 0;
+        
+        #369
+        send_start = 1;
+        send_byte = 8'b00000000;
+        #1
+        send_start = 0;
+        
+        #369
+        send_start = 1;
+        send_byte = 8'b00000001;
+        #1
+        send_start = 0;
+        
+        // 0C HALT
+        #369
+        send_start = 1;
+        send_byte = 8'b11111100;
+        #1
+        send_start = 0;
+        
+        #369
+        send_start = 1;
+        send_byte = 8'b00000000;
+        #1
+        send_start = 0;
+        
+        #369
+        send_start = 1;
+        send_byte = 8'b00000000;
+        #1
+        send_start = 0;
+        
+        #369
+        send_start = 1;
+        send_byte = 8'b00000000;
+        #1
+        send_start = 0;
+        
+        // 10 ADD R10 R10 1
+        #369
+        send_start = 1;
+        send_byte = 8'b01000101;
+        #1
+        send_start = 0;
+        
+        #369
+        send_start = 1;
+        send_byte = 8'b01001010;
+        #1
+        send_start = 0;
+        
+        #369
+        send_start = 1;
+        send_byte = 8'b00000000;
+        #1
+        send_start = 0;
+        
+        #369
+        send_start = 1;
+        send_byte = 8'b00000001;
+        #1
+        send_start = 0;
+        
+        // 14 ADD R20 R0 0008
+        #369
+        send_start = 1;
+        send_byte = 8'b01000100;
+        #1
+        send_start = 0;
+        
+        #369
+        send_start = 1;
+        send_byte = 8'b00010100;
+        #1
+        send_start = 0;
+        
+        #369
+        send_start = 1;
+        send_byte = 8'b00000000;
+        #1
+        send_start = 0;
+        
+        #369
+        send_start = 1;
+        send_byte = 8'b00001000;
+        #1
+        send_start = 0;
+        
+        // 18 JR R20
+        #369
+        send_start = 1;
+        send_byte = 8'b11001010;
+        #1
+        send_start = 0;
+        
+        #369
+        send_start = 1;
+        send_byte = 8'b10000000;
+        #1
+        send_start = 0;
+        
+        #369
+        send_start = 1;
+        send_byte = 8'b00000000;
+        #1
+        send_start = 0;
+        
+        #369
+        send_start = 1;
+        send_byte = 8'b00000000;
+        #1
+        send_start = 0;
+        
+        
+        // PRUEBA MODO CONTINUO
+        #369
+        send_start = 1;
+        send_byte = 8'h43;
+        #1
+        send_start = 0;
+        
+        /*
+        // PRUEBA MODO STEP
+        #369
+        send_start = 1;
+        send_byte = 8'h53;
+        #1
+        send_start = 0;
+        
+        #99999
+        send_start = 1;
+        send_byte = 8'h53;
+        #1
+        send_start = 0;
+        
+        #99999
+        send_start = 1;
+        send_byte = 8'h53;
+        #1
+        send_start = 0;
+        
+        #99999
+        send_start = 1;
+        send_byte = 8'h53;
+        #1
+        send_start = 0;
+        
+        #99999
+        send_start = 1;
+        send_byte = 8'h53;
+        #1
+        send_start = 0;
+        
+        #99999
+        send_start = 1;
+        send_byte = 8'h53;
+        #1
+        send_start = 0;
+        
+        #99999
+        send_start = 1;
+        send_byte = 8'h53;
+        #1
+        send_start = 0;
+        
+        #99999
+        send_start = 1;
+        send_byte = 8'h53;
+        #1
+        send_start = 0;
+        
+        #99999
+        send_start = 1;
+        send_byte = 8'h53;
+        #1
+        send_start = 0;
+        
+        #99999
+        send_start = 1;
+        send_byte = 8'h53;
+        #1
+        send_start = 0;
+        
+        #99999
+        send_start = 1;
+        send_byte = 8'h53;
+        #1
+        send_start = 0;
+        
+        #99999
+        send_start = 1;
+        send_byte = 8'h53;
+        #1
+        send_start = 0;
+        
+        #99999
+        send_start = 1;
+        send_byte = 8'h53;
+        #1
+        send_start = 0;
+        
+        #99999
+        send_start = 1;
+        send_byte = 8'h53;
+        #1
+        send_start = 0;
+        
+        #99999
+        send_start = 1;
+        send_byte = 8'h53;
+        #1
+        send_start = 0;
+        */
+    end
     
     
     // Clk de periodo 1
