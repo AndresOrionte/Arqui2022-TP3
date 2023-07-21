@@ -52,7 +52,7 @@ module MIPS #(
     wire [31:0] pc_p4_2, resultado_2, dato_2_2;
     wire carry_2;
     wire [4:0] reg_esc_2;
-    wire reg_write_2, mem_write_2, mem_to_reg_2, pc_4_wb_2, less_wb_2, halt_2, post_bloqueo_2_0, post_bloqueo_2_1;
+    wire reg_write_2, mem_write_2, mem_to_reg_2, pc_4_wb_2, less_wb_2, halt_2;
     wire [3:0] mem_width_2;
     
     wire reset_signals;
@@ -105,13 +105,13 @@ module MIPS #(
                         mem_width_2, less_wb_2, halt_2);
                         
     Etapa_MEM Etapa_3(i_clk, reset_out_debug, resultado_2, carry_2, less_wb_2, dato_2_2, mem_write_2, mem_width_2, mem_to_reg_2, pc_4_wb_2, pc_p4_2, block_latchs_debug,
-                        reg_esc_2, reg_write_2, post_bloqueo_2_0, sel_dir_mem_datos_debug, dir_mem_datos_debug, dato_esc_registros, reg_esc_registros, reg_write_id, post_bloqueo_2_1, lec_mem_datos_debug,
+                        reg_esc_2, reg_write_2, sel_dir_mem_datos_debug, dir_mem_datos_debug, dato_esc_registros, reg_esc_registros, reg_write_id, lec_mem_datos_debug,
                         dato_wb_reg, reg_esc_reg, reg_write_reg);
     
     UnidadDeCortocircuito Uc_0(instruccion_1[25:21], instruccion_1[20:16], reg_esc_2, reg_write_2, reg_esc_registros, reg_write_id, reg_dst_1, mem_write_1, forward_a, forward_b, forward_c);
     
     UnidadDeDeteccionDeRiesgos Udr_0(reset_out_debug, take_jump_r_uc, take_branch_uc, mem_to_reg_2, reg_dst_1, instruccion_1[25:21], instruccion_1[20:16], reg_esc_2, post_bloqueo_1_1,
-                                        post_bloqueo_2_1, block_pc_udr, block_latch_1_udr, block_latch_2_udr, reset_signals, reset_latch_exmem, post_bloqueo_1_0, post_bloqueo_2_0);
+                                        block_pc_udr, block_latch_1_udr, block_latch_2_udr, reset_signals, reset_latch_exmem, post_bloqueo_1_0);
     
     UnidadDeDebug Udebug_0(i_clk, i_reset, eor, err, recept_byte, sending_flag, pc_0, lec_reg_debug, lec_mem_datos_debug, halt_2,
                         send_start_debug, send_byte_debug, reset_out_debug, reset_pc_debug, block_latchs_debug, sel_dir_mem_instr_debug, flag_esc_mem_instr_debug,

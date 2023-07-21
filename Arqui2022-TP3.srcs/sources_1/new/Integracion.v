@@ -21,7 +21,7 @@
 
 
 module Integracion#(
-    parameter NCFT = 162
+    parameter NCFT = 260
     )(
     
     input wire i_clk,
@@ -35,18 +35,22 @@ module Integracion#(
     output wire o_locked
     );
     
-    wire clk_25;
+    wire clk_out;
     
-    clk_wiz_0 clk_wiz
+    clock_wizard_MIPS clock_machine
    (
     // Clock out ports
-    .clk_25(clk_25),            // output clk_25
+    .clk_out(clk_out),     // output clk_out
     // Status and control signals
-    .reset(i_reset),            // input reset
-    .locked(o_locked),          // output locked
+    .reset(i_reset), // input reset
+    .locked(o_locked),       // output locked
    // Clock in ports
-    .clk_in1(i_clk)); 
+    .clk_in1(i_clk));      // input clk_in1
     
-    MIPS #(.NCFT(NCFT)) M_0(clk_25, (i_reset | !o_locked), i_rx, o_tx, o_state);
+    MIPS #(.NCFT(NCFT)) M_0(clk_out, (i_reset | !o_locked), i_rx, o_tx, o_state);
+    
+    // NCFT
+    // 25MHz = 162
+    // 40MHz = 260
     
 endmodule

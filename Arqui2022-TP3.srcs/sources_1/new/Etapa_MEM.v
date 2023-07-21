@@ -41,7 +41,6 @@ module Etapa_MEM(
     input wire i_block_latch,
     input wire [4:0] i_reg_esc,
     input wire i_reg_write,
-    input wire i_post_bloqueo,
     //UnidadDeDebug
     input wire i_sel_dir_mem,
     input wire [31:0] i_dir_mem,
@@ -50,7 +49,6 @@ module Etapa_MEM(
     output wire [31:0] o_dato_wb,
     output wire [4:0] o_reg_esc,
     output wire o_reg_write,
-    output wire o_post_bloqueo,
     //UnidadDeDebug
     output wire [31:0] o_lec_mem,
     //Outputs especiales para UnidadDeRegistros
@@ -102,6 +100,6 @@ module Etapa_MEM(
     
     Mux2 Mux_5(i_pc_4_wb, dato_sel, i_pc_p4, dato_wb);
     
-    LatchMEMWB Latch_4(i_clk, i_reset, i_block_latch, dato_wb, i_reg_esc, i_reg_write, i_post_bloqueo, o_dato_wb, o_reg_esc, o_reg_write, o_post_bloqueo);
+    LatchMEMWB Latch_4(i_clk, i_reset, i_block_latch, dato_wb, i_reg_esc, i_reg_write, o_dato_wb, o_reg_esc, o_reg_write);
     
 endmodule

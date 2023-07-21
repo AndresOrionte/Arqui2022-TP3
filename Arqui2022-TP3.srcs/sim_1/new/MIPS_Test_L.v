@@ -55,7 +55,7 @@ module MIPS_Test_L();
     // 14 LW R12 (R11)
     // 18 SUB R12 R12 68
     // 1C JALR guardoen(R11) saltoa(R12)
-    /* 
+     
     initial begin
         
         i_clk = 1;
@@ -286,7 +286,7 @@ module MIPS_Test_L();
         #1
         send_start = 0;
         
-        
+        /*
         // PRUEBA MODO STEP
         #369
         send_start = 1;
@@ -377,9 +377,9 @@ module MIPS_Test_L();
         send_byte = 8'h53;
         #1
         send_start = 0;
-        
+        */
     end
-    */
+    
     
     
     //////////////////////////////////////////////////////////////////////////////////
@@ -392,7 +392,7 @@ module MIPS_Test_L();
     // 10 ADD R10 R10 1
     // 14 ADD R20 0008
     // 18 JR R20
-    
+    /*
     initial begin
         
         i_clk = 1;
@@ -598,7 +598,7 @@ module MIPS_Test_L();
         #1
         send_start = 0;
         
-        /*
+        
         // PRUEBA MODO STEP
         #369
         send_start = 1;
@@ -689,9 +689,9 @@ module MIPS_Test_L();
         send_byte = 8'h53;
         #1
         send_start = 0;
-        */
+        
     end
-    
+    */
     
     // Clk de periodo 1
     always begin

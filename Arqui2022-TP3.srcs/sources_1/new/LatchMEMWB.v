@@ -27,12 +27,10 @@ module LatchMEMWB(
     input wire [31:0] i_dato_wb,
     input wire [4:0] i_reg_esc,
     input wire i_reg_write,
-    input wire i_post_bloqueo,
     
     output reg [31:0] o_dato_wb,
     output reg [4:0] o_reg_esc,
-    output reg o_reg_write,
-    output reg o_post_bloqueo
+    output reg o_reg_write
 
     );
     
@@ -43,7 +41,6 @@ module LatchMEMWB(
             o_dato_wb <= 32'h00000000;
             o_reg_esc <= 5'h00;
             o_reg_write <= 1'b0;
-            o_post_bloqueo <= 1'b0;
         
         end else begin
         
@@ -51,8 +48,7 @@ module LatchMEMWB(
                 
                 o_dato_wb <= i_dato_wb;
                 o_reg_esc <= i_reg_esc;
-                o_reg_write <= i_reg_write;   
-                o_post_bloqueo <= i_post_bloqueo;   
+                o_reg_write <= i_reg_write; 
                 
             end
         end
